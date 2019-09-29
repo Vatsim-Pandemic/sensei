@@ -1,0 +1,17 @@
+{
+  "name": "sensei",
+  "version": "0.0.1",
+  "description": "A Bot Framework built on top of Discord.js",
+  "main": "index.js",
+  "keywords": [
+    "bot",
+    "framework",
+    "discord",
+    "chat"
+  ],
+  "author": "Demonicious <demoncious@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
