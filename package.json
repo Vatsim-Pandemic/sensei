@@ -2,7 +2,7 @@
   "name": "sensei",
   "version": "0.0.1",
   "description": "A Bot Framework built on top of Discord.js",
-  "main": "index.js",
+  "main": "module.js",
   "keywords": [
     "bot",
     "framework",
