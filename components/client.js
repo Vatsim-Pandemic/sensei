@@ -6,6 +6,17 @@ class SenseiClient extends Client {
         super();
         // - Properties - //
         // Public
+
+        this.info = {
+            name: "SenseiBot",
+            version: "1.0.0",
+            author: {
+                name: "Mudassar Islam",
+                username: "Demonicious#9560",
+                email: "demoncious@gmail.com"
+            }
+        }
+
         this.prefixes = null;
         this.commands = null;
 
@@ -13,29 +24,49 @@ class SenseiClient extends Client {
         this._token = null;
         this._commandsDir = null;
         this._commandGroups = null;
-        this._steps = 0;
     }
 
     // Methods
     setToken(Token = new String) {
         this._token = Token;
-        this._steps++;
         return this;
     }
     setPrefixes(PrefixesArray = new Array) { 
         this.prefixes = PrefixesArray;
-        this._steps++;
         return this;
     }
     setCommandDirectory(CommandsDirectory = new String) {
         this._commandsDir = CommandsDirectory;
-        this._steps++;
         return this;
     }
     registerGroups(Groups = new Array) {
         this._commandGroups = Groups;
         return this;
     }
+
+    configure(config = new Object) {
+        let setting;
+        for(setting in config) {
+            switch(setting) {
+                case "token":
+                    this._token = config[setting];
+                    break;
+                case "prefixes":
+                    if(config[setting].length > 0) {
+                        this.prefixes = config[setting];
+                    }
+                    break;
+                case "commandsDirectory":
+                    this._commandsDir = config[setting];
+                    break;
+                case "registerCommands":
+                    this.commands = config[setting];
+                    break;
+            }
+        }
+        return this;
+    }
+
     start() {
         if(this._steps >= 3) {
             // Register All of the Commands.
