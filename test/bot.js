@@ -1,6 +1,6 @@
-const Sensei = require("./module");
+const { SenseiClient } = require("../build/module");
 
-const bot = new Sensei.Client;
+const bot = new SenseiClient;
 
 const configObject = {
     // Required Information
@@ -12,10 +12,6 @@ const configObject = {
         "rave!"
     ],
     commandsDirectory: "./commands",
-    registerCommands: [
-        "hug",
-        "help",
-    ],
 
     // Optional Data that may come in Handy.
     info: {

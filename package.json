@@ -1,17 +1,24 @@
 {
   "name": "sensei",
-  "version": "0.0.1",
-  "description": "A Bot Framework built on top of Discord.js",
-  "main": "module.js",
-  "keywords": [
-    "bot",
-    "framework",
-    "discord",
-    "chat"
-  ],
-  "author": "Demonicious <demoncious@gmail.com>",
-  "license": "ISC",
+  "version": "1.0.0",
+  "description": "A Bot framework for making bots. Basically a wrapper for Discord.js",
   "dependencies": {
     "discord.js": "^11.5.1"
-  }
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "framework",
+    "chat"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Demonicious/bot_framework.git"
+  },
+  "author": "demonicious <demoncious@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Demonicious/bot_framework/issues"
+  },
+  "homepage": "https://github.com/Demonicious/bot_framework#readme"
 }
