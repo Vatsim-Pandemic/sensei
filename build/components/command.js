@@ -8,7 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = __importDefault(require("discord.js"));
 class SenseiCommand {
     constructor() {
         this.names = ["newcommand"];
@@ -22,12 +26,24 @@ class SenseiCommand {
         this.arguments = [];
     }
     run(bot, message, args) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log(`${this.info.name} command was executed`);
-        });
+        return __awaiter(this, void 0, void 0, function* () { });
     }
-    reportError(bot, message) {
-        message.reply(`Invalid Syntax. Please see ${bot.prefixes[0]}help ${this.names[0]}`);
+    reportError(bot, message, messages) {
+        let rb = new discord_js_1.default.RichEmbed;
+        rb.setColor(bot.errorColor);
+        let errString = "";
+        let index = 1;
+        messages.forEach(message => {
+            errString += `\n${index}.) ${message}`;
+            index++;
+        });
+        errString += `\n\nPlease see ${bot.prefixes[0]}help ${this.names[0]}`;
+        rb.setTitle("The following errors occured:")
+            .setDescription(errString)
+            .setFooter(bot.footerText)
+            .setTimestamp();
+        message.reply(rb);
+        return;
     }
     splitArgs(content) {
         return content.split(/\s+/g);
@@ -39,7 +55,7 @@ class SenseiCommand {
         return __awaiter(this, void 0, void 0, function* () {
             let args = this.splitArgs(content);
             let argObject = [];
-            let errors = 0;
+            let errors = [];
             if (this.arguments.length > 0 && this.arguments.length <= args.length) {
                 let index = 0;
                 for (let argType in this.arguments) {
@@ -60,10 +76,9 @@ class SenseiCommand {
                                 });
                             }
                             else {
-                                this.reportError(bot, message);
-                                errors++;
+                                errors.push(`Argument No.${index + 1} should be a number.`);
                             }
-                        case "user":
+                        case "user_mention":
                             if (args[index].length == 21) {
                                 if (args[index].includes("<@") && args[index].includes(">")) {
                                     if (this.isNum(args[index].replace("<@", "").replace(">", ""))) {
@@ -75,16 +90,14 @@ class SenseiCommand {
                                     }
                                 }
                                 else {
-                                    this.reportError(bot, message);
-                                    errors++;
+                                    errors.push(`Argument No.${index + 1} should be a Mentioned User.`);
                                 }
                             }
                             else {
-                                this.reportError(bot, message);
-                                errors++;
+                                errors.push(`Argument No.${index + 1} should be a Mentioned User.`);
                             }
                             break;
-                        case "role":
+                        case "role_mention":
                             if (args[index].length == 22) {
                                 if (args[index].includes("<@&") && args[index].includes(">")) {
                                     if (this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
@@ -96,16 +109,14 @@ class SenseiCommand {
                                     }
                                 }
                                 else {
-                                    this.reportError(bot, message);
-                                    errors++;
+                                    errors.push(`Argument No.${index + 1} should be a Mentioned Role.`);
                                 }
                             }
                             else {
-                                this.reportError(bot, message);
-                                errors++;
+                                errors.push(`Argument No.${index + 1} should be a Mentioned Role.`);
                             }
                             break;
-                        case "channel":
+                        case "channel_mention":
                             if (args[index].length == 21) {
                                 if (args[index].includes("<#") && args[index].includes(">")) {
                                     if (this.isNum(args[index].replace("<#", "").replace(">", ""))) {
@@ -117,24 +128,25 @@ class SenseiCommand {
                                     }
                                 }
                                 else {
-                                    this.reportError(bot, message);
-                                    errors++;
+                                    errors.push(`Argument No.${index + 1} should be a Mentioned Channel.`);
                                 }
                             }
                             else {
-                                this.reportError(bot, message);
-                                errors++;
+                                errors.push(`Argument No.${index + 1} should be a Mentioned Channel.`);
                             }
                             break;
                     }
                     index++;
                 }
-                if (errors == 0) {
+                if (errors.length == 0) {
                     yield this.run(bot, message, argObject);
+                }
+                else {
+                    this.reportError(bot, message, errors);
                 }
             }
             else {
-                this.reportError(bot, message);
+                this.reportError(bot, message, ["Insufficient arguments provided."]);
             }
         });
     }

@@ -1,4 +1,4 @@
-const { SenseiClient } = require("../build/module");
+const { SenseiClient } = require("../build/sensei");
 
 const bot = new SenseiClient;
 

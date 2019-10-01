@@ -25,6 +25,12 @@ class SenseiClient extends Client {
     public prefixes : string[];
     public commands : string[];
 
+    public footerText : string;
+    public primaryColor : string;
+    public secondaryColor : string;
+    public errorColor : string;
+    public successColor: string;
+
     // Private
     private loginToken : string;
     private commandsDir : string;
@@ -42,6 +48,13 @@ class SenseiClient extends Client {
         }
         this.prefixes = [];
         this.commands = [];
+
+        this.footerText = "SenseiBot";
+        this.primaryColor = "#5f5ac6";
+        this.secondaryColor = "#8e7878";
+        this.errorColor = "#ef2e2e";
+        this.successColor = "#68c73f";
+
         this.loginToken = "none";
         this.commandsDir = "none";
     }
@@ -80,17 +93,19 @@ class SenseiClient extends Client {
     }
 
     // Private
-    verifyToken() {
+    private verifyToken() {
         if(this.loginToken != "none") return true;
         return false;
     }
 
+    // Final Method
     start() : void {
         if(!this.verifyToken()) { console.error(new Error(`Login Token hasn't been set properly. Please set the "token" property in the Configuration Object or use the setToken(token : string) method.`)); return }
         if(!(this.prefixes.length > 0)) { console.error(new Error(`Atleast one prefix is required for the bot to work. Please set the "prefixes" : string[] property in the Configuration Object or use the setPrefixes(prefixes : string[]) method.`)); return }
 
         this.on("message", (message) => {
-            
+            if(message.author.bot) return;
+
         })
 
         try { this.login(this.loginToken); }

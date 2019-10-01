@@ -15,6 +15,11 @@ class SenseiClient extends discord_js_1.Client {
         };
         this.prefixes = [];
         this.commands = [];
+        this.footerText = "SenseiBot";
+        this.primaryColor = "#5f5ac6";
+        this.secondaryColor = "#8e7878";
+        this.errorColor = "#ef2e2e";
+        this.successColor = "#68c73f";
         this.loginToken = "none";
         this.commandsDir = "none";
     }
@@ -58,6 +63,7 @@ class SenseiClient extends discord_js_1.Client {
             return true;
         return false;
     }
+    // Final Method
     start() {
         if (!this.verifyToken()) {
             console.error(new Error(`Login Token hasn't been set properly. Please set the "token" property in the Configuration Object or use the setToken(token : string) method.`));
@@ -68,6 +74,8 @@ class SenseiClient extends discord_js_1.Client {
             return;
         }
         this.on("message", (message) => {
+            if (message.author.bot)
+                return;
         });
         try {
             this.login(this.loginToken);

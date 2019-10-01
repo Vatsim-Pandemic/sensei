@@ -42,12 +42,28 @@ class SenseiCommand {
         this.arguments = [];
     }
 
-    protected async run(bot : SenseiClient, message : Discord.Message, args? : ArgumentObject[]) : Promise<void> {
-        console.log(`${this.info.name} command was executed`);
-    }
+    protected async run(bot : SenseiClient, message : Discord.Message, args? : ArgumentObject[]) : Promise<void> {}
 
-    protected reportError(bot : SenseiClient, message : Discord.Message) {
-        message.reply(`Invalid Syntax. Please see ${bot.prefixes[0]}help ${this.names[0]}`);
+    protected reportError(bot : SenseiClient, message : Discord.Message, messages : string[]) : void {
+        let rb : Discord.RichEmbed = new Discord.RichEmbed;
+        rb.setColor(bot.errorColor);
+        
+        let errString : string = "";
+        let index = 1;
+        messages.forEach(message => {
+            errString += `\n${index}.) ${message}`;
+            index++;
+        })
+        
+        errString += `\n\nPlease see ${bot.prefixes[0]}help ${this.names[0]}`; 
+
+        rb.setTitle("The following errors occured:")
+        .setDescription(errString)
+        .setFooter(bot.footerText)
+        .setTimestamp();
+
+        message.reply(rb);
+        return;
     }
 
     private splitArgs(content : string) {
@@ -61,7 +77,7 @@ class SenseiCommand {
         let args : string[] = this.splitArgs(content);
         let argObject : ArgumentObject[] = [];
 
-        let errors : number = 0;
+        let errors : string[] = [];
 
         if(this.arguments.length > 0 && this.arguments.length <= args.length) {
             let index : number = 0;
@@ -82,10 +98,9 @@ class SenseiCommand {
                                 value: args[index],
                             });
                         } else {
-                            this.reportError(bot, message);
-                            errors++;
+                            errors.push(`Argument No.${index + 1} should be a number.`);
                         }
-                    case "user":
+                    case "user_mention":
                         if(args[index].length == 21) {
                             if(args[index].includes("<@") && args[index].includes(">")) {
                                 if(this.isNum(args[index].replace("<@", "").replace(">", ""))) {
@@ -96,15 +111,13 @@ class SenseiCommand {
                                     });
                                 }
                             } else {
-                                this.reportError(bot, message);
-                                errors++;
+                                errors.push(`Argument No.${index + 1} should be a Mentioned User.`);
                             }
                         } else {
-                            this.reportError(bot, message);
-                            errors++;
+                            errors.push(`Argument No.${index + 1} should be a Mentioned User.`);
                         }
                         break;
-                    case "role":
+                    case "role_mention":
                         if(args[index].length == 22) {
                             if(args[index].includes("<@&") && args[index].includes(">")) {
                                 if(this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
@@ -115,15 +128,13 @@ class SenseiCommand {
                                     });
                                 }
                             } else {
-                                this.reportError(bot, message);
-                                errors++;
+                                errors.push(`Argument No.${index + 1} should be a Mentioned Role.`);
                             }
                         } else {
-                            this.reportError(bot, message);
-                            errors++;
+                            errors.push(`Argument No.${index + 1} should be a Mentioned Role.`);
                         }
                         break;
-                    case "channel":
+                    case "channel_mention":
                         if(args[index].length == 21) {
                             if(args[index].includes("<#") && args[index].includes(">")) {
                                 if(this.isNum(args[index].replace("<#", "").replace(">", ""))) {
@@ -134,23 +145,23 @@ class SenseiCommand {
                                     });
                                }
                             } else {
-                                this.reportError(bot, message);
-                                errors++;
+                                errors.push(`Argument No.${index + 1} should be a Mentioned Channel.`);
                             }
                         } else {
-                            this.reportError(bot, message);
-                            errors++;
+                            errors.push(`Argument No.${index + 1} should be a Mentioned Channel.`);
                         }
                         break;
                 }
                 index++;
             }
 
-            if(errors == 0) {
+            if(errors.length == 0) {
                 await this.run(bot, message, argObject);
+            } else {
+                this.reportError(bot, message, errors);
             }
         } else {
-            this.reportError(bot, message);
+            this.reportError(bot, message, ["Insufficient arguments provided."]);
         }
     }
 }
