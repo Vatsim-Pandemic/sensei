@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "A Bot framework for making bots. Basically a wrapper for Discord.js",
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "@types/node": "^12.7.8",
+    "@types/recursive-readdir": "^2.2.0",
+    "discord.js": "^11.5.1",
+    "recursive-readdir": "^2.2.2"
+  },
+  "main": "module.js",
+  "scripts": {
+    "compile": "tsc -b"
   },
   "keywords": [
     "discord",

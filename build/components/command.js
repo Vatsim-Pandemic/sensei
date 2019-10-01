@@ -54,26 +54,25 @@ class SenseiCommand {
     execute(bot, message, content) {
         return __awaiter(this, void 0, void 0, function* () {
             let args = this.splitArgs(content);
-            let argObject = [];
+            let argObject = {};
             let errors = [];
             if (this.arguments.length > 0 && this.arguments.length <= args.length) {
                 let index = 0;
+                // Used for Sending the Mentioned Objects as Arguments.
+                let userIndex = 0;
+                let userMentions = message.mentions.users.array();
+                let roleIndex = 0;
+                let roleMentions = message.mentions.roles.array();
+                let channelIndex = 0;
+                let channelMentions = message.mentions.channels.array();
                 for (let argType in this.arguments) {
                     switch (this.arguments[index].type) {
                         case "string":
-                            argObject.push({
-                                name: this.arguments[index].name,
-                                type: this.arguments[index].type,
-                                value: args[index],
-                            });
+                            argObject.push(this);
                             break;
                         case "number":
                             if (this.isNum(args[index])) {
-                                argObject.push({
-                                    name: this.arguments[index].name,
-                                    type: this.arguments[index].type,
-                                    value: args[index],
-                                });
+                                argObject[this.arguments[index].name] = args[index];
                             }
                             else {
                                 errors.push(`Argument No.${index + 1} should be a number.`);
@@ -82,11 +81,8 @@ class SenseiCommand {
                             if (args[index].length == 21) {
                                 if (args[index].includes("<@") && args[index].includes(">")) {
                                     if (this.isNum(args[index].replace("<@", "").replace(">", ""))) {
-                                        argObject.push({
-                                            name: this.arguments[index].name,
-                                            type: this.arguments[index].type,
-                                            value: args[index],
-                                        });
+                                        argObject[this.arguments[index].name] = userMentions[userIndex];
+                                        userIndex++;
                                     }
                                 }
                                 else {
@@ -101,11 +97,8 @@ class SenseiCommand {
                             if (args[index].length == 22) {
                                 if (args[index].includes("<@&") && args[index].includes(">")) {
                                     if (this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
-                                        argObject.push({
-                                            name: this.arguments[index].name,
-                                            type: this.arguments[index].type,
-                                            value: args[index],
-                                        });
+                                        argObject[this.arguments[index].name] = roleMentions[roleIndex];
+                                        roleIndex++;
                                     }
                                 }
                                 else {
@@ -120,11 +113,8 @@ class SenseiCommand {
                             if (args[index].length == 21) {
                                 if (args[index].includes("<#") && args[index].includes(">")) {
                                     if (this.isNum(args[index].replace("<#", "").replace(">", ""))) {
-                                        argObject.push({
-                                            name: this.arguments[index].name,
-                                            type: this.arguments[index].type,
-                                            value: args[index],
-                                        });
+                                        argObject[this.arguments[index].name] = channelMentions[channelIndex];
+                                        channelIndex++;
                                     }
                                 }
                                 else {
@@ -152,3 +142,4 @@ class SenseiCommand {
     }
 }
 exports.SenseiCommand = SenseiCommand;
+//# sourceMappingURL=command.js.map

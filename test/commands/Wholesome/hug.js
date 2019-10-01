@@ -1,5 +1,5 @@
 const { RichEmbed } = require("discord.js");
-const { SenseiCommand } = require("./../../../build/sensei");
+const { SenseiCommand } = require("./../../../module");
 
 class HugCommand extends SenseiCommand {
     constructor() {
@@ -23,10 +23,10 @@ class HugCommand extends SenseiCommand {
         ]
     }
 
-    async run(bot, message, arguments) {
+    async run(bot, message, args) {
         let msgChannel = message.channel;
         let hugger = message.author.username;
-        let hugged = message.mentions.users.first().username;
+        let hugged = args.user;
 
         let rb = new RichEmbed()
         .setDescription(`${hugged} was embraced warmly by ${hugger}!`)

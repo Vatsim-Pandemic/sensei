@@ -1,4 +1,6 @@
 import { Client } from "discord.js";
+import { SenseiCommand } from "./command";
+import recursive from "recursive-readdir";
 
 interface AuthorInfo {
     name?: string,
@@ -23,7 +25,7 @@ class SenseiClient extends Client {
     // Public
     public info : BotInfo;
     public prefixes : string[];
-    public commands : string[];
+    public commands : any;
 
     public footerText : string;
     public primaryColor : string;
@@ -34,6 +36,9 @@ class SenseiClient extends Client {
     // Private
     private loginToken : string;
     private commandsDir : string;
+
+    private commandPaths : string[];
+    private possibleNames: string[];
 
     constructor() {
         super();
@@ -47,7 +52,7 @@ class SenseiClient extends Client {
             }
         }
         this.prefixes = [];
-        this.commands = [];
+        this.commands = {};
 
         this.footerText = "SenseiBot";
         this.primaryColor = "#5f5ac6";
@@ -57,6 +62,9 @@ class SenseiClient extends Client {
 
         this.loginToken = "none";
         this.commandsDir = "none";
+
+        this.commandPaths = [];
+        this.possibleNames = [];
     }
 
     // Methods
@@ -87,7 +95,7 @@ class SenseiClient extends Client {
         this.prefixes = PrefixesArray;
         return this;
     }
-    public setCommandDirectory(CommandsDirectory : string) : SenseiClient {
+    public setCommandsDirectory(CommandsDirectory : string) : SenseiClient {
         this.commandsDir = CommandsDirectory;
         return this;
     }
@@ -98,20 +106,50 @@ class SenseiClient extends Client {
         return false;
     }
 
+    private registerCommands() : void {
+        recursive(this.commandsDir, (err : Error, files : string[]) => {
+            if(err) throw(err);
+            this.commandPaths = files;
+            this.commandPaths.forEach((commandPath, index) => {
+                if(!commandPath.includes("_drafts")) {
+                    let bot = this;
+                    import(commandPath).then((command : any) => {
+                        let cmd = new command.default;
+                        cmd.names.forEach((name : string) => {
+                            if(bot.possibleNames.includes(name)) {
+                                console.log(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);
+                                process.exit();
+                            } else {
+                                bot.possibleNames.push(name);
+                            }
+                            bot.commands[name] = command.default;
+                        })
+                    }).catch(e => {
+                        console.error(e);
+                        return;
+                    })
+                }
+            })
+        })
+    }
+
     // Final Method
-    start() : void {
-        if(!this.verifyToken()) { console.error(new Error(`Login Token hasn't been set properly. Please set the "token" property in the Configuration Object or use the setToken(token : string) method.`)); return }
-        if(!(this.prefixes.length > 0)) { console.error(new Error(`Atleast one prefix is required for the bot to work. Please set the "prefixes" : string[] property in the Configuration Object or use the setPrefixes(prefixes : string[]) method.`)); return }
+    public start() : void {
+        if(!this.verifyToken()) { console.log(`Login Token hasn't been set properly. Please set the "token" property in the Configuration Object or use the setToken(token : string) method.`); process.exit(); }
+        if(!(this.prefixes.length > 0)) { console.log(`Atleast one prefix is required for the bot to work. Please set the "prefixes" : string[] property in the Configuration Object or use the setPrefixes(prefixes : string[]) method.`); process.exit(); }
+        if(this.commandsDir == "none") { console.log(`Commands Source Directory hasn't been set. Please set the "commandsDirectory" : string property in the Configuration Object or use the setCommandsDirectory(directory : string) method.`); process.exit(); }
+
+        this.registerCommands();
+        console.log(this.commands);
 
         this.on("message", (message) => {
             if(message.author.bot) return;
-
         })
 
         try { this.login(this.loginToken); }
         catch {
-            console.error(`The specified bot login token is Invalid.`);
-            return;
+            console.log(`The specified bot login token is Invalid.`);
+            process.exit();
         }
     }
 }
