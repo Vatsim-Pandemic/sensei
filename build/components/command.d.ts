@@ -18,8 +18,8 @@ declare class SenseiCommand {
     constructor();
     protected run(bot: SenseiClient, message: Discord.Message, args?: any): Promise<void>;
     protected reportError(bot: SenseiClient, message: Discord.Message, messages: string[]): void;
-    private splitArgs;
     isNum(toTest: any): boolean;
-    execute(bot: SenseiClient, message: Discord.Message, content: string): Promise<void>;
+    execute(bot: SenseiClient, message: Discord.Message, args: string[]): Promise<void>;
 }
 export { SenseiCommand };
+//# sourceMappingURL=command.d.ts.map
