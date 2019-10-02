@@ -85,7 +85,7 @@ class SenseiCommand {
                         break;
                     case "number":
                         if(this.isNum(args[index])) {
-                            argObject[this.arguments[index].name] = args[index];
+                            argObject[this.arguments[index].name] = Number(args[index]);
                         } else {
                             errors.push(`Argument must be a Number.`);
                         }
