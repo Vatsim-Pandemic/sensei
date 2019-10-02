@@ -89,6 +89,7 @@ class SenseiCommand {
                         } else {
                             errors.push(`Argument must be a Number.`);
                         }
+                        break;
                     case "user_mention":
                         if(args[index].length == 21) {
                             if(args[index].includes("<@") && args[index].includes(">")) {
