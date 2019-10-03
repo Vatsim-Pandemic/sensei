@@ -33,19 +33,18 @@ class SenseiCommand {
         }
         this.cooldown = 5;
         this.arguments = [];
-
-        if(this.duplicateArguments()) {
-            console.log(`Same name used for multiple arguments in '${this.names[0]}' command. Argument names must be distinct.`);
-            process.exit();
-        }
     }
 
     protected duplicateArguments() : boolean {
-        let arr : string[] = [];
-        this.arguments.forEach(argument => {
-            arr.push(argument.name);
-        })
-        return (new Set(arr)).size !== arr.length;
+        if(this.arguments.length > 0) {
+            let arr : string[] = [];
+            this.arguments.forEach(argument => {
+                arr.push(argument.name);
+            })
+            return (new Set(arr)).size !== arr.length;
+        } else {
+            return false;
+        }
     }
 
     protected async run(bot : SenseiClient, message : Discord.Message, args? : any) : Promise<void> {}
@@ -76,6 +75,10 @@ class SenseiCommand {
         return /^\d+$/.test(toTest);
     }
     public async execute(bot : SenseiClient, message : Discord.Message, args : string[]) : Promise<void> {
+        if(this.duplicateArguments()) {
+            console.log(`Same name used for multiple arguments in '${this.names[0]}' command. Argument names must be distinct.`);
+            process.exit();
+        }
         let argObject : any = {};
 
         let errors : string[] = [];

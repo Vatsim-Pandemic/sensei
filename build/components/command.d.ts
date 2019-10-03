@@ -5,7 +5,7 @@ interface CommandInfo {
     description: string;
     syntax: string;
 }
-interface Argument {
+interface ArgumentObject {
     name: string;
     type: string;
 }
@@ -14,8 +14,9 @@ declare class SenseiCommand {
     category: string;
     info: CommandInfo;
     protected cooldown: number;
-    protected arguments: Argument[];
+    protected arguments: ArgumentObject[];
     constructor();
+    protected duplicateArguments(): boolean;
     protected run(bot: SenseiClient, message: Discord.Message, args?: any): Promise<void>;
     protected reportError(bot: SenseiClient, message: Discord.Message, messages: string[]): void;
     isNum(toTest: any): boolean;

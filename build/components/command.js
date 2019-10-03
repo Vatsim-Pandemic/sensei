@@ -15,6 +15,17 @@ class SenseiCommand {
         };
         this.cooldown = 5;
         this.arguments = [];
+        if (this.duplicateArguments()) {
+            console.log(`Same name used for multiple arguments in '${this.names[0]}' command. Argument names must be distinct.`);
+            process.exit();
+        }
+    }
+    duplicateArguments() {
+        let arr = [];
+        this.arguments.forEach(argument => {
+            arr.push(argument.name);
+        });
+        return (new Set(arr)).size !== arr.length;
     }
     async run(bot, message, args) { }
     reportError(bot, message, messages) {
