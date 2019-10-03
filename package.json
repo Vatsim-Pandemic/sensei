@@ -8,7 +8,8 @@
     "discord.js": "^11.5.1",
     "recursive-readdir": "^2.2.2"
   },
-  "main": "build/sensei.js",
+  "main": "./build/sensei.js",
+  "typings": "./build/sensei.d.ts",
   "scripts": {
     "prepare": "npm run build",
     "build": "tsc -b"
