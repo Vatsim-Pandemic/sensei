@@ -77,96 +77,96 @@ class SenseiCommand {
     public async execute(bot : SenseiClient, message : Discord.Message, args : string[]) : Promise<void> {
         if(this.duplicateArguments()) {
             console.log(`Same name used for multiple arguments in '${this.names[0]}' command. Argument names must be distinct.`);
-            process.exit();
-        }
-        let argObject : any = {};
+        } else {
+            let argObject : any = {};
 
-        let errors : string[] = [];
-
-        if(this.arguments.length > 0 && this.arguments.length <= args.length) {
-            let index : number = 0;
-
-            // Used for Sending the Mentioned Objects as Arguments.
-            let userIndex : number = 0;
-            let userMentions : Discord.User[] = message.mentions.users.array();
-            let roleIndex : number = 0;
-            let roleMentions : Discord.Role[] = message.mentions.roles.array();
-            let channelIndex : number = 0;
-            let channelMentions : Discord.GuildChannel[] = message.mentions.channels.array();
-
-            for(let argType in this.arguments) {
-                switch(this.arguments[index].type) {
-                    case "string":
-                        argObject.push(this);
-                        break;
-                    case "number":
-                        if(this.isNum(args[index])) {
-                            argObject[this.arguments[index].name] = Number(args[index]);
-                        } else {
-                            errors.push(`Argument must be a Number.`);
-                        }
-                        break;
-                    case "user_mention":
-                        if(args[index].length == 21) {
-                            if(args[index].includes("<@") && args[index].includes(">")) {
-                                if(this.isNum(args[index].replace("<@", "").replace(">", ""))) {
-                                    argObject[this.arguments[index].name] = userMentions[userIndex];
-                                    userIndex++;
+            let errors : string[] = [];
+    
+            if(this.arguments.length > 0 && this.arguments.length <= args.length) {
+                let index : number = 0;
+    
+                // Used for Sending the Mentioned Objects as Arguments.
+                let userIndex : number = 0;
+                let userMentions : Discord.User[] = message.mentions.users.array();
+                let roleIndex : number = 0;
+                let roleMentions : Discord.Role[] = message.mentions.roles.array();
+                let channelIndex : number = 0;
+                let channelMentions : Discord.GuildChannel[] = message.mentions.channels.array();
+    
+                for(let argType in this.arguments) {
+                    switch(this.arguments[index].type) {
+                        case "string":
+                            argObject.push(this);
+                            break;
+                        case "number":
+                            if(this.isNum(args[index])) {
+                                argObject[this.arguments[index].name] = Number(args[index]);
+                            } else {
+                                errors.push(`Argument must be a Number.`);
+                            }
+                            break;
+                        case "user_mention":
+                            if(args[index].length == 21) {
+                                if(args[index].includes("<@") && args[index].includes(">")) {
+                                    if(this.isNum(args[index].replace("<@", "").replace(">", ""))) {
+                                        argObject[this.arguments[index].name] = userMentions[userIndex];
+                                        userIndex++;
+                                    }
+                                } else {
+                                    errors.push(`Argument must be a Mentioned User.`);
                                 }
                             } else {
                                 errors.push(`Argument must be a Mentioned User.`);
                             }
-                        } else {
-                            errors.push(`Argument must be a Mentioned User.`);
-                        }
-                        break;
-                    case "role_mention":
-                        if(args[index].length == 22) {
-                            if(args[index].includes("<@&") && args[index].includes(">")) {
-                                if(this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
-                                    argObject[this.arguments[index].name] = roleMentions[roleIndex];
-                                    roleIndex++;
+                            break;
+                        case "role_mention":
+                            if(args[index].length == 22) {
+                                if(args[index].includes("<@&") && args[index].includes(">")) {
+                                    if(this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
+                                        argObject[this.arguments[index].name] = roleMentions[roleIndex];
+                                        roleIndex++;
+                                    }
+                                } else {
+                                    errors.push(`Argument must be a Mentioned Role.`);
                                 }
                             } else {
                                 errors.push(`Argument must be a Mentioned Role.`);
                             }
-                        } else {
-                            errors.push(`Argument must be a Mentioned Role.`);
-                        }
-                        break;
-                    case "channel_mention":
-                        if(args[index].length == 21) {
-                            if(args[index].includes("<#") && args[index].includes(">")) {
-                                if(this.isNum(args[index].replace("<#", "").replace(">", ""))) {
-                                    argObject[this.arguments[index].name] = channelMentions[channelIndex];
-                                    channelIndex++;
-                               }
+                            break;
+                        case "channel_mention":
+                            if(args[index].length == 21) {
+                                if(args[index].includes("<#") && args[index].includes(">")) {
+                                    if(this.isNum(args[index].replace("<#", "").replace(">", ""))) {
+                                        argObject[this.arguments[index].name] = channelMentions[channelIndex];
+                                        channelIndex++;
+                                   }
+                                } else {
+                                    errors.push(`Argument must be a Mentioned Channel.`);
+                                }
                             } else {
                                 errors.push(`Argument must be a Mentioned Channel.`);
                             }
-                        } else {
-                            errors.push(`Argument must be a Mentioned Channel.`);
-                        }
-                        break;
+                            break;
+                    }
+                    index++;
                 }
-                index++;
-            }
-
-            if(errors.length == 0) {
-                bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
-                bot.sysMemory.add(message.author.id);
-                setTimeout(() => {
-                    bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
-                }, this.cooldown * 1000);
-                setTimeout(() => {
-                    bot.sysMemory.delete(message.author.id);
-                }, bot.cooldowns.systemCooldown * 1000);
-                this.run(bot, message, argObject);
+    
+                if(errors.length == 0) {
+                    bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
+                    bot.sysMemory.add(message.author.id);
+                    setTimeout(() => {
+                        bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
+                    }, this.cooldown * 1000);
+                    setTimeout(() => {
+                        bot.sysMemory.delete(message.author.id);
+                    }, bot.cooldowns.systemCooldown * 1000);
+                    this.run(bot, message, argObject);
+                } else {
+                    this.reportError(bot, message, errors);
+                }
             } else {
-                this.reportError(bot, message, errors);
-            }
-        } else {
-            this.reportError(bot, message, ["Insufficient arguments provided."]);
+                this.reportError(bot, message, ["Insufficient arguments provided."]);
+            }   
         }
     }
 }
