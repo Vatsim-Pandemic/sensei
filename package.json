@@ -10,7 +10,7 @@
   },
   "main": "build/sensei.js",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "tsc -b"
   },
   "keywords": [
