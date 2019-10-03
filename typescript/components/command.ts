@@ -7,7 +7,7 @@ interface CommandInfo {
     syntax : string,
 }
 
-interface Argument {
+interface ArgumentObject {
     name : string,
     type : string,
 }
@@ -21,7 +21,7 @@ class SenseiCommand {
     public info : CommandInfo;
 
     protected cooldown : number;
-    protected arguments : Argument[];
+    protected arguments : ArgumentObject[];
 
     constructor() {
         this.names = ["newcommand"];
@@ -33,6 +33,19 @@ class SenseiCommand {
         }
         this.cooldown = 5;
         this.arguments = [];
+
+        if(this.duplicateArguments()) {
+            console.log(`Same name used for multiple arguments in '${this.names[0]}' command. Argument names must be distinct.`);
+            process.exit();
+        }
+    }
+
+    protected duplicateArguments() : boolean {
+        let arr : string[] = [];
+        this.arguments.forEach(argument => {
+            arr.push(argument.name);
+        })
+        return (new Set(arr)).size !== arr.length;
     }
 
     protected async run(bot : SenseiClient, message : Discord.Message, args? : any) : Promise<void> {}
