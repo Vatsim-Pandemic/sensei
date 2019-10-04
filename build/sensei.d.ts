@@ -1,4 +1,5 @@
 import { SenseiClient } from "./components/client";
 import { SenseiCommand } from "./components/command";
-export { SenseiClient, SenseiCommand, };
+import { Logger } from "./components/log";
+export { SenseiClient, SenseiCommand, Logger, };
 //# sourceMappingURL=sensei.d.ts.map

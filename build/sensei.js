@@ -4,4 +4,6 @@ const client_1 = require("./components/client");
 exports.SenseiClient = client_1.SenseiClient;
 const command_1 = require("./components/command");
 exports.SenseiCommand = command_1.SenseiCommand;
+const log_1 = require("./components/log");
+exports.Logger = log_1.Logger;
 //# sourceMappingURL=sensei.js.map

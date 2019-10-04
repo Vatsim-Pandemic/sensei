@@ -12,9 +12,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const recursive_readdir_1 = __importDefault(require("recursive-readdir"));
+const sensei_1 = require("../sensei");
 class SenseiClient extends discord_js_1.Client {
     constructor() {
         super();
+        this.log = new sensei_1.Logger();
         this.info = {
             name: "SenseiBot",
             version: "1.0.0",
@@ -32,11 +34,11 @@ class SenseiClient extends discord_js_1.Client {
         };
         this.prefixes = [];
         this.commands = {};
-        this.footerText = "SenseiBot";
-        this.primaryColor = "#5f5ac6";
-        this.secondaryColor = "#8e7878";
-        this.errorColor = "#ef2e2e";
-        this.successColor = "#68c73f";
+        this.custom.footerText = "SenseiBot";
+        this.custom.primaryColor = "#5f5ac6";
+        this.custom.secondaryColor = "#8e7878";
+        this.custom.errorColor = "#ef2e2e";
+        this.custom.successColor = "#68c73f";
         this.reportErrors = false;
         this.loginToken = "none";
         this.commandsDir = "none";
@@ -50,20 +52,28 @@ class SenseiClient extends discord_js_1.Client {
         for (setting in configObject) {
             switch (setting) {
                 case "token":
-                    if (configObject.token != undefined)
+                    if (configObject.token != undefined && configObject.token != "")
                         this.loginToken = configObject.token;
+                    else {
+                        this.log.error(`Bot token wasn't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        process.exit();
+                    }
                     break;
                 case "prefixes":
                     if (configObject.prefixes != undefined && configObject.prefixes.length > 0)
                         this.prefixes = configObject.prefixes;
                     else {
-                        console.log("Prefixes array can't be empty in the configuration object.");
+                        this.log.error("Prefixes weren't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration");
                         process.exit();
                     }
                     break;
                 case "commandsDirectory":
                     if (configObject.commandsDirectory != undefined)
                         this.commandsDir = configObject.commandsDirectory;
+                    else {
+                        this.log.error("The Commands directory hasn't been setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration");
+                        process.exit();
+                    }
                     break;
                 case "reportErrors":
                     if (configObject.reportErrors != undefined)
@@ -73,33 +83,27 @@ class SenseiClient extends discord_js_1.Client {
                     if (configObject.cooldowns != undefined && configObject.cooldowns.type != undefined && configObject.cooldowns.systemCooldown != undefined)
                         this.cooldowns = configObject.cooldowns;
                     else {
-                        console.log("'cooldowns must be an object with properties 'type' = \"command\" | \"system\" and 'systemCooldown' = seconds");
+                        this.log.error(`Cooldown settings haven't been setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        process.exit();
+                    }
+                    break;
+                case "info":
+                    if (configObject.info != undefined)
+                        this.info = configObject.info;
+                    else {
+                        this.log.error(`'info' cannot be undefined. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        process.exit();
+                    }
+                    break;
+                case "custom":
+                    if (configObject.custom != undefined)
+                        this.custom = configObject.custom;
+                    else {
+                        this.log.error(`'custom' cannot be undefined. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
                         process.exit();
                     }
                     break;
             }
-        }
-        return this;
-    }
-    setToken(Token) {
-        this.loginToken = Token;
-        return this;
-    }
-    setPrefixes(PrefixesArray) {
-        this.prefixes = PrefixesArray;
-        return this;
-    }
-    setCommandsDirectory(CommandsDirectory) {
-        this.commandsDir = CommandsDirectory;
-        return this;
-    }
-    setReportErrors(ReportErrors) {
-        this.reportErrors = ReportErrors;
-        return this;
-    }
-    setCooldowns(CooldownSettings) {
-        if (CooldownSettings.systemCooldown != undefined && CooldownSettings.type != undefined) {
-            this.cooldowns = CooldownSettings;
         }
         return this;
     }
@@ -120,7 +124,7 @@ class SenseiClient extends discord_js_1.Client {
                         let cmd = new command.default;
                         cmd.names.forEach((name) => {
                             if (this.possibleNames.includes(name)) {
-                                console.log(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);
+                                this.log.error(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);
                                 process.exit();
                             }
                             else {
@@ -138,22 +142,22 @@ class SenseiClient extends discord_js_1.Client {
     // Final Method
     async start() {
         if (!this.verifyToken()) {
-            console.log(`Login Token hasn't been set properly. Please set the "token" property in the Configuration Object or use the setToken(token : string) method.`);
+            this.log.error(`Login Token hasn't been set properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
             process.exit();
         }
         if (!(this.prefixes.length > 0)) {
-            console.log(`Atleast one prefix is required for the bot to work. Please set the "prefixes" : string[] property in the Configuration Object or use the setPrefixes(prefixes : string[]) method.`);
+            this.log.error(`Atleast one prefix is required for the bot to work. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
             process.exit();
         }
         if (this.commandsDir == "none") {
-            console.log(`Commands Source Directory hasn't been set. Please set the "commandsDirectory" : string property in the Configuration Object or use the setCommandsDirectory(directory : string) method.`);
+            this.log.error(`Commands Source Directory hasn't been set. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
             process.exit();
         }
-        this.registerCommands().then(() => {
+        await this.registerCommands().then(() => {
             this.on("ready", () => {
-                console.log("(1/5) Beginning Startup Process.");
-                console.log("(2/5) Saving Configuration.");
-                console.log("(3/5) Starting Registry of System Events.");
+                this.log.progress("(Beginning Startup Process. [1/4]");
+                this.log.progress("Saving Configuration. [2/4]");
+                this.log.progress("Starting Registry of System Events. [3/4]");
                 this.on("message", (message) => {
                     let content = message.content;
                     let isCommand = false;
@@ -195,9 +199,9 @@ class SenseiClient extends discord_js_1.Client {
                                     attempt.execute(this, message, callArgs);
                                 else {
                                     let rb = new discord_js_1.RichEmbed()
-                                        .setColor(this.errorColor)
+                                        .setColor(this.custom.errorColor)
                                         .setDescription(`Please wait **${seconds} seconds** before executing this command.`)
-                                        .setFooter(this.footerText)
+                                        .setFooter(this.custom.footerText)
                                         .setTimestamp();
                                     message.channel.send(rb);
                                 }
@@ -206,9 +210,9 @@ class SenseiClient extends discord_js_1.Client {
                             else {
                                 if (this.reportErrors) {
                                     let rb = new discord_js_1.RichEmbed()
-                                        .setColor(this.errorColor)
-                                        .setDescription("Invalid Command")
-                                        .setFooter(this.footerText)
+                                        .setColor(this.custom.errorColor)
+                                        .setDescription("Invalid Command.")
+                                        .setFooter(this.custom.footerText)
                                         .setTimestamp();
                                     message.channel.send(rb);
                                 }
@@ -216,14 +220,14 @@ class SenseiClient extends discord_js_1.Client {
                         }
                     }
                 });
-                console.log("(4/5) Bot Logged In & Ready!");
-                console.log("(5/5) Watching for command events..");
+                this.log.progress("Bot Logged In & Ready! [4/4]");
+                this.log.ok("Watching for command events..");
             });
             try {
                 this.login(this.loginToken);
             }
             catch {
-                console.log(`The specified bot login token is Invalid.`);
+                this.log.error(`The specified bot login token is Invalid.`);
                 process.exit();
             }
         });

@@ -4,8 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = __importDefault(require("discord.js"));
+const sensei_1 = require("../sensei");
 class SenseiCommand {
     constructor() {
+        this.log = new sensei_1.Logger();
         this.names = ["newcommand"];
         this.category = "SomeCategory";
         this.info = {
@@ -16,6 +18,7 @@ class SenseiCommand {
         this.cooldown = 5;
         this.arguments = [];
     }
+    // Methods
     duplicateArguments() {
         if (this.arguments.length > 0) {
             let arr = [];
@@ -31,7 +34,7 @@ class SenseiCommand {
     async run(bot, message, args) { }
     reportError(bot, message, messages) {
         let rb = new discord_js_1.default.RichEmbed;
-        rb.setColor(bot.errorColor);
+        rb.setColor(bot.custom.errorColor);
         let errString = "";
         let index = 1;
         messages.forEach(message => {
@@ -41,7 +44,7 @@ class SenseiCommand {
         errString += `\n\n\`${bot.prefixes[0]}${this.info.syntax}\``;
         rb.setTitle("The following errors occured:")
             .setDescription(errString)
-            .setFooter(bot.footerText)
+            .setFooter(bot.custom.footerText)
             .setTimestamp();
         message.channel.send(rb);
         return;
@@ -51,7 +54,7 @@ class SenseiCommand {
     }
     async execute(bot, message, args) {
         if (this.duplicateArguments()) {
-            console.log(`Same name used for multiple arguments in '${this.names[0]}' command. Argument names must be distinct.`);
+            this.log.warn(`Same name used for multiple arguments in '${this.names[0]}' command. Command cannot be used in the Bot until this error has been fixed.`);
         }
         else {
             let argObject = {};
@@ -67,7 +70,7 @@ class SenseiCommand {
                 let channelMentions = message.mentions.channels.array();
                 for (let argType in this.arguments) {
                     switch (this.arguments[index].type) {
-                        case "string":
+                        case "text":
                             argObject.push(this);
                             break;
                         case "number":

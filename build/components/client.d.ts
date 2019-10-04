@@ -1,4 +1,5 @@
 import { Client } from "discord.js";
+import { Logger } from "../sensei";
 interface AuthorInfo {
     name?: string;
     username?: string;
@@ -14,12 +15,13 @@ interface CooldownSettings {
     systemCooldown: number;
 }
 interface Config {
-    token?: string;
-    prefixes?: string[];
-    reportErrors?: boolean;
-    cooldowns?: CooldownSettings;
-    commandsDirectory?: string;
+    token: string;
+    prefixes: string[];
+    reportErrors: boolean;
+    cooldowns: CooldownSettings;
+    commandsDirectory: string;
     info?: BotInfo;
+    custom?: any;
 }
 declare class SenseiClient extends Client {
     info: BotInfo;
@@ -28,23 +30,15 @@ declare class SenseiClient extends Client {
     sysMemory: any;
     cmdMemory: any;
     cooldowns: CooldownSettings;
-    footerText: string;
-    primaryColor: string;
-    secondaryColor: string;
-    errorColor: string;
-    successColor: string;
+    custom: any;
     private reportErrors;
     private loginToken;
     private commandsDir;
     private commandPaths;
     private possibleNames;
+    protected log: Logger;
     constructor();
     configure(configObject: Config): SenseiClient;
-    setToken(Token: string): SenseiClient;
-    setPrefixes(PrefixesArray: string[]): SenseiClient;
-    setCommandsDirectory(CommandsDirectory: string): SenseiClient;
-    setReportErrors(ReportErrors: boolean): SenseiClient;
-    setCooldowns(CooldownSettings: CooldownSettings): this;
     private verifyToken;
     private registerCommands;
     start(): Promise<void>;

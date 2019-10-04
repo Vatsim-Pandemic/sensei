@@ -1,1 +1,1 @@
-{"version":3,"file":"sensei.d.ts","sourceRoot":"","sources":["../typescript/sensei.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,qBAAqB,CAAC;AACnD,OAAO,EAAE,aAAa,EAAE,MAAM,sBAAsB,CAAC;AACrD,OAAO,EACH,YAAY,EACZ,aAAa,GAChB,CAAA"}
+{"version":3,"file":"sensei.d.ts","sourceRoot":"","sources":["../typescript/sensei.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,qBAAqB,CAAC;AACnD,OAAO,EAAE,aAAa,EAAE,MAAM,sBAAsB,CAAC;AACrD,OAAO,EAAE,MAAM,EAAE,MAAM,kBAAkB,CAAC;AAC1C,OAAO,EACH,YAAY,EACZ,aAAa,EACb,MAAM,GACT,CAAA"}

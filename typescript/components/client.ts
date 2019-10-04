@@ -1,5 +1,6 @@
 import { Client, RichEmbed } from "discord.js";
 import recursive from "recursive-readdir";
+import { SenseiCommand, Logger } from "../sensei";
 
 interface AuthorInfo {
     name? : string,
@@ -19,12 +20,13 @@ interface CooldownSettings {
 }
 
 interface Config {
-    token? : string,
-    prefixes? : string[],
-    reportErrors? : boolean,
-    cooldowns? : CooldownSettings,
-    commandsDirectory? : string,
+    token : string,
+    prefixes : string[],
+    reportErrors : boolean,
+    cooldowns : CooldownSettings,
+    commandsDirectory : string,
     info? : BotInfo,
+    custom? : any,
 }
 
 class SenseiClient extends Client {
@@ -36,11 +38,7 @@ class SenseiClient extends Client {
     public cmdMemory : any;
     public cooldowns : CooldownSettings;
 
-    public footerText : string;
-    public primaryColor : string;
-    public secondaryColor : string;
-    public errorColor : string;
-    public successColor: string;
+    public custom : any;
 
     // Private
     private reportErrors : boolean;
@@ -51,8 +49,11 @@ class SenseiClient extends Client {
     private commandPaths : string[];
     private possibleNames: string[];
 
+    protected log : Logger;
+
     constructor() {
         super();
+        this.log = new Logger();
         this.info = {
             name: "SenseiBot",
             version: "1.0.0",
@@ -72,11 +73,11 @@ class SenseiClient extends Client {
         this.prefixes = [];
         this.commands = {};
 
-        this.footerText = "SenseiBot";
-        this.primaryColor = "#5f5ac6";
-        this.secondaryColor = "#8e7878";
-        this.errorColor = "#ef2e2e";
-        this.successColor = "#68c73f";
+        this.custom.footerText = "SenseiBot";
+        this.custom.primaryColor = "#5f5ac6";
+        this.custom.secondaryColor = "#8e7878";
+        this.custom.errorColor = "#ef2e2e";
+        this.custom.successColor = "#68c73f";
 
         this.reportErrors = false;
 
@@ -95,17 +96,25 @@ class SenseiClient extends Client {
         for(setting in configObject) {
             switch(setting) {
                 case "token":
-                    if(configObject.token != undefined) this.loginToken = configObject.token;
+                    if(configObject.token != undefined && configObject.token != "") this.loginToken = configObject.token;
+                    else {
+                        this.log.error(`Bot token wasn't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        process.exit();
+                    }
                     break;
                 case "prefixes":
                     if(configObject.prefixes != undefined && configObject.prefixes.length > 0) this.prefixes = configObject.prefixes;
                     else {
-                        console.log("Prefixes array can't be empty in the configuration object.");
+                        this.log.error("Prefixes weren't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration");
                         process.exit();
                     }
                     break;
                 case "commandsDirectory":
                     if(configObject.commandsDirectory != undefined) this.commandsDir = configObject.commandsDirectory;
+                    else {
+                        this.log.error("The Commands directory hasn't been setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration");
+                        process.exit();
+                    }
                     break;
                 case "reportErrors":
                     if(configObject.reportErrors != undefined) this.reportErrors = configObject.reportErrors;
@@ -113,33 +122,25 @@ class SenseiClient extends Client {
                 case "cooldowns":
                     if(configObject.cooldowns != undefined && configObject.cooldowns.type != undefined && configObject.cooldowns.systemCooldown != undefined) this.cooldowns = configObject.cooldowns;
                     else {
-                        console.log("'cooldowns must be an object with properties 'type' = \"command\" | \"system\" and 'systemCooldown' = seconds");
+                        this.log.error(`Cooldown settings haven't been setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        process.exit();
+                    }
+                    break;
+                case "info":
+                    if(configObject.info != undefined) this.info = configObject.info;
+                    else {
+                        this.log.error(`'info' cannot be undefined. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        process.exit();
+                    }
+                    break;
+                case "custom":
+                    if(configObject.custom != undefined) this.custom = configObject.custom;
+                    else {
+                        this.log.error(`'custom' cannot be undefined. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
                         process.exit();
                     }
                     break;
             }
-        }
-        return this;
-    }
-    public setToken(Token : string) : SenseiClient {
-        this.loginToken = Token;
-        return this;
-    }
-    public setPrefixes(PrefixesArray : string[]) : SenseiClient { 
-        this.prefixes = PrefixesArray;
-        return this;
-    }
-    public setCommandsDirectory(CommandsDirectory : string) : SenseiClient {
-        this.commandsDir = CommandsDirectory;
-        return this;
-    }
-    public setReportErrors(ReportErrors : boolean) : SenseiClient {
-        this.reportErrors = ReportErrors;
-        return this;
-    }
-    public setCooldowns(CooldownSettings : CooldownSettings) {
-        if(CooldownSettings.systemCooldown != undefined && CooldownSettings.type != undefined) {
-            this.cooldowns = CooldownSettings;
         }
         return this;
     }
@@ -160,7 +161,7 @@ class SenseiClient extends Client {
                         let cmd = new command.default;
                         cmd.names.forEach((name : string) => {
                             if(this.possibleNames.includes(name)) {
-                                console.log(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);
+                                this.log.error(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);
                                 process.exit();
                             } else {
                                 this.possibleNames.push(name);
@@ -177,15 +178,15 @@ class SenseiClient extends Client {
 
     // Final Method
     public async start() : Promise<void> {
-        if(!this.verifyToken()) { console.log(`Login Token hasn't been set properly. Please set the "token" property in the Configuration Object or use the setToken(token : string) method.`); process.exit(); }
-        if(!(this.prefixes.length > 0)) { console.log(`Atleast one prefix is required for the bot to work. Please set the "prefixes" : string[] property in the Configuration Object or use the setPrefixes(prefixes : string[]) method.`); process.exit(); }
-        if(this.commandsDir == "none") { console.log(`Commands Source Directory hasn't been set. Please set the "commandsDirectory" : string property in the Configuration Object or use the setCommandsDirectory(directory : string) method.`); process.exit(); }
+        if(!this.verifyToken()) { this.log.error(`Login Token hasn't been set properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`); process.exit(); }
+        if(!(this.prefixes.length > 0)) { this.log.error(`Atleast one prefix is required for the bot to work. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`); process.exit(); }
+        if(this.commandsDir == "none") { this.log.error(`Commands Source Directory hasn't been set. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`); process.exit(); }
 
-        this.registerCommands().then(() => {
+        await this.registerCommands().then(() => {
             this.on("ready", () => {
-                console.log("(1/5) Beginning Startup Process.");
-                console.log("(2/5) Saving Configuration.");
-                console.log("(3/5) Starting Registry of System Events.");
+                this.log.progress("(Beginning Startup Process. [1/4]");
+                this.log.progress("Saving Configuration. [2/4]");
+                this.log.progress("Starting Registry of System Events. [3/4]");
                 this.on("message", (message) => {
                     let content = message.content;
                     let isCommand = false;
@@ -206,7 +207,7 @@ class SenseiClient extends Client {
                                 let callArgs = split.slice(1);
 
                                 let shouldRun = false;
-                                let attempt = new this.commands[cmd];
+                                let attempt : SenseiCommand = new this.commands[cmd];
                                 let seconds : number = 0;
                                 if(this.cooldowns.type == "command") {
                                     if(!this.cmdMemory.has(message.author.id + "<->" + attempt.names[0])) {
@@ -224,9 +225,9 @@ class SenseiClient extends Client {
                                 if(shouldRun) attempt.execute(this, message, callArgs);
                                 else {
                                     let rb = new RichEmbed()
-                                    .setColor(this.errorColor)
+                                    .setColor(this.custom.errorColor)
                                     .setDescription(`Please wait **${seconds} seconds** before executing this command.`)
-                                    .setFooter(this.footerText)
+                                    .setFooter(this.custom.footerText)
                                     .setTimestamp();
 
                                     message.channel.send(rb);
@@ -235,9 +236,9 @@ class SenseiClient extends Client {
                             } else {
                                 if(this.reportErrors) {
                                     let rb = new RichEmbed()
-                                    .setColor(this.errorColor)
-                                    .setDescription("Invalid Command")
-                                    .setFooter(this.footerText)
+                                    .setColor(this.custom.errorColor)
+                                    .setDescription("Invalid Command.")
+                                    .setFooter(this.custom.footerText)
                                     .setTimestamp();
 
                                     message.channel.send(rb);
@@ -246,13 +247,13 @@ class SenseiClient extends Client {
                         }
                     }
                 })
-                console.log("(4/5) Bot Logged In & Ready!");
-                console.log("(5/5) Watching for command events..");
+                this.log.progress("Bot Logged In & Ready! [4/4]");
+                this.log.ok("Watching for command events..");
             })
 
             try { this.login(this.loginToken); }
             catch {
-                console.log(`The specified bot login token is Invalid.`);
+                this.log.error(`The specified bot login token is Invalid.`);
                 process.exit();
             }
         });        

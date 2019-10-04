@@ -1,5 +1,5 @@
 import Discord from "discord.js";
-import { SenseiClient } from "./client";
+import { SenseiClient, Logger } from "../sensei";
 
 interface CommandInfo {
     name : string,
@@ -9,7 +9,7 @@ interface CommandInfo {
 
 interface ArgumentObject {
     name : string,
-    type : string,
+    type : "user_mention" | "role_mention" | "channel_mention" | "text" | "number",
 }
 
 class SenseiCommand {
@@ -19,9 +19,10 @@ class SenseiCommand {
     public names : string[];
     public category: string;
     public info : CommandInfo;
-
-    protected cooldown : number;
+    public cooldown : number;
+    
     protected arguments : ArgumentObject[];
+    protected log : Logger = new Logger();
 
     constructor() {
         this.names = ["newcommand"];
@@ -34,6 +35,8 @@ class SenseiCommand {
         this.cooldown = 5;
         this.arguments = [];
     }
+
+    // Methods
 
     protected duplicateArguments() : boolean {
         if(this.arguments.length > 0) {
@@ -51,7 +54,7 @@ class SenseiCommand {
 
     protected reportError(bot : SenseiClient, message : Discord.Message, messages : string[]) : void {
         let rb : Discord.RichEmbed = new Discord.RichEmbed;
-        rb.setColor(bot.errorColor);
+        rb.setColor(bot.custom.errorColor);
         
         let errString : string = "";
         let index = 1;
@@ -64,7 +67,7 @@ class SenseiCommand {
 
         rb.setTitle("The following errors occured:")
         .setDescription(errString)
-        .setFooter(bot.footerText)
+        .setFooter(bot.custom.footerText)
         .setTimestamp();
 
         message.channel.send(rb);
@@ -76,7 +79,7 @@ class SenseiCommand {
     }
     public async execute(bot : SenseiClient, message : Discord.Message, args : string[]) : Promise<void> {
         if(this.duplicateArguments()) {
-            console.log(`Same name used for multiple arguments in '${this.names[0]}' command. Argument names must be distinct.`);
+            this.log.warn(`Same name used for multiple arguments in '${this.names[0]}' command. Command cannot be used in the Bot until this error has been fixed.`);
         } else {
             let argObject : any = {};
 
@@ -95,7 +98,7 @@ class SenseiCommand {
     
                 for(let argType in this.arguments) {
                     switch(this.arguments[index].type) {
-                        case "string":
+                        case "text":
                             argObject.push(this);
                             break;
                         case "number":

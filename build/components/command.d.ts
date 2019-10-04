@@ -1,5 +1,5 @@
 import Discord from "discord.js";
-import { SenseiClient } from "./client";
+import { SenseiClient, Logger } from "../sensei";
 interface CommandInfo {
     name: string;
     description: string;
@@ -7,14 +7,15 @@ interface CommandInfo {
 }
 interface ArgumentObject {
     name: string;
-    type: string;
+    type: "user_mention" | "role_mention" | "channel_mention" | "text" | "number";
 }
 declare class SenseiCommand {
     names: string[];
     category: string;
     info: CommandInfo;
-    protected cooldown: number;
+    cooldown: number;
     protected arguments: ArgumentObject[];
+    protected log: Logger;
     constructor();
     protected duplicateArguments(): boolean;
     protected run(bot: SenseiClient, message: Discord.Message, args?: any): Promise<void>;
