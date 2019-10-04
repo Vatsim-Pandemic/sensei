@@ -185,7 +185,7 @@ class SenseiClient extends Client {
 
         await this.registerCommands().then(() => {
             this.on("ready", () => {
-                this.log.progress("(Beginning Startup Process. [1/4]");
+                this.log.progress("Beginning Startup Process. [1/4]");
                 this.log.progress("Saving Configuration. [2/4]");
                 this.log.progress("Starting Registry of System Events. [3/4]");
                 this.on("message", (message) => {
