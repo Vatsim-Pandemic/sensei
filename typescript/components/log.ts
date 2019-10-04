@@ -4,27 +4,27 @@ class Logger {
     // Methods;
 
     public error(message : string) : void {
-        console.log(colors.bgRed(colors.bold(`[Error]: ${message}`)));
+        console.log(colors.red(colors.bold(`[Error]: ${message}`)));
         return;
     }
 
     public warn(message : string) : void {
-        console.log(colors.bgYellow(colors.bold(`[Warning]: ${message}`)));
+        console.log(colors.yellow(colors.bold(`[Warning]: ${message}`)));
         return;
     }
 
     public info(message : string) : void {
-        console.log(colors.bgBlue(colors.bold(`[INFO]: ${message}`)));
+        console.log(colors.cyan(colors.bold(`[INFO]: ${message}`)));
         return;
     }
 
     public ok(message : string) : void {
-        console.log(colors.bgGreen(colors.bold(`[OK]: ${message}`)));
+        console.log(colors.green(colors.bold(`[OK]: ${message}`)));
         return;
     }
 
     public progress(message : string) : void {
-        console.log(colors.bgWhite(colors.bold(colors.black(`[Progress]: ${message}`))));
+        console.log(colors.blue(colors.bold(colors.black(`[Progress]: ${message}`))));
         return;
     }
 }
