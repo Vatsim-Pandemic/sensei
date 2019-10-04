@@ -124,19 +124,6 @@
           }
         }
       ],
-      "properties": [
-        {
-          "name": "config",
-          "description": "The Object that holds all Configuration Instructions.",
-          "type": [
-            [
-              [
-                "ConfigurationObject"
-              ]
-            ]
-          ]
-        }
-      ],
       "meta": {
         "line": 23,
         "file": "client.js",
@@ -150,6 +137,73 @@
         "name": "SenseiCommand",
         "description": "Creates a new SenseiCommand Object that can be used by a [SenseiClient](SenseiClient.html). All of the Properties Above need to be Defined in the Constructor of a Class that Extends this class."
       },
+      "props": [
+        {
+          "name": "names",
+          "description": "The Array of Names of the Command.",
+          "type": [
+            [
+              [
+                "Array",
+                "<"
+              ],
+              [
+                "String",
+                ">"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "category",
+          "description": "The Category this Command Belongs to.",
+          "type": [
+            [
+              [
+                "String"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "info",
+          "description": "The Name, Description and Syntax of the Command.",
+          "type": [
+            [
+              [
+                "CommandInfo"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "cooldown",
+          "description": "The Cooldown Duration of this Command (If Applicable)",
+          "type": [
+            [
+              [
+                "Number"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "arguments",
+          "description": "The Arguments that are required by this Command.",
+          "type": [
+            [
+              [
+                "Array",
+                "<"
+              ],
+              [
+                "ArgumentObject",
+                ">"
+              ]
+            ]
+          ]
+        }
+      ],
       "methods": [
         {
           "name": "run",
