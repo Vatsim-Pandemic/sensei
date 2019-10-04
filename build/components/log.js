@@ -7,23 +7,23 @@ const safe_1 = __importDefault(require("colors/safe"));
 class Logger {
     // Methods;
     error(message) {
-        console.log(safe_1.default.bgRed(safe_1.default.bold(`[Error]: ${message}`)));
+        console.log(safe_1.default.red(safe_1.default.bold(`[Error]: ${message}`)));
         return;
     }
     warn(message) {
-        console.log(safe_1.default.bgYellow(safe_1.default.bold(`[Warning]: ${message}`)));
+        console.log(safe_1.default.yellow(safe_1.default.bold(`[Warning]: ${message}`)));
         return;
     }
     info(message) {
-        console.log(safe_1.default.bgBlue(safe_1.default.bold(`[INFO]: ${message}`)));
+        console.log(safe_1.default.cyan(safe_1.default.bold(`[INFO]: ${message}`)));
         return;
     }
     ok(message) {
-        console.log(safe_1.default.bgGreen(safe_1.default.bold(`[OK]: ${message}`)));
+        console.log(safe_1.default.green(safe_1.default.bold(`[OK]: ${message}`)));
         return;
     }
     progress(message) {
-        console.log(safe_1.default.bgWhite(safe_1.default.bold(safe_1.default.black(`[Progress]: ${message}`))));
+        console.log(safe_1.default.blue(safe_1.default.bold(safe_1.default.black(`[Progress]: ${message}`))));
         return;
     }
 }
