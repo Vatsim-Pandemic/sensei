@@ -29,10 +29,6 @@ interface ArgumentObject {
  * @property {ArgumentObject[]} arguments The Arguments Required for this Command.
  */
 declare class SenseiCommand {
-    /**
-     * Array of Names of the Command.
-     * @type {string[]}
-     */
     names: string[];
     category: string;
     info: CommandInfo;

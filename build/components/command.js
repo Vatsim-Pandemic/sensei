@@ -30,14 +30,34 @@ class SenseiCommand {
      */
     constructor() {
         this.log = new sensei_1.Logger();
+        /**
+        * Array of Names of the Command.
+        * @type {string[]}
+        */
         this.names = ["newcommand"];
+        /**
+        * The Category which this Command Belongs To.
+        * @type {string}
+        */
         this.category = "SomeCategory";
+        /**
+        * Information About the Command
+        * @type {CommandInfo}
+        */
         this.info = {
             name: "New Command",
             description: "An Un-edited SenseiCommand.",
             syntax: "newcommand"
         };
+        /**
+        * The Cooldown Duration of this Command (If Applicable)
+        * @type {number}
+        */
         this.cooldown = 5;
+        /**
+         * The Array of Arguments this command requires.
+         * @type {ArgumentObject[]}
+         */
         this.arguments = [];
     }
     // Methods

@@ -37,11 +37,6 @@ class SenseiCommand {
     // Properties
     
     // Public
-
-    /**
-     * Array of Names of the Command.
-     * @type {string[]}
-     */
     public names : string[];
     public category: string;
     public info : CommandInfo;
@@ -54,14 +49,34 @@ class SenseiCommand {
      * Creates a new SenseiCommand Object that can be used by a [SenseiClient](SenseiClient.html). All of the Properties Above need to be Defined in the Constructor of a Class that Extends this class.
      */
     constructor() {
+        /**
+        * Array of Names of the Command.
+        * @type {string[]}
+        */
         this.names = ["newcommand"];
+        /**
+        * The Category which this Command Belongs To.
+        * @type {string}
+        */
         this.category = "SomeCategory";
+        /**
+        * Information About the Command
+        * @type {CommandInfo}
+        */
         this.info = {
             name: "New Command",
             description: "An Un-edited SenseiCommand.",
             syntax: "newcommand"
         }
+        /**
+        * The Cooldown Duration of this Command (If Applicable)
+        * @type {number}
+        */
         this.cooldown = 5;
+        /**
+         * The Array of Arguments this command requires.
+         * @type {ArgumentObject[]}
+         */
         this.arguments = [];
     }
 
