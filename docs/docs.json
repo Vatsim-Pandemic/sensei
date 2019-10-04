@@ -2,14 +2,14 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570215542287
+    "date": 1570215634674
   },
   "custom": {
     "general": {
       "name": "General",
       "files": {
         "welcome": {
-          "name": "welcome",
+          "name": "Welcome",
           "type": "md",
           "content": "",
           "path": "../docs/general/welcome.md"
