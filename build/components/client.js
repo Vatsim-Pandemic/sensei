@@ -56,7 +56,7 @@ class SenseiClient extends discord_js_1.Client {
                     if (configObject.token != undefined && configObject.token != "")
                         this.loginToken = configObject.token;
                     else {
-                        this.log.error(`Bot token wasn't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        this.log.error(`Bot token wasn't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
                         process.exit();
                     }
                     break;
@@ -64,7 +64,7 @@ class SenseiClient extends discord_js_1.Client {
                     if (configObject.prefixes != undefined && configObject.prefixes.length > 0)
                         this.prefixes = configObject.prefixes;
                     else {
-                        this.log.error("Prefixes weren't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration");
+                        this.log.error("Prefixes weren't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration");
                         process.exit();
                     }
                     break;
@@ -72,7 +72,7 @@ class SenseiClient extends discord_js_1.Client {
                     if (configObject.commandsDirectory != undefined)
                         this.commandsDir = configObject.commandsDirectory;
                     else {
-                        this.log.error("The Commands directory hasn't been setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration");
+                        this.log.error("The Commands directory hasn't been setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration");
                         process.exit();
                     }
                     break;
@@ -84,7 +84,7 @@ class SenseiClient extends discord_js_1.Client {
                     if (configObject.cooldowns != undefined && configObject.cooldowns.type != undefined && configObject.cooldowns.systemCooldown != undefined)
                         this.cooldowns = configObject.cooldowns;
                     else {
-                        this.log.error(`Cooldown settings haven't been setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        this.log.error(`Cooldown settings haven't been setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
                         process.exit();
                     }
                     break;
@@ -92,7 +92,7 @@ class SenseiClient extends discord_js_1.Client {
                     if (configObject.info != undefined)
                         this.info = configObject.info;
                     else {
-                        this.log.error(`'info' cannot be undefined. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        this.log.error(`'info' cannot be undefined. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
                         process.exit();
                     }
                     break;
@@ -100,7 +100,7 @@ class SenseiClient extends discord_js_1.Client {
                     if (configObject.custom != undefined)
                         this.custom = configObject.custom;
                     else {
-                        this.log.error(`'custom' cannot be undefined. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+                        this.log.error(`'custom' cannot be undefined. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
                         process.exit();
                     }
                     break;
@@ -143,15 +143,15 @@ class SenseiClient extends discord_js_1.Client {
     // Final Method
     async start() {
         if (!this.verifyToken()) {
-            this.log.error(`Login Token hasn't been set properly. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+            this.log.error(`Login Token hasn't been set properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
             process.exit();
         }
         if (!(this.prefixes.length > 0)) {
-            this.log.error(`Atleast one prefix is required for the bot to work. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+            this.log.error(`Atleast one prefix is required for the bot to work. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
             process.exit();
         }
         if (this.commandsDir == "none") {
-            this.log.error(`Commands Source Directory hasn't been set. Please see https://github.com/Demonicious/sensei/wiki/2.)-Configuration`);
+            this.log.error(`Commands Source Directory hasn't been set. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
             process.exit();
         }
         await this.registerCommands().then(() => {
