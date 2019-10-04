@@ -150,6 +150,17 @@
               ]
             ]
           ]
+        },
+        {
+          "name": "custom",
+          "description": "Used to set Custom Properties under the Bot.",
+          "type": [
+            [
+              [
+                "Object"
+              ]
+            ]
+          ]
         }
       ],
       "methods": [
