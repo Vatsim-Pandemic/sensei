@@ -1,0 +1,598 @@
+{
+  "meta": {
+    "generator": "0.9.0",
+    "format": 20,
+    "date": 1570213186530
+  },
+  "custom": {
+    "general": {
+      "name": "General",
+      "files": {
+        "Home": {
+          "name": "Home",
+          "type": "md",
+          "content": "",
+          "path": "../docs/general/Home.md"
+        },
+        "Startup": {
+          "name": "Startup",
+          "type": "md",
+          "content": "",
+          "path": "../docs/general/Startup.md"
+        },
+        "FirstCommand": {
+          "name": "First Command",
+          "type": "md",
+          "content": "",
+          "path": "../docs/general/FirstCommand.md"
+        }
+      }
+    },
+    "command snippets": {
+      "name": "Command Snippets",
+      "files": {
+        "Ping": {
+          "name": "Ping Command",
+          "type": "md",
+          "content": "",
+          "path": "../docs/command snippets/Ping.md"
+        },
+        "Hug": {
+          "name": "Hug Command.md",
+          "type": "md",
+          "content": "",
+          "path": "../docs/command snippets/Hug.md"
+        },
+        "KickUser": {
+          "name": "Kick User Command",
+          "type": "md",
+          "content": "",
+          "path": "../docs/command snippets/KickUser.md"
+        }
+      }
+    }
+  },
+  "classes": [
+    {
+      "name": "SenseiClient",
+      "description": "Extends [Client](https://discord.js.org/#/docs/main/stable/class/Client).",
+      "construct": {
+        "name": "SenseiClient",
+        "description": "Creates a new SenseiClient Object."
+      },
+      "methods": [
+        {
+          "name": "configure",
+          "description": "Configures the Bot for Usage.",
+          "params": [
+            {
+              "name": "config",
+              "description": "The Object that holds all Configuration Instructions.",
+              "type": [
+                [
+                  [
+                    "ConfigurationObject"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "SenseiClient"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 89,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "start",
+          "description": "Performs all of the Pre-Processing Tasks and Logs in the Bot.",
+          "async": true,
+          "returns": [
+            [
+              [
+                "Promise",
+                "<"
+              ],
+              [
+                "Void",
+                ">"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 186,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        }
+      ],
+      "meta": {
+        "line": 23,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "SenseiCommand",
+      "description": "Represents a Command that can be executed by [SenseiClient](SenseiClient.html).",
+      "construct": {
+        "name": "SenseiCommand",
+        "description": "Creates a new SenseiCommand Object that can be used by a [SenseiClient](SenseiClient.html). All of the Properties Above need to be Defined in the Constructor of a Class that Extends this class."
+      },
+      "methods": [
+        {
+          "name": "run",
+          "description": "The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.",
+          "examples": [
+            "// Here's how this method may be defined in a Command:\rasync run(bot, message, args) {\r     let sender = message.author.username;\r     let channel = message.channe;\r\r     channel.send(`Hello ${sender}!. How are you doing ?`);\r     return;\r}"
+          ],
+          "params": [
+            {
+              "name": "bot",
+              "description": "The SenseiClient Object.",
+              "type": [
+                [
+                  [
+                    "SenseiClient"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "message",
+              "description": "The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object",
+              "type": [
+                [
+                  [
+                    "Message"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "args",
+              "description": "The Arguments this message was sent with.",
+              "type": [
+                [
+                  [
+                    "Object"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "async": true,
+          "meta": {
+            "line": 71,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "reportError",
+          "description": "This Method is used for Error Reporting (To the Discord User)",
+          "params": [
+            {
+              "name": "bot",
+              "description": "The SenseiClient Object.",
+              "type": [
+                [
+                  [
+                    "SenseiClient"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "message",
+              "description": "The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object",
+              "type": [
+                [
+                  [
+                    "Message"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "messages",
+              "description": "An array of messages to be included in the error.",
+              "type": [
+                [
+                  [
+                    "Array",
+                    "<"
+                  ],
+                  [
+                    "String",
+                    ">"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "meta": {
+            "line": 78,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        }
+      ],
+      "meta": {
+        "line": 31,
+        "file": "command.js",
+        "path": "../build/components"
+      }
+    }
+  ],
+  "interfaces": [],
+  "typedefs": [
+    {
+      "name": "AuthorInfo",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "name",
+          "description": "The Real/Online name of the Author.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "username",
+          "description": "The Discord Username of the Author.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "email",
+          "description": "The E-Mail address of the Author.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 57,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "BotInfo",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "name",
+          "description": "The Name of the Bot.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "version",
+          "description": "The Current Version of the Bot.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "author",
+          "description": "Information about the Author.",
+          "type": [
+            [
+              [
+                "AuthorInfo"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 63,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "CooldownSettings",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "type",
+          "description": "Whether the Cooldowns should be applied per command or not.",
+          "type": [
+            [
+              [
+                "command",
+                "\""
+              ]
+            ],
+            [
+              [
+                "system",
+                "\""
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "systemCooldown",
+          "description": "If cooldowns.type is \"system\" then, this is the duration of the cooldown.",
+          "type": [
+            [
+              [
+                "number"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 69,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "ConfigurationObject",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "token",
+          "description": "The Token of the Bot used to Login",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "prefixes",
+          "description": "The Array of Prefixes the bot uses. The first item is considered the Main Prefix, others are considered alternative prefixes.",
+          "type": [
+            [
+              [
+                "Array",
+                "<"
+              ],
+              [
+                "string",
+                ">"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "reportErrors",
+          "description": "Whether even the smallest of errors should be reported to the Discord User or not.",
+          "type": [
+            [
+              [
+                "boolean"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "cooldowns",
+          "description": "Determines how cooldowns should be applied in the bot.",
+          "type": [
+            [
+              [
+                "CooldownSettings"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "commandsDirectory",
+          "description": "The Directory where the Bot should scan for Command Files.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "info",
+          "description": "Some Optional but Useful information about the bot.",
+          "type": [
+            [
+              [
+                "BotInfo"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "custom",
+          "description": "Used to Declare Custom Properties that are held in the bot object.",
+          "type": [
+            [
+              [
+                "Object"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 74,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "CommandInfo",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "name",
+          "description": "The Extensive Name of the command.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "description",
+          "description": "Short Description of the command.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "syntax",
+          "description": "The Basic Usage of the Command.",
+          "type": [
+            [
+              [
+                "syntax"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 8,
+        "file": "command.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "ArgumentObject",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "name",
+          "description": "The Name of the Argument. This is used to access this argument later in the run() method.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "type",
+          "description": "The Type of the Argument.",
+          "type": [
+            [
+              [
+                "user_mention",
+                "\""
+              ]
+            ],
+            [
+              [
+                "role_mention",
+                "\""
+              ]
+            ],
+            [
+              [
+                "channel_mention",
+                "\""
+              ]
+            ],
+            [
+              [
+                "text",
+                "\""
+              ]
+            ],
+            [
+              [
+                "number",
+                "\""
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 14,
+        "file": "command.js",
+        "path": "../build/components"
+      }
+    }
+  ],
+  "externals": []
+}
