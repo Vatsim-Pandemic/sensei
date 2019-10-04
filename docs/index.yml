@@ -6,6 +6,8 @@
   files:
     - name: Startup
       path: startup.md
+    - name: Configuration
+      path: configuration.md
     - name: First Command
       path: firstcommand.md
     - name: Directory Structure
