@@ -17,7 +17,7 @@ interface CooldownSettings {
 interface Config {
     token: string;
     prefixes: string[];
-    reportErrors: boolean;
+    reportErrors?: boolean;
     cooldowns: CooldownSettings;
     commandsDirectory: string;
     info?: BotInfo;
