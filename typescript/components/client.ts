@@ -92,7 +92,7 @@ class SenseiClient extends Client {
     // Methods
 
     // Public
-    configure(configObject : Config) : SenseiClient {
+    public configure(configObject : Config) : SenseiClient {
         let setting : string;
         for(setting in configObject) {
             switch(setting) {
