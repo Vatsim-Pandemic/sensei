@@ -2,7 +2,7 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570215911989
+    "date": 1570220563965
   },
   "custom": {
     "general": {
@@ -28,7 +28,7 @@
         "configuration": {
           "name": "Configuration",
           "type": "md",
-          "content": "",
+          "content": "### Configuration Object\r\nThe object that is passed as an Argument to the \"configure()\" method has a few properties that need to be Specified for it to work properly.\r\n\r\nThese are the properties that are required to be in this Object.\r\n#### 1.) Token\r\nThese properties are:\r\n```javascript\r\ntoken: \"the.bot.token\" // The Bot Token that is required to Login as the Bot.\r\n```\r\nThis property is the Token of the Bot that is used to Login into Discord.\r\n\r\n#### 2.) Prefixes Array\r\n```javascript\r\nprefixes: [\r\n    \"prefix1\",\r\n    \"prefix2\",\r\n    \"p!\"\r\n]\r\n```\r\nAn array of the Prefixes that the bot understands. A Bot may have atleast 1 Prefix to Work but alternative prefixes can be specified.\r\n\r\n#### 3.) Error Reporting\r\n```javascript\r\nreportErrors: true // Dictates whether All Errors should be reported to the Discord User or not.\r\n```\r\nThis property determines If even the smallest of errors should be reported to the user or not.<br>Note that If the user attempts to use a command with incorrect syntax, Those types of errors will be reported but If the user tries to execute a command that doesn't exist then those types of errors will not be reported if this is set to false.<br>\r\n\r\nThis is an optional property. Its value is set to \"false\" by default.\r\n\r\n#### 4.) Cooldown Settings\r\n```javascript\r\ncooldowns: {\r\n    type: \"command\" // Cooldowns Type. \"command\" or \"system\".\r\n    systemCooldown: 10 // Duration of the Cooldown if the type is set to \"system\"\r\n}\r\n```\r\nThis property is an object which determines how Cooldowns should work in the bot.<br>\r\n\r\nIf `cooldowns.type` is set to \"command\", Then the cooldowns will be applied on a command basis (User can execute other commands but cannot execute the same command for a certain amount of seconds).<br>\r\nIf `cooldowns.type` is set to \"system\", Then the User will not be able to execute *any* command until the cooldown duration is over.\r\n<br>\r\n\r\n`cooldowns.systemCooldown` determines the duration of the Cooldown *IF* `cooldowns.type` is set to \"system\". If the `cooldowns.type` is set to \"command\" then the Duration specified in the Command will be used instead.\r\n\r\n#### 5.) Commands Directory\r\n```javascript\r\ncommandsDirectory: path.join(__dirname, \"/commands\") // The Full Path to the Directory where Command Files are saved.\r\n```\r\nThis property is the path of the Commands Source Directory. The Commands Directory is the folder where all the command files are saved. The bot assumes that the command files are saved in this Directory and only reads from here.<br>\r\n\r\nAdditional directories may be created under the Commands directory for keeping everything organized e.g. Moderation commands under their own specific directory. You can read more about this [here](https://github.com/Demonicious/sensei/wiki/commands).\r\n\r\n#### 6.) Information\r\n```javascript\r\ninfo: {\r\n    name: \"The Name of the Bot\",\r\n    version: \"The Current Version of the Bot\",\r\n    author: {\r\n        name: \"The Real/Online Name of the Author\",\r\n        username: \"The Discord Username of the Author\",\r\n        email: \"The Support E-Mail of the Author\".\r\n    }\r\n}\r\n```\r\nThis property holds some information about the bot that may be used for Logging or providing Information to the users.<br>\r\nThe Framework doesn't use this information for anything. So this is optional but it may be useful to someone who's using this Framework.\r\n\r\n#### 7.) Setting Custom Properties\r\n```javascript\r\ncustom: {\r\n   myCustomProperty: \"The Value of my Custom Property\",\r\n}\r\n```\r\nThis is another Optional Property that can be used to set Custom Properties in the bot that can later be used later as such: ```bot.custom.myCustomProperty``` inside your code anywhere. This is useful for Declaring some useful information such as.. You may want to declare some kind of custom \"primaryColor\" property that holds color codes which you may then use inside your RichEmbeds as such ```richEmbed.setColor(bot.custom.primaryColor)```.<br>\r\n\r\nSome custom properties are pre-declared. These are:\r\n```\r\ncustom.footerText = \"SenseiBot\";\r\ncustom.primaryColor = \"#5f5ac6\";\r\ncustom.secondaryColor = \"#8e7878\";\r\ncustom.errorColor = \"#ef2e2e\";\r\ncustom.successColor = \"#68c73f\";\r\n```\r\nThese are used by the Bot for Showing Errors to the User. To edit these properties you must specify their values in the \"custom\" propertie.<br>\r\n\r\nI'd let the user think of more use cases :)\r\n\r\n#### 8.) Full Example of a \"main.js\" file.\r\n\r\n```javascript\r\nconst { SenseiClient } = require(\"sensei.djs\");\r\nconst path = require(\"path\");\r\n\r\nconst bot = new SenseiClient;\r\nbot.configure({\r\n    // The Login Token of My Bot.\r\n    token: \"BOT.TOKEN.HERE\",\r\n    // The Prefixes I want this bot to understand.\r\n    prefixes: [\r\n        \"r>\",\r\n        \"rave>\"\r\n    ],\r\n    // Whether even the smallest of errors should be reported to the User or Not.\r\n    reportErrors: true,\r\n    // How should the Cooldowns work in the bot.\r\n    cooldowns: {\r\n        type: \"command\",\r\n        systemCooldown: 10\r\n    },\r\n    // Where all my commands are stored.\r\n    commandsDirectory: path.join(__dirname, \"/commands\"),\r\n    // Some Information about the Bot (Optional Property)\r\n    info: {\r\n        name: \"RAVE\",\r\n        version: \"1.0.0\",\r\n        author: {\r\n            name: \"Mudassar Islam\",\r\n            username: \"Demonicious#9560\",\r\n            email: \"demoncious@gmail.com\",\r\n        }\r\n    },\r\n    // Some Custom Properties that I want to be held in the \"bot\" object.\r\n    custom: {\r\n        // I declared this footerText property so that I can use it in my RichEmbeds without typing out everything manually.\r\n        footerText: \"Footer Text\",\r\n    }\r\n});\r\n\r\nbot.start();\r\n```",
           "path": "../docs/basic/configuration.md"
         },
         "firstcommand": {
@@ -77,92 +77,6 @@
         "name": "SenseiClient",
         "description": "Creates a new SenseiClient Object."
       },
-      "props": [
-        {
-          "name": "log",
-          "description": "Used to Log Messages.",
-          "type": [
-            [
-              [
-                "Logger"
-              ]
-            ]
-          ]
-        },
-        {
-          "name": "info",
-          "description": "Information About the Bot.",
-          "type": [
-            [
-              [
-                "BotInfo"
-              ]
-            ]
-          ]
-        },
-        {
-          "name": "cooldowns",
-          "description": "Cooldown Settings of the Bot.",
-          "type": [
-            [
-              [
-                "CooldownSettings"
-              ]
-            ]
-          ]
-        },
-        {
-          "name": "prefixes",
-          "description": "Array of Prefixes that the Bot uses.",
-          "type": [
-            [
-              [
-                [
-                  "Array",
-                  "<"
-                ],
-                [
-                  "String",
-                  ">"
-                ]
-              ]
-            ]
-          ]
-        },
-        {
-          "name": "reportErrors",
-          "description": "Determines whether even the Smallest of Errors should be Reported or Not.",
-          "type": [
-            [
-              [
-                "Number"
-              ]
-            ]
-          ]
-        },
-        {
-          "name": "commandsDirectory",
-          "description": "The Path of the Directory where the Commands are saved.",
-          "type": [
-            [
-              [
-                "String"
-              ]
-            ]
-          ]
-        },
-        {
-          "name": "custom",
-          "description": "Used to set Custom Properties under the Bot.",
-          "type": [
-            [
-              [
-                "Object"
-              ]
-            ]
-          ]
-        }
-      ],
       "methods": [
         {
           "name": "configure",
@@ -231,19 +145,8 @@
       },
       "props": [
         {
-          "name": "log",
-          "description": "Used to Log Messages.",
-          "type": [
-            [
-              [
-                "Logger"
-              ]
-            ]
-          ]
-        },
-        {
           "name": "names",
-          "description": "The Array of Names of the Command.",
+          "description": "Array of Names of the Command.",
           "type": [
             [
               [
@@ -251,33 +154,48 @@
                 "<"
               ],
               [
-                "String",
+                "string",
                 ">"
               ]
             ]
-          ]
+          ],
+          "meta": {
+            "line": 37,
+            "file": "command.js",
+            "path": "../build/components"
+          }
         },
         {
           "name": "category",
-          "description": "The Category this Command Belongs to.",
+          "description": "The Category which this Command Belongs To.",
           "type": [
             [
               [
-                "String"
+                "string"
               ]
             ]
-          ]
+          ],
+          "meta": {
+            "line": 42,
+            "file": "command.js",
+            "path": "../build/components"
+          }
         },
         {
           "name": "info",
-          "description": "The Name, Description and Syntax of the Command.",
+          "description": "Information About the Command",
           "type": [
             [
               [
                 "CommandInfo"
               ]
             ]
-          ]
+          ],
+          "meta": {
+            "line": 47,
+            "file": "command.js",
+            "path": "../build/components"
+          }
         },
         {
           "name": "cooldown",
@@ -285,14 +203,19 @@
           "type": [
             [
               [
-                "Number"
+                "number"
               ]
             ]
-          ]
+          ],
+          "meta": {
+            "line": 56,
+            "file": "command.js",
+            "path": "../build/components"
+          }
         },
         {
           "name": "arguments",
-          "description": "The Arguments that are required by this Command.",
+          "description": "The Array of Arguments this command requires.",
           "type": [
             [
               [
@@ -304,7 +227,12 @@
                 ">"
               ]
             ]
-          ]
+          ],
+          "meta": {
+            "line": 61,
+            "file": "command.js",
+            "path": "../build/components"
+          }
         }
       ],
       "methods": [
@@ -351,7 +279,7 @@
           ],
           "async": true,
           "meta": {
-            "line": 71,
+            "line": 91,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -400,7 +328,7 @@
             }
           ],
           "meta": {
-            "line": 78,
+            "line": 98,
             "file": "command.js",
             "path": "../build/components"
           }
