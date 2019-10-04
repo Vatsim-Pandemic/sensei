@@ -124,6 +124,20 @@
           }
         }
       ],
+      "properties": [
+        {
+          "name": "asd",
+          "description": "A Property that is used to do stuff.",
+          "type": [
+            [
+              [
+                "SenseiClient"
+              ]
+            ]
+          ],
+          "default": "none"
+        }
+      ],
       "meta": {
         "line": 23,
         "file": "client.js",
