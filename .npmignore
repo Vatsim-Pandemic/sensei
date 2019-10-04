@@ -1,0 +1,5 @@
+/.vscode/*
+/docgen/*
+/docs/*
+/node_modules/*
+jsdoc.json
