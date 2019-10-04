@@ -1,6 +1,6 @@
 - name: General
   files:
-    - name: Welcome
+    - name: welcome
       path: welcome.md
 - name: Basic
   files:
