@@ -126,16 +126,15 @@
       ],
       "properties": [
         {
-          "name": "asd",
-          "description": "A Property that is used to do stuff.",
+          "name": "config",
+          "description": "The Object that holds all Configuration Instructions.",
           "type": [
             [
               [
-                "SenseiClient"
+                "ConfigurationObject"
               ]
             ]
-          ],
-          "default": "none"
+          ]
         }
       ],
       "meta": {
