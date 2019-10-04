@@ -77,6 +77,92 @@
         "name": "SenseiClient",
         "description": "Creates a new SenseiClient Object."
       },
+      "props": [
+        {
+          "name": "log",
+          "description": "Used to Log Messages.",
+          "type": [
+            [
+              [
+                "Logger"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "info",
+          "description": "Information About the Bot.",
+          "type": [
+            [
+              [
+                "BotInfo"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "cooldowns",
+          "description": "Cooldown Settings of the Bot.",
+          "type": [
+            [
+              [
+                "CooldownSettings"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "prefixes",
+          "description": "Array of Prefixes that the Bot uses.",
+          "type": [
+            [
+              [
+                [
+                  "Array",
+                  "<"
+                ],
+                [
+                  "String",
+                  ">"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "reportErrors",
+          "description": "Determines whether even the Smallest of Errors should be Reported or Not.",
+          "type": [
+            [
+              [
+                "Number"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "commandsDirectory",
+          "description": "The Path of the Directory where the Commands are saved.",
+          "type": [
+            [
+              [
+                "String"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "custom",
+          "description": "Used to set Custom Properties under the Bot.",
+          "type": [
+            [
+              [
+                "Object"
+              ]
+            ]
+          ]
+        }
+      ],
       "methods": [
         {
           "name": "configure",
@@ -145,8 +231,19 @@
       },
       "props": [
         {
+          "name": "log",
+          "description": "Used to Log Messages.",
+          "type": [
+            [
+              [
+                "Logger"
+              ]
+            ]
+          ]
+        },
+        {
           "name": "names",
-          "description": "Array of Names of the Command.",
+          "description": "The Array of Names of the Command.",
           "type": [
             [
               [
@@ -154,48 +251,33 @@
                 "<"
               ],
               [
-                "string",
+                "String",
                 ">"
               ]
             ]
-          ],
-          "meta": {
-            "line": 37,
-            "file": "command.js",
-            "path": "../build/components"
-          }
+          ]
         },
         {
           "name": "category",
-          "description": "The Category which this Command Belongs To.",
+          "description": "The Category this Command Belongs to.",
           "type": [
             [
               [
-                "string"
+                "String"
               ]
             ]
-          ],
-          "meta": {
-            "line": 42,
-            "file": "command.js",
-            "path": "../build/components"
-          }
+          ]
         },
         {
           "name": "info",
-          "description": "Information About the Command",
+          "description": "The Name, Description and Syntax of the Command.",
           "type": [
             [
               [
                 "CommandInfo"
               ]
             ]
-          ],
-          "meta": {
-            "line": 47,
-            "file": "command.js",
-            "path": "../build/components"
-          }
+          ]
         },
         {
           "name": "cooldown",
@@ -203,19 +285,14 @@
           "type": [
             [
               [
-                "number"
+                "Number"
               ]
             ]
-          ],
-          "meta": {
-            "line": 56,
-            "file": "command.js",
-            "path": "../build/components"
-          }
+          ]
         },
         {
           "name": "arguments",
-          "description": "The Array of Arguments this command requires.",
+          "description": "The Arguments that are required by this Command.",
           "type": [
             [
               [
@@ -227,12 +304,7 @@
                 ">"
               ]
             ]
-          ],
-          "meta": {
-            "line": 61,
-            "file": "command.js",
-            "path": "../build/components"
-          }
+          ]
         }
       ],
       "methods": [
@@ -279,7 +351,7 @@
           ],
           "async": true,
           "meta": {
-            "line": 91,
+            "line": 71,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -328,7 +400,7 @@
             }
           ],
           "meta": {
-            "line": 98,
+            "line": 78,
             "file": "command.js",
             "path": "../build/components"
           }
