@@ -73,6 +73,7 @@ class SenseiClient extends Client {
         this.prefixes = [];
         this.commands = {};
 
+        this.custom = {};
         this.custom.footerText = "SenseiBot";
         this.custom.primaryColor = "#5f5ac6";
         this.custom.secondaryColor = "#8e7878";
