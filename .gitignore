@@ -1,0 +1,4 @@
+/node_modules/*
+/.vscode/*
+/docgen/*
+package-lock.json

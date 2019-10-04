@@ -13,7 +13,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const recursive_readdir_1 = __importDefault(require("recursive-readdir"));
 const sensei_1 = require("../sensei");
+/**
+ * Extends [Client](https://discord.js.org/#/docs/main/stable/class/Client).
+ */
 class SenseiClient extends discord_js_1.Client {
+    /**
+     * Creates a new SenseiClient Object.
+     */
     constructor() {
         super();
         this.log = new sensei_1.Logger();
@@ -30,7 +36,7 @@ class SenseiClient extends discord_js_1.Client {
         this.cmdMemory = new Set();
         this.cooldowns = {
             type: "command",
-            systemCooldown: 5,
+            systemCooldown: 10,
         };
         this.prefixes = [];
         this.commands = {};
@@ -48,6 +54,38 @@ class SenseiClient extends discord_js_1.Client {
     }
     // Methods
     // Public
+    /**
+     * @typedef {Object} AuthorInfo
+     * @property {string} name The Real/Online name of the Author.
+     * @property {string} username The Discord Username of the Author.
+     * @property {string} email The E-Mail address of the Author.
+     */
+    /**
+     * @typedef {Object} BotInfo
+     * @property {string} name The Name of the Bot.
+     * @property {string} version The Current Version of the Bot.
+     * @property {AuthorInfo} author Information about the Author.
+     */
+    /**
+     * @typedef {Object} CooldownSettings
+     * @property {"command" | "system"} type Whether the Cooldowns should be applied per command or not.
+     * @property {number} systemCooldown If cooldowns.type is "system" then, this is the duration of the cooldown.
+     */
+    /**
+     * @typedef {Object} ConfigurationObject
+     * @property {string} token  The Token of the Bot used to Login
+     * @property {string[]} prefixes The Array of Prefixes the bot uses. The first item is considered the Main Prefix, others are considered alternative prefixes.
+     * @property {boolean} reportErrors Whether even the smallest of errors should be reported to the Discord User or not.
+     * @property {CooldownSettings} cooldowns Determines how cooldowns should be applied in the bot.
+     * @property {string} commandsDirectory The Directory where the Bot should scan for Command Files.
+     * @property {BotInfo} info Some Optional but Useful information about the bot.
+     * @property {Object} custom Used to Declare Custom Properties that are held in the bot object.
+     */
+    /**
+     * Configures the Bot for Usage.
+     * @param {ConfigurationObject} config The Object that holds all Configuration Instructions.
+     * @returns {SenseiClient}
+     */
     configure(configObject) {
         let setting;
         for (setting in configObject) {
@@ -141,6 +179,10 @@ class SenseiClient extends discord_js_1.Client {
         });
     }
     // Final Method
+    /**
+     * Performs all of the Pre-Processing Tasks and Logs in the Bot.
+     * @returns {Promise<Void>}
+     */
     async start() {
         if (!this.verifyToken()) {
             this.log.error(`Login Token hasn't been set properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);

@@ -1,0 +1,12 @@
+- name: General
+  files:
+    - name: Home
+      path: Home.md
+    - name: Startup
+      path: Startup.md
+    - name: First Command
+      path: FirstCommand.md
+- name: Examples
+  files:
+    - name: Blah
+      path: blah.js

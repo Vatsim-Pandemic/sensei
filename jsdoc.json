@@ -1,0 +1,18 @@
+{
+    "source": {
+        "include": ["./build"],
+        "includePattern": ".js$",
+        "excludePattern": "(node_modules/|docs)"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "opts": {
+        "template": "node_modules/minami",
+        "encoding": "utf8",
+        "readme": "./readme.md",
+        "destination": "docs/",
+        "recurse": true,
+        "verbose": true
+    }
+}
