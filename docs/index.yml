@@ -1,20 +1,20 @@
 - name: General
   files:
     - name: Welcome
-      path: Welcome.md
+      path: welcome.md
 - name: Basic
   files:
     - name: Startup
-      path: Startup.md
+      path: startup.md
     - name: First Command
-      path: FirstCommand.md
+      path: firstcommand.md
     - name: Directory Structure
-      path: DirectoryStructure.md
+      path: directorystructure.md
 - name: Snippets
   files:
     - name: Ping Command
-      path: Ping.md
+      path: ping.md
     - name: Hug Command.md
-      path: Hug.md
+      path: hug.md
     - name: Kick User Command
-      path: KickUser.md
+      path: kickuser.md

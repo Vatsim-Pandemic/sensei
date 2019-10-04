@@ -2,63 +2,63 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570214664634
+    "date": 1570215457461
   },
   "custom": {
     "general": {
       "name": "General",
       "files": {
-        "Welcome": {
+        "welcome": {
           "name": "Welcome",
           "type": "md",
           "content": "",
-          "path": "../docs/general/Welcome.md"
+          "path": "../docs/general/welcome.md"
         }
       }
     },
     "basic": {
       "name": "Basic",
       "files": {
-        "Startup": {
+        "startup": {
           "name": "Startup",
           "type": "md",
           "content": "",
-          "path": "../docs/basic/Startup.md"
+          "path": "../docs/basic/startup.md"
         },
-        "FirstCommand": {
+        "firstcommand": {
           "name": "First Command",
           "type": "md",
           "content": "",
-          "path": "../docs/basic/FirstCommand.md"
+          "path": "../docs/basic/firstcommand.md"
         },
-        "DirectoryStructure": {
+        "directorystructure": {
           "name": "Directory Structure",
           "type": "md",
           "content": "",
-          "path": "../docs/basic/DirectoryStructure.md"
+          "path": "../docs/basic/directorystructure.md"
         }
       }
     },
     "snippets": {
       "name": "Snippets",
       "files": {
-        "Ping": {
+        "ping": {
           "name": "Ping Command",
           "type": "md",
           "content": "",
-          "path": "../docs/snippets/Ping.md"
+          "path": "../docs/snippets/ping.md"
         },
-        "Hug": {
+        "hug": {
           "name": "Hug Command.md",
           "type": "md",
           "content": "",
-          "path": "../docs/snippets/Hug.md"
+          "path": "../docs/snippets/hug.md"
         },
-        "KickUser": {
+        "kickuser": {
           "name": "Kick User Command",
           "type": "md",
           "content": "",
-          "path": "../docs/snippets/KickUser.md"
+          "path": "../docs/snippets/kickuser.md"
         }
       }
     }
