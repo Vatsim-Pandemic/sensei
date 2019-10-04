@@ -10,7 +10,7 @@
       path: FirstCommand.md
     - name: Directory Structure
       path: DirectoryStructure.md
-- name: Command Snippets
+- name: Snippets
   files:
     - name: Ping Command
       path: Ping.md

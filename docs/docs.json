@@ -2,52 +2,63 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570213186530
+    "date": 1570214664634
   },
   "custom": {
     "general": {
       "name": "General",
       "files": {
-        "Home": {
-          "name": "Home",
+        "Welcome": {
+          "name": "Welcome",
           "type": "md",
           "content": "",
-          "path": "../docs/general/Home.md"
-        },
+          "path": "../docs/general/Welcome.md"
+        }
+      }
+    },
+    "basic": {
+      "name": "Basic",
+      "files": {
         "Startup": {
           "name": "Startup",
           "type": "md",
           "content": "",
-          "path": "../docs/general/Startup.md"
+          "path": "../docs/basic/Startup.md"
         },
         "FirstCommand": {
           "name": "First Command",
           "type": "md",
           "content": "",
-          "path": "../docs/general/FirstCommand.md"
+          "path": "../docs/basic/FirstCommand.md"
+        },
+        "DirectoryStructure": {
+          "name": "Directory Structure",
+          "type": "md",
+          "content": "",
+          "path": "../docs/basic/DirectoryStructure.md"
         }
       }
     },
-    "command snippets": {
-      "name": "Command Snippets",
+    "snippets": {
+      "name": "Snippets",
       "files": {
         "Ping": {
           "name": "Ping Command",
           "type": "md",
           "content": "",
-          "path": "../docs/command snippets/Ping.md"
+          "path": "../docs/snippets/Ping.md"
         },
         "Hug": {
           "name": "Hug Command.md",
           "type": "md",
           "content": "",
-          "path": "../docs/command snippets/Hug.md"
+          "path": "../docs/snippets/Hug.md"
         },
         "KickUser": {
           "name": "Kick User Command",
           "type": "md",
           "content": "",
-          "path": "../docs/command snippets/KickUser.md"
+          "path": "../docs/snippets/KickUser.md"
         }
       }
     }
@@ -228,6 +239,162 @@
       "meta": {
         "line": 31,
         "file": "command.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "Logger",
+      "description": "A Class used for Logging Stuff to the Console. Can be used by Anyone, although its main usage is to Log Messages from the Other Classes.",
+      "methods": [
+        {
+          "name": "error",
+          "description": "Used to log Errors to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Error Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 17,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "warn",
+          "description": "Used to log Warnings to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Warning Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 26,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "info",
+          "description": "Used to log Info Messages to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Information Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 35,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "ok",
+          "description": "Used to log Success Messages to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Success Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 44,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "progress",
+          "description": "Used to log Progress Related Messages to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Progress Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 53,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        }
+      ],
+      "meta": {
+        "line": 10,
+        "file": "log.js",
         "path": "../build/components"
       }
     }
