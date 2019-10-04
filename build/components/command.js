@@ -9,7 +9,7 @@ const sensei_1 = require("../sensei");
  * @typedef {Object} CommandInfo
  * @property {string} name The Extensive Name of the command.
  * @property {string} description Short Description of the command.
- * @property {syntax} syntax The Basic Usage of the Command.
+ * @property {string} syntax The Basic Usage of the Command.
  */
 /**
  * @typedef {Object} ArgumentObject

@@ -13,7 +13,7 @@ interface ArgumentObject {
  * @typedef {Object} CommandInfo
  * @property {string} name The Extensive Name of the command.
  * @property {string} description Short Description of the command.
- * @property {syntax} syntax The Basic Usage of the Command.
+ * @property {string} syntax The Basic Usage of the Command.
  */
 /**
  * @typedef {Object} ArgumentObject
@@ -29,6 +29,10 @@ interface ArgumentObject {
  * @property {ArgumentObject[]} arguments The Arguments Required for this Command.
  */
 declare class SenseiCommand {
+    /**
+     * Array of Names of the Command.
+     * @type {string[]}
+     */
     names: string[];
     category: string;
     info: CommandInfo;
