@@ -1,0 +1,1035 @@
+{
+  "meta": {
+    "generator": "0.9.0",
+    "format": 20,
+    "date": 1570305343432
+  },
+  "custom": {
+    "general": {
+      "name": "General",
+      "files": {
+        "welcome": {
+          "name": "Welcome",
+          "type": "md",
+          "content": "",
+          "path": "../docs/general/welcome.md"
+        }
+      }
+    },
+    "basic": {
+      "name": "Basic",
+      "files": {
+        "startup": {
+          "name": "Startup",
+          "type": "md",
+          "content": "",
+          "path": "../docs/basic/startup.md"
+        },
+        "configuration": {
+          "name": "Configuration",
+          "type": "md",
+          "content": "<<<<<<< HEAD\n### Configuration Object\nThe object that is passed as an Argument to the \"configure()\" method has a few properties that need to be Specified for it to work properly.\n\nThese are the properties that are required to be in this Object.\n#### 1.) Token\nThese properties are:\n```javascript\ntoken: \"the.bot.token\" // The Bot Token that is required to Login as the Bot.\n```\nThis property is the Token of the Bot that is used to Login into Discord.\n\n#### 2.) Prefixes Array\n```javascript\nprefixes: [\n    \"prefix1\",\n    \"prefix2\",\n    \"p!\"\n]\n```\nAn array of the Prefixes that the bot understands. A Bot may have atleast 1 Prefix to Work but alternative prefixes can be specified.\n\n#### 3.) Error Reporting\n```javascript\nreportErrors: true // Dictates whether All Errors should be reported to the Discord User or not.\n```\nThis property determines If even the smallest of errors should be reported to the user or not.<br>Note that If the user attempts to use a command with incorrect syntax, Those types of errors will be reported but If the user tries to execute a command that doesn't exist then those types of errors will not be reported if this is set to false.<br>\n\nThis is an optional property. Its value is set to \"false\" by default.\n\n#### 4.) Cooldown Settings\n```javascript\ncooldowns: {\n    type: \"command\" // Cooldowns Type. \"command\" or \"system\".\n    systemCooldown: 10 // Duration of the Cooldown if the type is set to \"system\"\n}\n```\nThis property is an object which determines how Cooldowns should work in the bot.<br>\n\nIf `cooldowns.type` is set to \"command\", Then the cooldowns will be applied on a command basis (User can execute other commands but cannot execute the same command for a certain amount of seconds).<br>\nIf `cooldowns.type` is set to \"system\", Then the User will not be able to execute *any* command until the cooldown duration is over.\n<br>\n\n`cooldowns.systemCooldown` determines the duration of the Cooldown *IF* `cooldowns.type` is set to \"system\". If the `cooldowns.type` is set to \"command\" then the Duration specified in the Command will be used instead.\n\n#### 5.) Commands Directory\n```javascript\ncommandsDirectory: path.join(__dirname, \"/commands\") // The Full Path to the Directory where Command Files are saved.\n```\nThis property is the path of the Commands Source Directory. The Commands Directory is the folder where all the command files are saved. The bot assumes that the command files are saved in this Directory and only reads from here.<br>\n\nAdditional directories may be created under the Commands directory for keeping everything organized e.g. Moderation commands under their own specific directory. You can read more about this [here](https://github.com/Demonicious/sensei/wiki/commands).\n\n#### 6.) Information\n```javascript\ninfo: {\n    name: \"The Name of the Bot\",\n    version: \"The Current Version of the Bot\",\n    author: {\n        name: \"The Real/Online Name of the Author\",\n        username: \"The Discord Username of the Author\",\n        email: \"The Support E-Mail of the Author\".\n    }\n}\n```\nThis property holds some information about the bot that may be used for Logging or providing Information to the users.<br>\nThe Framework doesn't use this information for anything. So this is optional but it may be useful to someone who's using this Framework.\n\n#### 7.) Setting Custom Properties\n```javascript\ncustom: {\n   myCustomProperty: \"The Value of my Custom Property\",\n}\n```\nThis is another Optional Property that can be used to set Custom Properties in the bot that can later be used later as such: ```bot.custom.myCustomProperty``` inside your code anywhere. This is useful for Declaring some useful information such as.. You may want to declare some kind of custom \"primaryColor\" property that holds color codes which you may then use inside your RichEmbeds as such ```richEmbed.setColor(bot.custom.primaryColor)```.<br>\n\nSome custom properties are pre-declared. These are:\n```\ncustom.footerText = \"SenseiBot\";\ncustom.primaryColor = \"#5f5ac6\";\ncustom.secondaryColor = \"#8e7878\";\ncustom.errorColor = \"#ef2e2e\";\ncustom.successColor = \"#68c73f\";\n```\nThese are used by the Bot for Showing Errors to the User. To edit these properties you must specify their values in the \"custom\" propertie.<br>\n\nI'd let the user think of more use cases :)\n\n#### 8.) Full Example of a \"main.js\" file.\n\n```javascript\nconst { SenseiClient } = require(\"sensei.djs\");\nconst path = require(\"path\");\n\nconst bot = new SenseiClient;\nbot.configure({\n    // The Login Token of My Bot.\n    token: \"BOT.TOKEN.HERE\",\n    // The Prefixes I want this bot to understand.\n    prefixes: [\n        \"r>\",\n        \"rave>\"\n    ],\n    // Whether even the smallest of errors should be reported to the User or Not.\n    reportErrors: true,\n    // How should the Cooldowns work in the bot.\n    cooldowns: {\n        type: \"command\",\n        systemCooldown: 10\n    },\n    // Where all my commands are stored.\n    commandsDirectory: path.join(__dirname, \"/commands\"),\n    // Some Information about the Bot (Optional Property)\n    info: {\n        name: \"RAVE\",\n        version: \"1.0.0\",\n        author: {\n            name: \"Mudassar Islam\",\n            username: \"Demonicious#9560\",\n            email: \"demoncious@gmail.com\",\n        }\n    },\n    // Some Custom Properties that I want to be held in the \"bot\" object.\n    custom: {\n        // I declared this footerText property so that I can use it in my RichEmbeds without typing out everything manually.\n        footerText: \"Footer Text\",\n    }\n});\n\nbot.start();\n```\n=======\n### Configuration Object\r\nThe object that is passed as an Argument to the \"configure()\" method has a few properties that need to be Specified for it to work properly.\r\n\r\nThese are the properties that are required to be in this Object.\r\n#### 1.) Token\r\nThese properties are:\r\n```javascript\r\ntoken: \"the.bot.token\" // The Bot Token that is required to Login as the Bot.\r\n```\r\nThis property is the Token of the Bot that is used to Login into Discord.\r\n\r\n#### 2.) Prefixes Array\r\n```javascript\r\nprefixes: [\r\n    \"prefix1\",\r\n    \"prefix2\",\r\n    \"p!\"\r\n]\r\n```\r\nAn array of the Prefixes that the bot understands. A Bot may have atleast 1 Prefix to Work but alternative prefixes can be specified.\r\n\r\n#### 3.) Error Reporting\r\n```javascript\r\nreportErrors: true // Dictates whether All Errors should be reported to the Discord User or not.\r\n```\r\nThis property determines If even the smallest of errors should be reported to the user or not.<br>Note that If the user attempts to use a command with incorrect syntax, Those types of errors will be reported but If the user tries to execute a command that doesn't exist then those types of errors will not be reported if this is set to false.<br>\r\n\r\nThis is an optional property. Its value is set to \"false\" by default.\r\n\r\n#### 4.) Cooldown Settings\r\n```javascript\r\ncooldowns: {\r\n    type: \"command\" // Cooldowns Type. \"command\" or \"system\".\r\n    systemCooldown: 10 // Duration of the Cooldown if the type is set to \"system\"\r\n}\r\n```\r\nThis property is an object which determines how Cooldowns should work in the bot.<br>\r\n\r\nIf `cooldowns.type` is set to \"command\", Then the cooldowns will be applied on a command basis (User can execute other commands but cannot execute the same command for a certain amount of seconds).<br>\r\nIf `cooldowns.type` is set to \"system\", Then the User will not be able to execute *any* command until the cooldown duration is over.\r\n<br>\r\n\r\n`cooldowns.systemCooldown` determines the duration of the Cooldown *IF* `cooldowns.type` is set to \"system\". If the `cooldowns.type` is set to \"command\" then the Duration specified in the Command will be used instead.\r\n\r\n#### 5.) Commands Directory\r\n```javascript\r\ncommandsDirectory: path.join(__dirname, \"/commands\") // The Full Path to the Directory where Command Files are saved.\r\n```\r\nThis property is the path of the Commands Source Directory. The Commands Directory is the folder where all the command files are saved. The bot assumes that the command files are saved in this Directory and only reads from here.<br>\r\n\r\nAdditional directories may be created under the Commands directory for keeping everything organized e.g. Moderation commands under their own specific directory. You can read more about this [here](https://github.com/Demonicious/sensei/wiki/commands).\r\n\r\n#### 6.) Information\r\n```javascript\r\ninfo: {\r\n    name: \"The Name of the Bot\",\r\n    version: \"The Current Version of the Bot\",\r\n    author: {\r\n        name: \"The Real/Online Name of the Author\",\r\n        username: \"The Discord Username of the Author\",\r\n        email: \"The Support E-Mail of the Author\".\r\n    }\r\n}\r\n```\r\nThis property holds some information about the bot that may be used for Logging or providing Information to the users.<br>\r\nThe Framework doesn't use this information for anything. So this is optional but it may be useful to someone who's using this Framework.\r\n\r\n#### 7.) Setting Custom Properties\r\n```javascript\r\ncustom: {\r\n   myCustomProperty: \"The Value of my Custom Property\",\r\n}\r\n```\r\nThis is another Optional Property that can be used to set Custom Properties in the bot that can later be used later as such: ```bot.custom.myCustomProperty``` inside your code anywhere. This is useful for Declaring some useful information such as.. You may want to declare some kind of custom \"primaryColor\" property that holds color codes which you may then use inside your RichEmbeds as such ```richEmbed.setColor(bot.custom.primaryColor)```.<br>\r\n\r\nSome custom properties are pre-declared. These are:\r\n```\r\ncustom.footerText = \"SenseiBot\";\r\ncustom.primaryColor = \"#5f5ac6\";\r\ncustom.secondaryColor = \"#8e7878\";\r\ncustom.errorColor = \"#ef2e2e\";\r\ncustom.successColor = \"#68c73f\";\r\n```\r\nThese are used by the Bot for Showing Errors to the User. To edit these properties you must specify their values in the \"custom\" propertie.<br>\r\n\r\nI'd let the user think of more use cases :)\r\n\r\n#### 8.) Full Example of a \"main.js\" file.\r\n\r\n```javascript\r\nconst { SenseiClient } = require(\"sensei.djs\");\r\nconst path = require(\"path\");\r\n\r\nconst bot = new SenseiClient;\r\nbot.configure({\r\n    // The Login Token of My Bot.\r\n    token: \"BOT.TOKEN.HERE\",\r\n    // The Prefixes I want this bot to understand.\r\n    prefixes: [\r\n        \"r>\",\r\n        \"rave>\"\r\n    ],\r\n    // Whether even the smallest of errors should be reported to the User or Not.\r\n    reportErrors: true,\r\n    // How should the Cooldowns work in the bot.\r\n    cooldowns: {\r\n        type: \"command\",\r\n        systemCooldown: 10\r\n    },\r\n    // Where all my commands are stored.\r\n    commandsDirectory: path.join(__dirname, \"/commands\"),\r\n    // Some Information about the Bot (Optional Property)\r\n    info: {\r\n        name: \"RAVE\",\r\n        version: \"1.0.0\",\r\n        author: {\r\n            name: \"Mudassar Islam\",\r\n            username: \"Demonicious#9560\",\r\n            email: \"demoncious@gmail.com\",\r\n        }\r\n    },\r\n    // Some Custom Properties that I want to be held in the \"bot\" object.\r\n    custom: {\r\n        // I declared this footerText property so that I can use it in my RichEmbeds without typing out everything manually.\r\n        footerText: \"Footer Text\",\r\n    }\r\n});\r\n\r\nbot.start();\r\n```\r\n>>>>>>> a4c2ffe1800aea07f805211787c40770b7d4bd32\n",
+          "path": "../docs/basic/configuration.md"
+        },
+        "firstcommand": {
+          "name": "First Command",
+          "type": "md",
+          "content": "",
+          "path": "../docs/basic/firstcommand.md"
+        },
+        "directorystructure": {
+          "name": "Directory Structure",
+          "type": "md",
+          "content": "",
+          "path": "../docs/basic/directorystructure.md"
+        }
+      }
+    },
+    "snippets": {
+      "name": "Snippets",
+      "files": {
+        "ping": {
+          "name": "Ping Command",
+          "type": "md",
+          "content": "",
+          "path": "../docs/snippets/ping.md"
+        },
+        "hug": {
+          "name": "Hug Command.md",
+          "type": "md",
+          "content": "",
+          "path": "../docs/snippets/hug.md"
+        },
+        "kickuser": {
+          "name": "Kick User Command",
+          "type": "md",
+          "content": "",
+          "path": "../docs/snippets/kickuser.md"
+        }
+      }
+    }
+  },
+  "classes": [
+    {
+      "name": "SenseiClient",
+      "description": "Extends [Client](https://discord.js.org/#/docs/main/stable/class/Client).",
+      "construct": {
+        "name": "SenseiClient",
+        "description": "Creates a new SenseiClient Object.",
+        "params": [
+          {
+            "name": "configObject",
+            "description": "An Object containing all of the Configuration Instructions.",
+            "type": [
+              [
+                [
+                  "Config"
+                ]
+              ]
+            ]
+          }
+        ]
+      },
+      "props": [
+        {
+          "name": "info",
+          "description": "Stores the Name, Version, and Author Information of the Bot.",
+          "type": [
+            [
+              [
+                "BotInfo"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 30,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "prefixes",
+          "description": "Array of prefixes that the Bot Uses. A Bot may have atleast 1 Prefix to work.",
+          "type": [
+            [
+              [
+                "Array",
+                "<"
+              ],
+              [
+                "string",
+                ">"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 43,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "commands",
+          "description": "An Object that holds all of the Registered Commands.",
+          "type": [
+            [
+              [
+                "Object"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 48,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "cooldowns",
+          "description": "The Cooldown Settings of the Bot. Determines how cooldowns should be applied.",
+          "type": [
+            [
+              [
+                "CooldownSettings"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 55,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "custom",
+          "description": "An object that allows you to declare custom properties under the Bot. Some custom.properties are pre-declared in this object.",
+          "type": [
+            [
+              [
+                "Object"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 63,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "reportErrors",
+          "description": "Determines whether insignificant errors should be reported to the user or not. Major errors are reported regardless.",
+          "access": "private",
+          "type": [
+            [
+              [
+                "Boolean"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 70,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "logMessages",
+          "description": "Determines whether the Bot should Log information messages to the Console. Errors and Warnings are logged regardless.",
+          "type": [
+            [
+              [
+                "Boolean"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 75,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "commandsDir",
+          "description": "The path of the directory where the commands are saved.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 80,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "log",
+          "description": "An Object that is used for Logging messages to the console",
+          "type": [
+            [
+              [
+                "Logger"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 87,
+            "file": "client.js",
+            "path": "../build/components"
+          }
+        }
+      ],
+      "meta": {
+        "line": 23,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "SenseiCommand",
+      "description": "Represents a Command that can be executed by [SenseiClient](SenseiClient.html).",
+      "props": [
+        {
+          "name": "names",
+          "description": "Array of Names of the Command.",
+          "type": [
+            [
+              [
+                "Array",
+                "<"
+              ],
+              [
+                "string",
+                ">"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 31,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "category",
+          "description": "The Category which this Command Belongs To.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 36,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "info",
+          "description": "Information About the Command",
+          "type": [
+            [
+              [
+                "CommandInfo"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 41,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "cooldown",
+          "description": "The Cooldown Duration of this Command (If Applicable)",
+          "type": [
+            [
+              [
+                "number"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 50,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "arguments",
+          "description": "The Array of Arguments this command requires.",
+          "type": [
+            [
+              [
+                "Array",
+                "<"
+              ],
+              [
+                "ArgumentObject",
+                ">"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 55,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "log",
+          "description": "An Object of type Logger that is used to Log messages to the console.",
+          "type": [
+            [
+              [
+                "Logger"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 60,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "permissions",
+          "description": "The Permissions required to execute this command. By default no permission checks are applied.",
+          "type": [
+            [
+              [
+                "Array",
+                "<"
+              ],
+              [
+                "PermissionResolvable",
+                ">"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 65,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "run",
+          "description": "The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.",
+          "examples": [
+            "// Here's how this method may be defined in a Command:\rasync run(bot, message, args) {\r     let sender = message.author.username;\r     let channel = message.channe;\r\r     channel.send(`Hello ${sender}!. How are you doing ?`);\r     return;\r}"
+          ],
+          "params": [
+            {
+              "name": "bot",
+              "description": "The SenseiClient Object.",
+              "type": [
+                [
+                  [
+                    "SenseiClient"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "message",
+              "description": "The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object",
+              "type": [
+                [
+                  [
+                    "Message"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "args",
+              "description": "The Arguments this message was sent with.",
+              "type": [
+                [
+                  [
+                    "Object"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "async": true,
+          "meta": {
+            "line": 95,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "reportError",
+          "description": "This Method is used for Error Reporting (To the Discord User)",
+          "params": [
+            {
+              "name": "bot",
+              "description": "The SenseiClient Object.",
+              "type": [
+                [
+                  [
+                    "SenseiClient"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "message",
+              "description": "The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object",
+              "type": [
+                [
+                  [
+                    "Message"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "messages",
+              "description": "An array of messages to be included in the error.",
+              "type": [
+                [
+                  [
+                    "Array",
+                    "<"
+                  ],
+                  [
+                    "String",
+                    ">"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "meta": {
+            "line": 102,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "verifyPermissions",
+          "description": "This Method is used to check if the User has the necessary permissions required to Execute this command.",
+          "access": "private",
+          "params": [
+            {
+              "name": "member",
+              "description": "The [GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to Check.",
+              "type": [
+                [
+                  [
+                    "DiscordGuildMember"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Boolean"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 128,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        }
+      ],
+      "meta": {
+        "line": 24,
+        "file": "command.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "Logger",
+      "description": "A Class used for Logging Stuff to the Console. Can be used by Anyone, although its main usage is to Log Messages from the Other Classes.",
+      "methods": [
+        {
+          "name": "error",
+          "description": "Used to log Errors to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Error Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 16,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "warn",
+          "description": "Used to log Warnings to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Warning Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 25,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "info",
+          "description": "Used to log Info Messages to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Information Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 34,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "ok",
+          "description": "Used to log Success Messages to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Success Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 43,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "progress",
+          "description": "Used to log Progress Related Messages to the console.",
+          "params": [
+            {
+              "name": "message",
+              "description": "The Progress Message to Log.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "returns": [
+            [
+              [
+                "Void"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 52,
+            "file": "log.js",
+            "path": "../build/components"
+          }
+        }
+      ],
+      "meta": {
+        "line": 9,
+        "file": "log.js",
+        "path": "../build/components"
+      }
+    }
+  ],
+  "interfaces": [],
+  "typedefs": [
+    {
+      "name": "AuthorInfo",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "name",
+          "description": "The Real/Online name of the Author.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "username",
+          "description": "The Discord Username of the Author.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "email",
+          "description": "The E-Mail address of the Author.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 243,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "BotInfo",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "name",
+          "description": "The Name of the Bot.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "version",
+          "description": "The Current Version of the Bot.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "author",
+          "description": "Information about the Author.",
+          "type": [
+            [
+              [
+                "AuthorInfo"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 249,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "CooldownSettings",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "type",
+          "description": "Whether the Cooldowns should be applied per command or not.",
+          "type": [
+            [
+              [
+                "command",
+                "\""
+              ]
+            ],
+            [
+              [
+                "system",
+                "\""
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "systemCooldown",
+          "description": "If cooldowns.type is \"system\" then, this is the duration of the cooldown.",
+          "type": [
+            [
+              [
+                "number"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 255,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "Config",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "prefixes",
+          "description": "The Array of Prefixes the bot uses. The first item is considered the Main Prefix, others are considered alternative prefixes.",
+          "type": [
+            [
+              [
+                "Array",
+                "<"
+              ],
+              [
+                "string",
+                ">"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "commandsDirectory",
+          "description": "The Directory where the Bot should scan for Command Files.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "logMessages",
+          "description": "Whether the Bot should Log Information Messages to the Console or not.",
+          "type": [
+            [
+              [
+                "boolean"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "reportErrors",
+          "description": "Whether even the smallest of errors should be reported to the Discord User or not.",
+          "type": [
+            [
+              [
+                "boolean"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "cooldowns",
+          "description": "Determines how cooldowns should be applied in the bot.",
+          "type": [
+            [
+              [
+                "CooldownSettings"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "info",
+          "description": "Some Optional but Useful information about the bot.",
+          "type": [
+            [
+              [
+                "BotInfo"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "custom",
+          "description": "Used to Declare Custom Properties that are held in the bot object.",
+          "type": [
+            [
+              [
+                "Object"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 260,
+        "file": "client.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "CommandInfo",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "name",
+          "description": "The Extensive Name of the command.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "description",
+          "description": "Short Description of the command.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "syntax",
+          "description": "The Basic Usage of the Command.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 7,
+        "file": "command.js",
+        "path": "../build/components"
+      }
+    },
+    {
+      "name": "ArgumentObject",
+      "type": [
+        [
+          [
+            "Object"
+          ]
+        ]
+      ],
+      "props": [
+        {
+          "name": "name",
+          "description": "The Name of the Argument. This is used to access this argument later in the run() method.",
+          "type": [
+            [
+              [
+                "string"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "type",
+          "description": "The Type of the Argument.",
+          "type": [
+            [
+              [
+                "ArgumentTypeResolvable"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "optional",
+          "description": "Whether the Argument is Optional or not.",
+          "type": [
+            [
+              [
+                "boolean"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "default",
+          "description": "The Default value (if set) of this Argument (Only Applicable if Argument is Optional)",
+          "type": [
+            [
+              [
+                "ArgumentDefaultResolvable"
+              ]
+            ]
+          ]
+        }
+      ],
+      "meta": {
+        "line": 13,
+        "file": "command.js",
+        "path": "../build/components"
+      }
+    }
+  ],
+  "externals": []
+}
