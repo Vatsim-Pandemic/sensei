@@ -8,11 +8,6 @@ interface CommandInfo {
     syntax : string,
 }
 
-/**
- * @typedef {"USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"} ArgumentTypeResolvable
- * @typedef {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number} ArgumentDefaultResolvable
- */
-
 type ArgumentTypeResolvable = "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number";
 type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number;
 
@@ -33,9 +28,9 @@ interface ArgumentObject {
 /**
  * @typedef {Object} ArgumentObject
  * @property {string} name The Name of the Argument. This is used to access this argument later in the run() method.
- * @property {ArgumentTypeResolvable} type The Type of the Argument.
+ * @property {"USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"} type The Type of the Argument.
  * @property {boolean} optional Whether the Argument is Optional or not.
- * @property {ArgumentDefaultResolvable} default The Default value (if set) of this Argument (Only Applicable if Argument is Optional)
+ * @property {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number} default The Default value (if set) of this Argument (Only Applicable if Argument is Optional)
  */
 
 /**
