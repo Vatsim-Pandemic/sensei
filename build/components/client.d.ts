@@ -15,35 +15,73 @@ interface CooldownSettings {
     systemCooldown: number;
 }
 interface Config {
-    token: string;
     prefixes: string[];
+    commandsDirectory: string;
+    logMessages?: boolean;
     reportErrors?: boolean;
     cooldowns?: CooldownSettings;
-    commandsDirectory: string;
     info?: BotInfo;
     custom?: any;
 }
 /**
  * Extends [Client](https://discord.js.org/#/docs/main/stable/class/Client).
+ * @param {Config} configObject An Object containing all of the Configuration Instructions.
  */
 declare class SenseiClient extends Client {
+    /**
+     * Stores the Name, Version, and Author Information of the Bot.
+     * @type {BotInfo}
+     */
     info: BotInfo;
+    /**
+     * Array of prefixes that the Bot Uses. A Bot may have atleast 1 Prefix to work.
+     * @type {string[]}
+     */
     prefixes: string[];
+    /**
+     * An Object that holds all of the Registered Commands.
+     * @type {Object}
+     */
     commands: any;
     sysMemory: any;
     cmdMemory: any;
+    /**
+     * The Cooldown Settings of the Bot. Determines how cooldowns should be applied.
+     * @type {CooldownSettings}
+     */
     cooldowns: CooldownSettings;
+    /**
+     * An object that allows you to declare custom properties under the Bot. Some custom.properties are pre-declared in this object.
+     * @type {Object}
+     */
     custom: any;
+    /**
+     * Determines whether insignificant errors should be reported to the user or not. Major errors are reported regardless.
+     * @type {Boolean}
+     * @private
+     */
     private reportErrors;
-    private loginToken;
+    /**
+     * Determines whether the Bot should Log information messages to the Console. Errors and Warnings are logged regardless.
+     * @type {Boolean}
+     */
+    private logMessages;
+    /**
+     * The path of the directory where the commands are saved.
+     * @type {string}
+     */
     private commandsDir;
     private commandPaths;
     private possibleNames;
+    /**
+     * An Object that is used for Logging messages to the console
+     * @type {Logger}
+     */
     protected log: Logger;
     /**
      * Creates a new SenseiClient Object.
      */
-    constructor();
+    constructor(configObject: Config);
     /**
      * @typedef {Object} AuthorInfo
      * @property {string} name The Real/Online name of the Author.
@@ -62,28 +100,16 @@ declare class SenseiClient extends Client {
      * @property {number} systemCooldown If cooldowns.type is "system" then, this is the duration of the cooldown.
      */
     /**
-     * @typedef {Object} ConfigurationObject
-     * @property {string} token  The Token of the Bot used to Login
+     * @typedef {Object} Config
      * @property {string[]} prefixes The Array of Prefixes the bot uses. The first item is considered the Main Prefix, others are considered alternative prefixes.
+     * @property {string} commandsDirectory The Directory where the Bot should scan for Command Files.
+     * @property {boolean} logMessages Whether the Bot should Log Information Messages to the Console or not.
      * @property {boolean} reportErrors Whether even the smallest of errors should be reported to the Discord User or not.
      * @property {CooldownSettings} cooldowns Determines how cooldowns should be applied in the bot.
-     * @property {string} commandsDirectory The Directory where the Bot should scan for Command Files.
      * @property {BotInfo} info Some Optional but Useful information about the bot.
      * @property {Object} custom Used to Declare Custom Properties that are held in the bot object.
      */
-    /**
-     * Configures the Bot for Usage.
-     * @param {ConfigurationObject} config The Object that holds all Configuration Instructions.
-     * @returns {SenseiClient}
-     */
-    configure(configObject: Config): SenseiClient;
-    private verifyToken;
     private registerCommands;
-    /**
-     * Performs all of the Pre-Processing Tasks and Logs in the Bot.
-     * @returns {Promise<Void>}
-     */
-    start(): Promise<void>;
 }
-export { SenseiClient };
+export = SenseiClient;
 //# sourceMappingURL=client.d.ts.map

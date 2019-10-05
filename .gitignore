@@ -1,4 +1,6 @@
 /node_modules/*
 /.vscode/*
 /docgen/*
+/test/*
+/.alm/*
 package-lock.json

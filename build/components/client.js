@@ -9,20 +9,24 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const recursive_readdir_1 = __importDefault(require("recursive-readdir"));
 const sensei_1 = require("../sensei");
 /**
  * Extends [Client](https://discord.js.org/#/docs/main/stable/class/Client).
+ * @param {Config} configObject An Object containing all of the Configuration Instructions.
  */
 class SenseiClient extends discord_js_1.Client {
     /**
      * Creates a new SenseiClient Object.
      */
-    constructor() {
+    constructor(configObject) {
         super();
-        this.log = new sensei_1.Logger();
+        // Public
+        /**
+         * Stores the Name, Version, and Author Information of the Bot.
+         * @type {BotInfo}
+         */
         this.info = {
             name: "SenseiBot",
             version: "1.0.0",
@@ -32,72 +36,71 @@ class SenseiClient extends discord_js_1.Client {
                 email: "demoncious@gmail.com"
             }
         };
+        /**
+         * Array of prefixes that the Bot Uses. A Bot may have atleast 1 Prefix to work.
+         * @type {string[]}
+         */
+        this.prefixes = ["s!"];
+        /**
+         * An Object that holds all of the Registered Commands.
+         * @type {Object}
+         */
+        this.commands = {};
         this.sysMemory = new Set();
         this.cmdMemory = new Set();
+        /**
+         * The Cooldown Settings of the Bot. Determines how cooldowns should be applied.
+         * @type {CooldownSettings}
+         */
         this.cooldowns = {
             type: "command",
             systemCooldown: 10,
         };
-        this.prefixes = [];
-        this.commands = {};
+        /**
+         * An object that allows you to declare custom properties under the Bot. Some custom.properties are pre-declared in this object.
+         * @type {Object}
+         */
         this.custom = {};
+        // Private
+        /**
+         * Determines whether insignificant errors should be reported to the user or not. Major errors are reported regardless.
+         * @type {Boolean}
+         * @private
+         */
+        this.reportErrors = false;
+        /**
+         * Determines whether the Bot should Log information messages to the Console. Errors and Warnings are logged regardless.
+         * @type {Boolean}
+         */
+        this.logMessages = false;
+        /**
+         * The path of the directory where the commands are saved.
+         * @type {string}
+         */
+        this.commandsDir = "";
+        this.commandPaths = [];
+        this.possibleNames = [];
+        /**
+         * An Object that is used for Logging messages to the console
+         * @type {Logger}
+         */
+        this.log = new sensei_1.Logger();
         this.custom.footerText = "SenseiBot";
         this.custom.primaryColor = "#5f5ac6";
         this.custom.secondaryColor = "#8e7878";
         this.custom.errorColor = "#ef2e2e";
         this.custom.successColor = "#68c73f";
-        this.reportErrors = false;
-        this.loginToken = "none";
-        this.commandsDir = "none";
-        this.commandPaths = [];
-        this.possibleNames = [];
-    }
-    // Methods
-    // Public
-    /**
-     * @typedef {Object} AuthorInfo
-     * @property {string} name The Real/Online name of the Author.
-     * @property {string} username The Discord Username of the Author.
-     * @property {string} email The E-Mail address of the Author.
-     */
-    /**
-     * @typedef {Object} BotInfo
-     * @property {string} name The Name of the Bot.
-     * @property {string} version The Current Version of the Bot.
-     * @property {AuthorInfo} author Information about the Author.
-     */
-    /**
-     * @typedef {Object} CooldownSettings
-     * @property {"command" | "system"} type Whether the Cooldowns should be applied per command or not.
-     * @property {number} systemCooldown If cooldowns.type is "system" then, this is the duration of the cooldown.
-     */
-    /**
-     * @typedef {Object} ConfigurationObject
-     * @property {string} token  The Token of the Bot used to Login
-     * @property {string[]} prefixes The Array of Prefixes the bot uses. The first item is considered the Main Prefix, others are considered alternative prefixes.
-     * @property {boolean} reportErrors Whether even the smallest of errors should be reported to the Discord User or not.
-     * @property {CooldownSettings} cooldowns Determines how cooldowns should be applied in the bot.
-     * @property {string} commandsDirectory The Directory where the Bot should scan for Command Files.
-     * @property {BotInfo} info Some Optional but Useful information about the bot.
-     * @property {Object} custom Used to Declare Custom Properties that are held in the bot object.
-     */
-    /**
-     * Configures the Bot for Usage.
-     * @param {ConfigurationObject} config The Object that holds all Configuration Instructions.
-     * @returns {SenseiClient}
-     */
-    configure(configObject) {
         let setting;
         for (setting in configObject) {
             switch (setting) {
-                case "token":
-                    if (configObject.token != undefined && configObject.token != "")
-                        this.loginToken = configObject.token;
+                /* case "token":
+                    if(configObject.token != undefined && configObject.token != "") this.loginToken = configObject.token;
                     else {
                         this.log.error(`Bot token wasn't setup properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
                         process.exit();
                     }
                     break;
+                */
                 case "prefixes":
                     if (configObject.prefixes != undefined && configObject.prefixes.length > 0)
                         this.prefixes = configObject.prefixes;
@@ -117,6 +120,10 @@ class SenseiClient extends discord_js_1.Client {
                 case "reportErrors":
                     if (configObject.reportErrors != undefined)
                         this.reportErrors = configObject.reportErrors;
+                    break;
+                case "logMessages":
+                    if (configObject.logMessages != undefined)
+                        this.logMessages = configObject.logMessages;
                     break;
                 case "cooldowns":
                     if (configObject.cooldowns != undefined && configObject.cooldowns.type != undefined && configObject.cooldowns.systemCooldown != undefined)
@@ -144,50 +151,7 @@ class SenseiClient extends discord_js_1.Client {
                     break;
             }
         }
-        return this;
-    }
-    // Private
-    verifyToken() {
-        if (this.loginToken != "none")
-            return true;
-        return false;
-    }
-    async registerCommands() {
-        return await recursive_readdir_1.default(this.commandsDir, (err, files) => {
-            if (err)
-                throw (err);
-            this.commandPaths = files;
-            this.commandPaths.forEach((commandPath, index) => {
-                if (!commandPath.includes("_drafts")) {
-                    Promise.resolve().then(() => __importStar(require(commandPath))).then((command) => {
-                        let cmd = new command.default;
-                        cmd.names.forEach((name) => {
-                            if (this.possibleNames.includes(name)) {
-                                this.log.error(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);
-                                process.exit();
-                            }
-                            else {
-                                this.possibleNames.push(name);
-                            }
-                            this.commands[name] = command.default;
-                        });
-                    }).catch(e => {
-                        console.error(e);
-                    });
-                }
-            });
-        });
-    }
-    // Final Method
-    /**
-     * Performs all of the Pre-Processing Tasks and Logs in the Bot.
-     * @returns {Promise<Void>}
-     */
-    async start() {
-        if (!this.verifyToken()) {
-            this.log.error(`Login Token hasn't been set properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
-            process.exit();
-        }
+        // if(!this.verifyToken()) { this.log.error(`Login Token hasn't been set properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`); process.exit(); }
         if (!(this.prefixes.length > 0)) {
             this.log.error(`Atleast one prefix is required for the bot to work. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
             process.exit();
@@ -196,7 +160,7 @@ class SenseiClient extends discord_js_1.Client {
             this.log.error(`Commands Source Directory hasn't been set. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`);
             process.exit();
         }
-        await this.registerCommands().then(() => {
+        this.registerCommands().then(() => {
             this.on("ready", () => {
                 this.log.progress("Beginning Startup Process. [1/4]");
                 this.log.progress("Saving Configuration. [2/4]");
@@ -206,12 +170,13 @@ class SenseiClient extends discord_js_1.Client {
                     let isCommand = false;
                     this.prefixes.map((prefix) => {
                         // Check if a message starts with a prefix.
-                        if (content.startsWith(prefix)) {
+                        if (content.toLowerCase().startsWith(prefix)) {
                             content = content.replace(prefix, "");
+                            content = content.trim();
                             isCommand = true;
                         }
                     });
-                    if (isCommand && content.trim() != "") {
+                    if (isCommand && content != "") {
                         let commandKeys = Object.keys(this.commands);
                         // Determine Which command it is.
                         let split = content.split(/\s+/g);
@@ -238,8 +203,12 @@ class SenseiClient extends discord_js_1.Client {
                                         seconds = this.cooldowns.systemCooldown;
                                     }
                                 }
-                                if (shouldRun)
+                                if (shouldRun) {
                                     attempt.execute(this, message, callArgs);
+                                    if (this.logMessages) {
+                                        this.log.info(`Command: '${attempt.names[0]}' executed by ${message.author.username} in Channel: ${message.channel.id} Guild: ${message.guild.name}`);
+                                    }
+                                }
                                 else {
                                     let rb = new discord_js_1.RichEmbed()
                                         .setColor(this.custom.errorColor)
@@ -266,15 +235,69 @@ class SenseiClient extends discord_js_1.Client {
                 this.log.progress("Bot Logged In & Ready! [4/4]");
                 this.log.ok("Watching for command events..");
             });
-            try {
-                this.login(this.loginToken);
-            }
-            catch {
-                this.log.error(`The specified bot login token is Invalid.`);
-                process.exit();
-            }
+        });
+        return this;
+    }
+    // Methods
+    // Public
+    /**
+     * @typedef {Object} AuthorInfo
+     * @property {string} name The Real/Online name of the Author.
+     * @property {string} username The Discord Username of the Author.
+     * @property {string} email The E-Mail address of the Author.
+     */
+    /**
+     * @typedef {Object} BotInfo
+     * @property {string} name The Name of the Bot.
+     * @property {string} version The Current Version of the Bot.
+     * @property {AuthorInfo} author Information about the Author.
+     */
+    /**
+     * @typedef {Object} CooldownSettings
+     * @property {"command" | "system"} type Whether the Cooldowns should be applied per command or not.
+     * @property {number} systemCooldown If cooldowns.type is "system" then, this is the duration of the cooldown.
+     */
+    /**
+     * @typedef {Object} Config
+     * @property {string[]} prefixes The Array of Prefixes the bot uses. The first item is considered the Main Prefix, others are considered alternative prefixes.
+     * @property {string} commandsDirectory The Directory where the Bot should scan for Command Files.
+     * @property {boolean} logMessages Whether the Bot should Log Information Messages to the Console or not.
+     * @property {boolean} reportErrors Whether even the smallest of errors should be reported to the Discord User or not.
+     * @property {CooldownSettings} cooldowns Determines how cooldowns should be applied in the bot.
+     * @property {BotInfo} info Some Optional but Useful information about the bot.
+     * @property {Object} custom Used to Declare Custom Properties that are held in the bot object.
+     */
+    async registerCommands() {
+        return await recursive_readdir_1.default(this.commandsDir, (err, files) => {
+            if (err)
+                throw (err);
+            this.commandPaths = files;
+            this.commandPaths.forEach((commandPath, index) => {
+                if (!commandPath.includes("_drafts")) {
+                    Promise.resolve().then(() => __importStar(require(commandPath))).then((command) => {
+                        try {
+                            let cmd = new command.default;
+                            cmd.names.forEach((name) => {
+                                if (this.possibleNames.includes(name)) {
+                                    this.log.error(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);
+                                    process.exit();
+                                }
+                                else {
+                                    this.possibleNames.push(name);
+                                }
+                                this.commands[name] = command.default;
+                            });
+                        }
+                        catch (e) {
+                            this.log.error(`${commandPath} does not Export a Constructor.`);
+                        }
+                    }).catch(e => {
+                        console.error(e);
+                    });
+                }
+            });
         });
     }
 }
-exports.SenseiClient = SenseiClient;
+module.exports = SenseiClient;
 //# sourceMappingURL=client.js.map

@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord, { PermissionResolvable } from "discord.js";
 import { SenseiClient, Logger } from "../sensei";
 
 interface CommandInfo {
@@ -7,9 +7,18 @@ interface CommandInfo {
     syntax : string,
 }
 
+/**
+ * @typedef {"USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"} ArgumentTypeResolvable
+ * @typedef {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD"} ArgumentDefaultResolvable
+ */
+type ArgumentTypeResolvable = "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number";
+type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD";
+
 interface ArgumentObject {
     name : string,
-    type : "user_mention" | "role_mention" | "channel_mention" | "text" | "number",
+    type : ArgumentTypeResolvable,
+    optional : boolean,
+    default? : ArgumentDefaultResolvable | string | number,
 }
 
 /**
@@ -22,63 +31,64 @@ interface ArgumentObject {
 /**
  * @typedef {Object} ArgumentObject
  * @property {string} name The Name of the Argument. This is used to access this argument later in the run() method.
- * @property {"user_mention" | "role_mention" | "channel_mention" | "text" | "number"} type The Type of the Argument.
+ * @property {ArgumentTypeResolvable} type The Type of the Argument.
+ * @property {boolean} optional Whether the Argument is Optional or not.
+ * @property {ArgumentDefaultResolvable} default The Default value (if set) of this Argument (Only Applicable if Argument is Optional)
  */
 
 /**
  * Represents a Command that can be executed by [SenseiClient](SenseiClient.html).
- * @property {String[]} names An Array of the Names of this Command. The First item of the array is the main Name, others are aliases.
- * @property {String} category The Category which this Command belongs to.
- * @property {CommandInfo} info Information about the Command.
- * @property {number} cooldown Duration of the Cooldown. Only Applicable if cooldowns.type is set to "command" in SenseiClient.
- * @property {ArgumentObject[]} arguments The Arguments Required for this Command.
  */
 class SenseiCommand {
     // Properties
     
     // Public
-    public names : string[];
-    public category: string;
-    public info : CommandInfo;
-    public cooldown : number;
+
+    /**
+     * Array of Names of the Command.
+     * @type {string[]}
+     */
+    public names : string[] = ["newcommand"];
+
+    /**
+     * The Category which this Command Belongs To.
+     * @type {string}
+     */
+    public category: string = "SomeCategory";
+
+    /**
+     * Information About the Command
+     * @type {CommandInfo}
+     */
+    public info : CommandInfo = {
+        name: "New Command",
+        description: "An Un-edited SenseiCommand.",
+        syntax: "newcommand"
+    };
+
+    /**
+     * The Cooldown Duration of this Command (If Applicable)
+     * @type {number}
+     */
+    public cooldown : number = 5;
     
-    protected arguments : ArgumentObject[];
+    /**
+     * The Array of Arguments this command requires.
+     * @type {ArgumentObject[]}
+     */
+    protected arguments : ArgumentObject[] = [];
+
+    /**
+     * An Object of type Logger that is used to Log messages to the console.
+     * @type {Logger}
+     */
     protected log : Logger = new Logger();
 
     /**
-     * Creates a new SenseiCommand Object that can be used by a [SenseiClient](SenseiClient.html). All of the Properties Above need to be Defined in the Constructor of a Class that Extends this class.
+     * The Permissions required to execute this command. By default no permission checks are applied.
+     * @type {PermissionResolvable[]}
      */
-    constructor() {
-        /**
-        * Array of Names of the Command.
-        * @type {string[]}
-        */
-        this.names = ["newcommand"];
-        /**
-        * The Category which this Command Belongs To.
-        * @type {string}
-        */
-        this.category = "SomeCategory";
-        /**
-        * Information About the Command
-        * @type {CommandInfo}
-        */
-        this.info = {
-            name: "New Command",
-            description: "An Un-edited SenseiCommand.",
-            syntax: "newcommand"
-        }
-        /**
-        * The Cooldown Duration of this Command (If Applicable)
-        * @type {number}
-        */
-        this.cooldown = 5;
-        /**
-         * The Array of Arguments this command requires.
-         * @type {ArgumentObject[]}
-         */
-        this.arguments = [];
-    }
+    protected permissions : PermissionResolvable[] = [];
 
     // Methods
 
@@ -142,108 +152,226 @@ class SenseiCommand {
     public isNum(toTest : any) : boolean {
         return /^\d+$/.test(toTest);
     }
+
+    /**
+     * This Method is used to check if the User has the necessary permissions required to Execute this command.
+     * @param {Discord.GuildMember} member The [GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to Check. 
+     * @returns {Boolean}
+     * @private
+     */
+    protected verifyPermissions(member : Discord.GuildMember) : boolean {
+        let errors : number = 0;
+        this.permissions.forEach(permission => {
+            if(!member.hasPermission(permission)) {
+                errors++;
+            }
+        })
+        if(errors > 0) return false;
+        else return true;
+    }
+
     public async execute(bot : SenseiClient, message : Discord.Message, args : string[]) : Promise<void> {
         if(this.duplicateArguments()) {
             this.log.warn(`Same name used for multiple arguments in '${this.names[0]}' command. Command cannot be used in the Bot until this error has been fixed.`);
         } else {
-            let argObject : any = {};
+            if(this.verifyPermissions(message.member)) {
+                let argObject : any = {};
+                let errors : string[] = [];
+        
+                let required : ArgumentObject[] = [];
+                let optional : ArgumentObject[] = [];
+                let contradictions = 0;
+                this.arguments.forEach((argument, index) => {
+                    if(!argument.optional) required.push(argument);
+                    else optional.push(argument);
+                    if(index + 1 != this.arguments.length) {
+                        if(argument.optional && !this.arguments[index + 1].optional) {
+                            this.log.error(`Optional Argument: '${argument.name}' comes before Required Argument: '${this.arguments[index + 1].name}'. Command: '${this.names[0]}'`);
+                            contradictions++;
+                            return;
+                        }
+                    }
+                })
 
-            let errors : string[] = [];
-    
-            if(this.arguments.length > 0 && this.arguments.length <= args.length) {
-                let index : number = 0;
-    
-                // Used for Sending the Mentioned Objects as Arguments.
-                let userIndex : number = 0;
-                let userMentions : Discord.User[] = message.mentions.users.array();
-                let roleIndex : number = 0;
-                let roleMentions : Discord.Role[] = message.mentions.roles.array();
-                let channelIndex : number = 0;
-                let channelMentions : Discord.GuildChannel[] = message.mentions.channels.array();
-    
-                for(let argType in this.arguments) {
-                    switch(this.arguments[index].type) {
-                        case "text":
-                            argObject.push(this);
-                            break;
-                        case "number":
-                            if(this.isNum(args[index])) {
-                                argObject[this.arguments[index].name] = Number(args[index]);
-                            } else {
-                                errors.push(`Argument must be a Number.`);
+                let argumentsList : ArgumentObject[] = [];
+                argumentsList.push(...required);
+                argumentsList.push(...optional);
+
+                if(contradictions != 0) {
+                    console.log(this.arguments);
+                    this.log.error("Required Arguments must come before Optional Arguments and Optional Arguments must come after Required Arguments");
+                    this.log.error("Please Fix the Order of the Arguments");
+
+                    if(this.reportError) {
+                        this.reportError(bot, message, ["System Error."]);
+                    }
+                } else if(argumentsList.length > 0 && required.length <= args.length) {
+                    let index : number = 0;
+        
+                    // Used for Sending the Mentioned Objects as Arguments.
+                    let userIndex : number = 0;
+                    let userMentions : Discord.User[] = message.mentions.users.array();
+                    let roleIndex : number = 0;
+                    let roleMentions : Discord.Role[] = message.mentions.roles.array();
+                    let channelIndex : number = 0;
+                    let channelMentions : Discord.GuildChannel[] = message.mentions.channels.array();
+        
+                    for(let arg in argumentsList) {
+                        if(args[index] != undefined) {
+                            switch(argumentsList[index].type) {
+                                case "string":
+                                    argObject.push(this);
+                                    break;
+                                case "number":
+                                    if(this.isNum(args[index])) {
+                                        argObject[argumentsList[index].name] = Number(args[index]);
+                                    } else {
+                                        errors.push(`Argument must be a Number.`);
+                                    }
+                                    break;
+                                case "USER_MENTION":
+                                    if(args[index].length == 21) {
+                                        if(args[index].includes("<@") && args[index].includes(">")) {
+                                            if(this.isNum(args[index].replace("<@", "").replace(">", ""))) {
+                                                argObject[argumentsList[index].name] = userMentions[userIndex];
+                                                userIndex++;
+                                            }
+                                        } else {
+                                            errors.push(`Argument must be a Mentioned User.`);
+                                        }
+                                    } else {
+                                        errors.push(`Argument must be a Mentioned User.`);
+                                    }
+                                    break;
+                                case "ROLE_MENTION":
+                                    if(args[index].length == 22) {
+                                        if(args[index].includes("<@&") && args[index].includes(">")) {
+                                            if(this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
+                                                argObject[argumentsList[index].name] = roleMentions[roleIndex];
+                                                roleIndex++;
+                                            }
+                                        } else {
+                                            errors.push(`Argument must be a Mentioned Role.`);
+                                        }
+                                    } else {
+                                        errors.push(`Argument must be a Mentioned Role.`);
+                                    }
+                                    break;
+                                case "CHANNEL_MENTION":
+                                    if(args[index].length == 21) {
+                                        if(args[index].includes("<#") && args[index].includes(">")) {
+                                            if(this.isNum(args[index].replace("<#", "").replace(">", ""))) {
+                                                argObject[argumentsList[index].name] = channelMentions[channelIndex];
+                                                channelIndex++;
+                                        }
+                                        } else {
+                                            errors.push(`Argument must be a Mentioned Channel.`);
+                                        }
+                                    } else {
+                                        errors.push(`Argument must be a Mentioned Channel.`);
+                                    }
+                                    break;
                             }
-                            break;
-                        case "user_mention":
-                            if(args[index].length == 21) {
-                                if(args[index].includes("<@") && args[index].includes(">")) {
-                                    if(this.isNum(args[index].replace("<@", "").replace(">", ""))) {
-                                        argObject[this.arguments[index].name] = userMentions[userIndex];
-                                        userIndex++;
+                        } else if(argumentsList[index].optional) {
+                            if(argumentsList[index].default != undefined) {
+                                let def = argumentsList[index].default;
+                                if(def == "MESSAGE_AUTHOR") {
+                                    argObject[argumentsList[index].name] = message.author;
+                                } else if(def == "MESSAGE_CHANNEL") {
+                                    argObject[argumentsList[index].name] = message.channel;
+                                } else if(def == "MESSAGE_GUILD") {
+                                    argObject[argumentsList[index].name] = message.guild;
+                                } else {
+                                    argObject[argumentsList[index].name] = def;
+                                }
+                            } else {
+                                argObject[argumentsList[index].name] = "unset";
+                            }
+                        }
+                        index++;
+                    }
+
+                    /* for(let argType in args) {
+                        switch(argumentsList[index].type) {
+                            case "string":
+                                argObject.push(this);
+                                break;
+                            case "number":
+                                if(this.isNum(args[index])) {
+                                    argObject[argumentsList[index].name] = Number(args[index]);
+                                } else {
+                                    errors.push(`Argument must be a Number.`);
+                                }
+                                break;
+                            case "USER_MENTION":
+                                if(args[index].length == 21) {
+                                    if(args[index].includes("<@") && args[index].includes(">")) {
+                                        if(this.isNum(args[index].replace("<@", "").replace(">", ""))) {
+                                            argObject[argumentsList[index].name] = userMentions[userIndex];
+                                            userIndex++;
+                                        }
+                                    } else {
+                                        errors.push(`Argument must be a Mentioned User.`);
                                     }
                                 } else {
                                     errors.push(`Argument must be a Mentioned User.`);
                                 }
-                            } else {
-                                errors.push(`Argument must be a Mentioned User.`);
-                            }
-                            break;
-                        case "role_mention":
-                            if(args[index].length == 22) {
-                                if(args[index].includes("<@&") && args[index].includes(">")) {
-                                    if(this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
-                                        argObject[this.arguments[index].name] = roleMentions[roleIndex];
-                                        roleIndex++;
+                                break;
+                            case "ROLE_MENTION":
+                                if(args[index].length == 22) {
+                                    if(args[index].includes("<@&") && args[index].includes(">")) {
+                                        if(this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
+                                            argObject[argumentsList[index].name] = roleMentions[roleIndex];
+                                            roleIndex++;
+                                        }
+                                    } else {
+                                        errors.push(`Argument must be a Mentioned Role.`);
                                     }
                                 } else {
                                     errors.push(`Argument must be a Mentioned Role.`);
                                 }
-                            } else {
-                                errors.push(`Argument must be a Mentioned Role.`);
-                            }
-                            break;
-                        case "channel_mention":
-                            if(args[index].length == 21) {
-                                if(args[index].includes("<#") && args[index].includes(">")) {
-                                    if(this.isNum(args[index].replace("<#", "").replace(">", ""))) {
-                                        argObject[this.arguments[index].name] = channelMentions[channelIndex];
-                                        channelIndex++;
-                                   }
+                                break;
+                            case "CHANNEL_MENTION":
+                                if(args[index].length == 21) {
+                                    if(args[index].includes("<#") && args[index].includes(">")) {
+                                        if(this.isNum(args[index].replace("<#", "").replace(">", ""))) {
+                                            argObject[argumentsList[index].name] = channelMentions[channelIndex];
+                                            channelIndex++;
+                                    }
+                                    } else {
+                                        errors.push(`Argument must be a Mentioned Channel.`);
+                                    }
                                 } else {
                                     errors.push(`Argument must be a Mentioned Channel.`);
                                 }
-                            } else {
-                                errors.push(`Argument must be a Mentioned Channel.`);
-                            }
-                            break;
+                                break;
+                        }
+                        index++;
+                    } */
+        
+                    if(errors.length == 0) {
+                        bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
+                        bot.sysMemory.add(message.author.id);
+                        setTimeout(() => {
+                            bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
+                        }, this.cooldown * 1000);
+                        setTimeout(() => {
+                            bot.sysMemory.delete(message.author.id);
+                        }, bot.cooldowns.systemCooldown * 1000);
+                        this.run(bot, message, argObject);
+                    } else {
+                        this.reportError(bot, message, errors);
                     }
-                    index++;
-                }
-
-                if(args.length != index + 1) {
-                    argObject.optional = {};
-                    for(let i = index + 1; i < args.length; i++) {
-                        argObject.optional[i] = args[i];
-                    }
-                }
-    
-                if(errors.length == 0) {
-                    bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
-                    bot.sysMemory.add(message.author.id);
-                    setTimeout(() => {
-                        bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
-                    }, this.cooldown * 1000);
-                    setTimeout(() => {
-                        bot.sysMemory.delete(message.author.id);
-                    }, bot.cooldowns.systemCooldown * 1000);
-                    this.run(bot, message, argObject);
                 } else {
-                    this.reportError(bot, message, errors);
+                    this.reportError(bot, message, ["Insufficient arguments provided."]);
                 }
             } else {
-                this.reportError(bot, message, ["Insufficient arguments provided."]);
-            }   
+                this.reportError(bot, message, [
+                    "You aren't permitted to execute this command."
+                ]);
+            }
         }
     }
 }
 
-export { SenseiCommand };
+export = SenseiCommand;

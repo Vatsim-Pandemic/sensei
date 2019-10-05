@@ -2,7 +2,6 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const safe_1 = __importDefault(require("colors/safe"));
 /**
  * A Class used for Logging Stuff to the Console. Can be used by Anyone, although its main usage is to Log Messages from the Other Classes.
@@ -55,5 +54,5 @@ class Logger {
         return;
     }
 }
-exports.Logger = Logger;
+module.exports = Logger;
 //# sourceMappingURL=log.js.map

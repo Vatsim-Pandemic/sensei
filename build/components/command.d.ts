@@ -1,13 +1,21 @@
-import Discord from "discord.js";
+import Discord, { PermissionResolvable } from "discord.js";
 import { SenseiClient, Logger } from "../sensei";
 interface CommandInfo {
     name: string;
     description: string;
     syntax: string;
 }
+/**
+ * @typedef {"USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"} ArgumentTypeResolvable
+ * @typedef {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD"} ArgumentDefaultResolvable
+ */
+declare type ArgumentTypeResolvable = "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number";
+declare type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD";
 interface ArgumentObject {
     name: string;
-    type: "user_mention" | "role_mention" | "channel_mention" | "text" | "number";
+    type: ArgumentTypeResolvable;
+    optional: boolean;
+    default?: ArgumentDefaultResolvable | string | number;
 }
 /**
  * @typedef {Object} CommandInfo
@@ -18,27 +26,49 @@ interface ArgumentObject {
 /**
  * @typedef {Object} ArgumentObject
  * @property {string} name The Name of the Argument. This is used to access this argument later in the run() method.
- * @property {"user_mention" | "role_mention" | "channel_mention" | "text" | "number"} type The Type of the Argument.
+ * @property {ArgumentTypeResolvable} type The Type of the Argument.
+ * @property {boolean} optional Whether the Argument is Optional or not.
+ * @property {ArgumentDefaultResolvable} default The Default value (if set) of this Argument (Only Applicable if Argument is Optional)
  */
 /**
  * Represents a Command that can be executed by [SenseiClient](SenseiClient.html).
- * @property {String[]} names An Array of the Names of this Command. The First item of the array is the main Name, others are aliases.
- * @property {String} category The Category which this Command belongs to.
- * @property {CommandInfo} info Information about the Command.
- * @property {number} cooldown Duration of the Cooldown. Only Applicable if cooldowns.type is set to "command" in SenseiClient.
- * @property {ArgumentObject[]} arguments The Arguments Required for this Command.
  */
 declare class SenseiCommand {
+    /**
+     * Array of Names of the Command.
+     * @type {string[]}
+     */
     names: string[];
+    /**
+     * The Category which this Command Belongs To.
+     * @type {string}
+     */
     category: string;
+    /**
+     * Information About the Command
+     * @type {CommandInfo}
+     */
     info: CommandInfo;
+    /**
+     * The Cooldown Duration of this Command (If Applicable)
+     * @type {number}
+     */
     cooldown: number;
+    /**
+     * The Array of Arguments this command requires.
+     * @type {ArgumentObject[]}
+     */
     protected arguments: ArgumentObject[];
+    /**
+     * An Object of type Logger that is used to Log messages to the console.
+     * @type {Logger}
+     */
     protected log: Logger;
     /**
-     * Creates a new SenseiCommand Object that can be used by a [SenseiClient](SenseiClient.html). All of the Properties Above need to be Defined in the Constructor of a Class that Extends this class.
+     * The Permissions required to execute this command. By default no permission checks are applied.
+     * @type {PermissionResolvable[]}
      */
-    constructor();
+    protected permissions: PermissionResolvable[];
     protected duplicateArguments(): boolean;
     /**
      * The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.
@@ -64,7 +94,14 @@ declare class SenseiCommand {
      */
     protected reportError(bot: SenseiClient, message: Discord.Message, messages: string[]): void;
     isNum(toTest: any): boolean;
+    /**
+     * This Method is used to check if the User has the necessary permissions required to Execute this command.
+     * @param {Discord.GuildMember} member The [GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to Check.
+     * @returns {Boolean}
+     * @private
+     */
+    protected verifyPermissions(member: Discord.GuildMember): boolean;
     execute(bot: SenseiClient, message: Discord.Message, args: string[]): Promise<void>;
 }
-export { SenseiCommand };
+export = SenseiCommand;
 //# sourceMappingURL=command.d.ts.map
