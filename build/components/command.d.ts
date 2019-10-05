@@ -7,15 +7,15 @@ interface CommandInfo {
 }
 /**
  * @typedef {"USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"} ArgumentTypeResolvable
- * @typedef {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD"} ArgumentDefaultResolvable
+ * @typedef {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number} ArgumentDefaultResolvable
  */
 declare type ArgumentTypeResolvable = "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number";
-declare type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD";
+declare type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number;
 interface ArgumentObject {
     name: string;
     type: ArgumentTypeResolvable;
     optional: boolean;
-    default?: ArgumentDefaultResolvable | string | number;
+    default?: ArgumentDefaultResolvable;
 }
 /**
  * @typedef {Object} CommandInfo
@@ -85,6 +85,36 @@ declare class SenseiCommand {
      *      return;
      * }
      */
+    /**
+     * Used to set the Name(s) of the Command.
+     * @param {string[]} namesArray The Array of Names.
+     */
+    protected setNames(namesArray: string[]): this;
+    /**
+     * Used to set the Category of the Command.
+     * @param {string} category Category Name.
+     */
+    protected setCategory(category: string): this;
+    /**
+     * Used to set some Information about the Command
+     * @param {CommandInfo} info
+     */
+    protected setInfo(info: CommandInfo): this;
+    /**
+     * Used to set the Cooldown Duration of the Command.
+     * @param {number} duration The Duration in Seconds.
+     */
+    protected setCooldown(duration: number): this;
+    /**
+     * Used to set the Arguments for the Command
+     * @param {ArgumentObject[]} argumentsArray Array of Arguments
+     */
+    protected setArguments(argumentsArray: ArgumentObject[]): this;
+    /**
+     * Used to set the Permissions required to Execute this command;
+     * @param {PermissionResolvable[]} permissionsArray Array of [PermissionResolvable](https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS)
+     */
+    protected setPermissions(permissionsArray: PermissionResolvable[]): this;
     protected run(bot: SenseiClient, message: Discord.Message, args?: any): Promise<void>;
     /**
      * This Method is used for Error Reporting (To the Discord User)

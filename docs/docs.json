@@ -2,7 +2,7 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570305715952
+    "date": 1570307813303
   },
   "custom": {
     "general": {
@@ -55,7 +55,7 @@
           "path": "../docs/snippets/ping.md"
         },
         "hug": {
-          "name": "Hug Command.md",
+          "name": "Hug Command",
           "type": "md",
           "content": "",
           "path": "../docs/snippets/hug.md"
@@ -195,6 +195,7 @@
         {
           "name": "logMessages",
           "description": "Determines whether the Bot should Log information messages to the Console. Errors and Warnings are logged regardless.",
+          "access": "private",
           "type": [
             [
               [
@@ -203,7 +204,7 @@
             ]
           ],
           "meta": {
-            "line": 72,
+            "line": 73,
             "file": "client.js",
             "path": "../build/components"
           }
@@ -211,6 +212,7 @@
         {
           "name": "commandsDir",
           "description": "The path of the directory where the commands are saved.",
+          "access": "private",
           "type": [
             [
               [
@@ -219,7 +221,7 @@
             ]
           ],
           "meta": {
-            "line": 77,
+            "line": 79,
             "file": "client.js",
             "path": "../build/components"
           }
@@ -227,6 +229,7 @@
         {
           "name": "log",
           "description": "An Object that is used for Logging messages to the console",
+          "access": "protected",
           "type": [
             [
               [
@@ -235,7 +238,7 @@
             ]
           ],
           "meta": {
-            "line": 84,
+            "line": 87,
             "file": "client.js",
             "path": "../build/components"
           }
@@ -381,49 +384,147 @@
       ],
       "methods": [
         {
-          "name": "run",
-          "description": "The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.",
-          "examples": [
-            "// Here's how this method may be defined in a Command:\rasync run(bot, message, args) {\r     let sender = message.author.username;\r     let channel = message.channe;\r\r     channel.send(`Hello ${sender}!. How are you doing ?`);\r     return;\r}"
-          ],
+          "name": "setNames",
+          "description": "Used to set the Name(s) of the Command.",
           "params": [
             {
-              "name": "bot",
-              "description": "The SenseiClient Object.",
+              "name": "namesArray",
+              "description": "The Array of Names.",
               "type": [
                 [
                   [
-                    "SenseiClient"
-                  ]
-                ]
-              ]
-            },
-            {
-              "name": "message",
-              "description": "The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object",
-              "type": [
-                [
+                    "Array",
+                    "<"
+                  ],
                   [
-                    "Message"
-                  ]
-                ]
-              ]
-            },
-            {
-              "name": "args",
-              "description": "The Arguments this message was sent with.",
-              "type": [
-                [
-                  [
-                    "Object"
+                    "string",
+                    ">"
                   ]
                 ]
               ]
             }
           ],
-          "async": true,
           "meta": {
-            "line": 95,
+            "line": 99,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "setCategory",
+          "description": "Used to set the Category of the Command.",
+          "params": [
+            {
+              "name": "category",
+              "description": "Category Name.",
+              "type": [
+                [
+                  [
+                    "string"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "meta": {
+            "line": 116,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "setInfo",
+          "description": "Used to set some Information about the Command",
+          "params": [
+            {
+              "name": "info",
+              "type": [
+                [
+                  [
+                    "CommandInfo"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "meta": {
+            "line": 130,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "setCooldown",
+          "description": "Used to set the Cooldown Duration of the Command.",
+          "params": [
+            {
+              "name": "duration",
+              "description": "The Duration in Seconds.",
+              "type": [
+                [
+                  [
+                    "number"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "meta": {
+            "line": 144,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "setArguments",
+          "description": "Used to set the Arguments for the Command",
+          "params": [
+            {
+              "name": "argumentsArray",
+              "description": "Array of Arguments",
+              "type": [
+                [
+                  [
+                    "Array",
+                    "<"
+                  ],
+                  [
+                    "ArgumentObject",
+                    ">"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "meta": {
+            "line": 158,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "setPermissions",
+          "description": "Used to set the Permissions required to Execute this command;",
+          "params": [
+            {
+              "name": "permissionsArray",
+              "description": "Array of [PermissionResolvable](https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS)",
+              "type": [
+                [
+                  [
+                    "Array",
+                    "<"
+                  ],
+                  [
+                    "PermissionResolvable",
+                    ">"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "meta": {
+            "line": 172,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -472,7 +573,7 @@
             }
           ],
           "meta": {
-            "line": 102,
+            "line": 189,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -502,7 +603,7 @@
             ]
           ],
           "meta": {
-            "line": 128,
+            "line": 215,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -718,7 +819,7 @@
         }
       ],
       "meta": {
-        "line": 240,
+        "line": 243,
         "file": "client.js",
         "path": "../build/components"
       }
@@ -768,7 +869,7 @@
         }
       ],
       "meta": {
-        "line": 246,
+        "line": 249,
         "file": "client.js",
         "path": "../build/components"
       }
@@ -814,7 +915,7 @@
         }
       ],
       "meta": {
-        "line": 252,
+        "line": 255,
         "file": "client.js",
         "path": "../build/components"
       }
@@ -913,7 +1014,7 @@
         }
       ],
       "meta": {
-        "line": 257,
+        "line": 260,
         "file": "client.js",
         "path": "../build/components"
       }

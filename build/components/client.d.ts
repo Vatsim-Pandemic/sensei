@@ -64,11 +64,13 @@ declare class SenseiClient extends Client {
     /**
      * Determines whether the Bot should Log information messages to the Console. Errors and Warnings are logged regardless.
      * @type {Boolean}
+     * @private
      */
     private logMessages;
     /**
      * The path of the directory where the commands are saved.
      * @type {string}
+     * @private
      */
     private commandsDir;
     private commandPaths;
@@ -76,6 +78,7 @@ declare class SenseiClient extends Client {
     /**
      * An Object that is used for Logging messages to the console
      * @type {Logger}
+     * @protected
      */
     protected log: Logger;
     constructor(configObject: Config);

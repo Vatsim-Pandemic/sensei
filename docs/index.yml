@@ -16,7 +16,7 @@
   files:
     - name: Ping Command
       path: ping.md
-    - name: Hug Command.md
+    - name: Hug Command
       path: hug.md
     - name: Kick User Command
       path: kickuser.md

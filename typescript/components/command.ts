@@ -1,5 +1,6 @@
 import Discord, { PermissionResolvable } from "discord.js";
 import { SenseiClient, Logger } from "../sensei";
+import path from "path";
 
 interface CommandInfo {
     name : string,
@@ -9,16 +10,17 @@ interface CommandInfo {
 
 /**
  * @typedef {"USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"} ArgumentTypeResolvable
- * @typedef {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD"} ArgumentDefaultResolvable
+ * @typedef {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number} ArgumentDefaultResolvable
  */
+
 type ArgumentTypeResolvable = "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number";
-type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD";
+type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number;
 
 interface ArgumentObject {
     name : string,
     type : ArgumentTypeResolvable,
     optional : boolean,
-    default? : ArgumentDefaultResolvable | string | number,
+    default? : ArgumentDefaultResolvable,
 }
 
 /**
@@ -119,6 +121,94 @@ class SenseiCommand {
      *      return;
      * }
      */
+
+    /**
+     * Used to set the Name(s) of the Command.
+     * @param {string[]} namesArray The Array of Names.
+     */
+    protected setNames(namesArray : string[]) {
+        if(namesArray.length > 0) {
+            namesArray.forEach((name, index) => {
+                namesArray[index] = name.toLowerCase();
+            })
+            this.names = namesArray;
+        } else {
+            this.log.error(`Array of Names cannot be Empty. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+
+    /**
+     * Used to set the Category of the Command.
+     * @param {string} category Category Name.
+     */
+    protected setCategory(category : string) {
+        if(category != "") {
+            this.category = category;
+        } else {
+            this.log.error(`Category name can't be empty. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+
+    /**
+     * Used to set some Information about the Command
+     * @param {CommandInfo} info 
+     */
+    protected setInfo(info : CommandInfo) {
+        if(info != undefined) {
+            this.info = info;
+        } else {
+            this.log.error(`Invalid Command Information Object provided. ${__filename}. https://discord-sensei.js.org/#/docs/main/stable/typedef/CommandInfo`);
+            process.exit();
+        }
+        return this;
+    }
+
+    /**
+     * Used to set the Cooldown Duration of the Command.
+     * @param {number} duration The Duration in Seconds.
+     */
+    protected setCooldown(duration : number) {
+        if(duration > 0) {
+            this.cooldown = duration;
+        } else {
+            this.log.error(`Duration must be greater than 0. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+
+    /**
+     * Used to set the Arguments for the Command
+     * @param {ArgumentObject[]} argumentsArray Array of Arguments
+     */
+    protected setArguments(argumentsArray : ArgumentObject[]) {
+        if(argumentsArray.length > 0) {
+            this.arguments = argumentsArray;
+        } else {
+            this.log.error(`Argument Array can't be empty. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+
+    /**
+     * Used to set the Permissions required to Execute this command;
+     * @param {PermissionResolvable[]} permissionsArray Array of [PermissionResolvable](https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS)
+     */
+    protected setPermissions(permissionsArray : PermissionResolvable[]) {
+        if(permissionsArray.length > 0) {
+            this.permissions = permissionsArray;
+        } else {
+            this.log.error(`Permissions Array can't be empty. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+     
     protected async run(bot : SenseiClient, message : Discord.Message, args? : any) : Promise<void> {}
 
     /**

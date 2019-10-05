@@ -68,11 +68,13 @@ class SenseiClient extends discord_js_1.Client {
         /**
          * Determines whether the Bot should Log information messages to the Console. Errors and Warnings are logged regardless.
          * @type {Boolean}
+         * @private
          */
         this.logMessages = false;
         /**
          * The path of the directory where the commands are saved.
          * @type {string}
+         * @private
          */
         this.commandsDir = "";
         this.commandPaths = [];
@@ -80,6 +82,7 @@ class SenseiClient extends discord_js_1.Client {
         /**
          * An Object that is used for Logging messages to the console
          * @type {Logger}
+         * @protected
          */
         this.log = new sensei_1.Logger();
         this.custom.footerText = "SenseiBot";

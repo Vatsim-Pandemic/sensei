@@ -92,6 +92,93 @@ class SenseiCommand {
      *      return;
      * }
      */
+    /**
+     * Used to set the Name(s) of the Command.
+     * @param {string[]} namesArray The Array of Names.
+     */
+    setNames(namesArray) {
+        if (namesArray.length > 0) {
+            namesArray.forEach((name, index) => {
+                namesArray[index] = name.toLowerCase();
+            });
+            this.names = namesArray;
+        }
+        else {
+            this.log.error(`Array of Names cannot be Empty. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+    /**
+     * Used to set the Category of the Command.
+     * @param {string} category Category Name.
+     */
+    setCategory(category) {
+        if (category != "") {
+            this.category = category;
+        }
+        else {
+            this.log.error(`Category name can't be empty. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+    /**
+     * Used to set some Information about the Command
+     * @param {CommandInfo} info
+     */
+    setInfo(info) {
+        if (info != undefined) {
+            this.info = info;
+        }
+        else {
+            this.log.error(`Invalid Command Information Object provided. ${__filename}. https://discord-sensei.js.org/#/docs/main/stable/typedef/CommandInfo`);
+            process.exit();
+        }
+        return this;
+    }
+    /**
+     * Used to set the Cooldown Duration of the Command.
+     * @param {number} duration The Duration in Seconds.
+     */
+    setCooldown(duration) {
+        if (duration > 0) {
+            this.cooldown = duration;
+        }
+        else {
+            this.log.error(`Duration must be greater than 0. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+    /**
+     * Used to set the Arguments for the Command
+     * @param {ArgumentObject[]} argumentsArray Array of Arguments
+     */
+    setArguments(argumentsArray) {
+        if (argumentsArray.length > 0) {
+            this.arguments = argumentsArray;
+        }
+        else {
+            this.log.error(`Argument Array can't be empty. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
+    /**
+     * Used to set the Permissions required to Execute this command;
+     * @param {PermissionResolvable[]} permissionsArray Array of [PermissionResolvable](https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS)
+     */
+    setPermissions(permissionsArray) {
+        if (permissionsArray.length > 0) {
+            this.permissions = permissionsArray;
+        }
+        else {
+            this.log.error(`Permissions Array can't be empty. ${__filename}`);
+            process.exit();
+        }
+        return this;
+    }
     async run(bot, message, args) { }
     /**
      * This Method is used for Error Reporting (To the Discord User)
