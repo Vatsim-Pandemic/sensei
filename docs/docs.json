@@ -75,6 +75,7 @@
       "description": "Extends [Client](https://discord.js.org/#/docs/main/stable/class/Client).",
       "construct": {
         "name": "SenseiClient",
+<<<<<<< HEAD
         "description": "Creates a new SenseiClient Object.",
         "params": [
           {
@@ -82,6 +83,105 @@
             "description": "An Object containing all of the Configuration Instructions.",
             "type": [
               [
+=======
+        "description": "Creates a new SenseiClient Object."
+      },
+      "props": [
+        {
+          "name": "log",
+          "description": "Used to Log Messages.",
+          "type": [
+            [
+              [
+                "Logger"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "info",
+          "description": "Information About the Bot.",
+          "type": [
+            [
+              [
+                "BotInfo"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "cooldowns",
+          "description": "Cooldown Settings of the Bot.",
+          "type": [
+            [
+              [
+                "CooldownSettings"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "prefixes",
+          "description": "Array of Prefixes that the Bot uses.",
+          "type": [
+            [
+              [
+                [
+                  "Array",
+                  "<"
+                ],
+                [
+                  "String",
+                  ">"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "reportErrors",
+          "description": "Determines whether even the Smallest of Errors should be Reported or Not.",
+          "type": [
+            [
+              [
+                "Number"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "commandsDirectory",
+          "description": "The Path of the Directory where the Commands are saved.",
+          "type": [
+            [
+              [
+                "String"
+              ]
+            ]
+          ]
+        },
+        {
+          "name": "custom",
+          "description": "Used to set Custom Properties under the Bot.",
+          "type": [
+            [
+              [
+                "Object"
+              ]
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "configure",
+          "description": "Configures the Bot for Usage.",
+          "params": [
+            {
+              "name": "config",
+              "description": "The Object that holds all Configuration Instructions.",
+              "type": [
+>>>>>>> 65377bcb1de98d119afcb9c33a5a39b735a74717
                 [
                   "Config"
                 ]
@@ -253,8 +353,19 @@
       "description": "Represents a Command that can be executed by [SenseiClient](SenseiClient.html).",
       "props": [
         {
+          "name": "log",
+          "description": "Used to Log Messages.",
+          "type": [
+            [
+              [
+                "Logger"
+              ]
+            ]
+          ]
+        },
+        {
           "name": "names",
-          "description": "Array of Names of the Command.",
+          "description": "The Array of Names of the Command.",
           "type": [
             [
               [
@@ -262,48 +373,60 @@
                 "<"
               ],
               [
-                "string",
+                "String",
                 ">"
               ]
             ]
+<<<<<<< HEAD
           ],
           "meta": {
             "line": 31,
             "file": "command.js",
             "path": "../build/components"
           }
+=======
+          ]
+>>>>>>> 65377bcb1de98d119afcb9c33a5a39b735a74717
         },
         {
           "name": "category",
-          "description": "The Category which this Command Belongs To.",
+          "description": "The Category this Command Belongs to.",
           "type": [
             [
               [
-                "string"
+                "String"
               ]
             ]
+<<<<<<< HEAD
           ],
           "meta": {
             "line": 36,
             "file": "command.js",
             "path": "../build/components"
           }
+=======
+          ]
+>>>>>>> 65377bcb1de98d119afcb9c33a5a39b735a74717
         },
         {
           "name": "info",
-          "description": "Information About the Command",
+          "description": "The Name, Description and Syntax of the Command.",
           "type": [
             [
               [
                 "CommandInfo"
               ]
             ]
+<<<<<<< HEAD
           ],
           "meta": {
             "line": 41,
             "file": "command.js",
             "path": "../build/components"
           }
+=======
+          ]
+>>>>>>> 65377bcb1de98d119afcb9c33a5a39b735a74717
         },
         {
           "name": "cooldown",
@@ -311,19 +434,23 @@
           "type": [
             [
               [
-                "number"
+                "Number"
               ]
             ]
+<<<<<<< HEAD
           ],
           "meta": {
             "line": 50,
             "file": "command.js",
             "path": "../build/components"
           }
+=======
+          ]
+>>>>>>> 65377bcb1de98d119afcb9c33a5a39b735a74717
         },
         {
           "name": "arguments",
-          "description": "The Array of Arguments this command requires.",
+          "description": "The Arguments that are required by this Command.",
           "type": [
             [
               [
@@ -335,6 +462,7 @@
                 ">"
               ]
             ]
+<<<<<<< HEAD
           ],
           "meta": {
             "line": 55,
@@ -378,6 +506,9 @@
             "file": "command.js",
             "path": "../build/components"
           }
+=======
+          ]
+>>>>>>> 65377bcb1de98d119afcb9c33a5a39b735a74717
         }
       ],
       "methods": [
@@ -424,7 +555,11 @@
           ],
           "async": true,
           "meta": {
+<<<<<<< HEAD
             "line": 95,
+=======
+            "line": 71,
+>>>>>>> 65377bcb1de98d119afcb9c33a5a39b735a74717
             "file": "command.js",
             "path": "../build/components"
           }
@@ -473,6 +608,7 @@
             }
           ],
           "meta": {
+<<<<<<< HEAD
             "line": 102,
             "file": "command.js",
             "path": "../build/components"
@@ -504,6 +640,9 @@
           ],
           "meta": {
             "line": 128,
+=======
+            "line": 78,
+>>>>>>> 65377bcb1de98d119afcb9c33a5a39b735a74717
             "file": "command.js",
             "path": "../build/components"
           }
