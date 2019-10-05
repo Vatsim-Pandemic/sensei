@@ -17,9 +17,6 @@ const sensei_1 = require("../sensei");
  * @param {Config} configObject An Object containing all of the Configuration Instructions.
  */
 class SenseiClient extends discord_js_1.Client {
-    /**
-     * Creates a new SenseiClient Object.
-     */
     constructor(configObject) {
         super();
         // Public

@@ -109,9 +109,6 @@ class SenseiClient extends Client {
      */
     protected log : Logger = new Logger();
 
-    /**
-     * Creates a new SenseiClient Object.
-     */
     constructor(configObject : Config) {
         super();
         this.custom.footerText = "SenseiBot";

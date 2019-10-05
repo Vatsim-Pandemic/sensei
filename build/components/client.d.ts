@@ -78,9 +78,6 @@ declare class SenseiClient extends Client {
      * @type {Logger}
      */
     protected log: Logger;
-    /**
-     * Creates a new SenseiClient Object.
-     */
     constructor(configObject: Config);
     /**
      * @typedef {Object} AuthorInfo
