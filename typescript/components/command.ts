@@ -208,6 +208,7 @@ class SenseiCommand {
      * @param {SenseiClient} bot The SenseiClient Object.
      * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object 
      * @param {Object} args The Arguments this message was sent with.
+     * @async
      * @example
      * // Here's how this method may be defined in a Command:
      * async run(bot, message, args) {
