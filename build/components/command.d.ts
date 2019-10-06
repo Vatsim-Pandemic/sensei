@@ -5,8 +5,14 @@ interface CommandInfo {
     description: string;
     syntax: string;
 }
+/**
+ * @typedef {String} ArgumentTypeResolvable Determines the type of the argument. Argument Types: "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"
+ */
+/**
+ * @typedef {String | Number} ArgumentDefaultResolvable Determines what the default value of this argument should be (Only if Optional). Default Values: "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | String | Number
+ */
 declare type ArgumentTypeResolvable = "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number";
-declare type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number;
+declare type ArgumentDefaultResolvable = "MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD";
 interface ArgumentObject {
     name: string;
     type: ArgumentTypeResolvable;
@@ -22,9 +28,9 @@ interface ArgumentObject {
 /**
  * @typedef {Object} ArgumentObject
  * @property {string} name The Name of the Argument. This is used to access this argument later in the run() method.
- * @property {"USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"} type The Type of the Argument.
+ * @property {ArgumentTypeResolvable} type The Type of the Argument.
  * @property {boolean} optional Whether the Argument is Optional or not.
- * @property {"MESSAGE_AUTHOR" | "MESSAGE_CHANNEL" | "MESSAGE_GUILD" | string | number} default The Default value (if set) of this Argument (Only Applicable if Argument is Optional)
+ * @property {ArgumentDefaultResolvable} default The Default value (if set) of this Argument (Only Applicable if Argument is Optional)
  */
 /**
  * Represents a Command that can be executed by [SenseiClient](SenseiClient.html).
@@ -66,6 +72,7 @@ declare class SenseiCommand {
      */
     protected permissions: PermissionResolvable[];
     protected duplicateArguments(): boolean;
+    protected duplicateNames(): boolean;
     /**
      * The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.
      * @param {SenseiClient} bot The SenseiClient Object.

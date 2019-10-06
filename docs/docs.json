@@ -2,7 +2,7 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570307977534
+    "date": 1570351910286
   },
   "custom": {
     "general": {
@@ -405,7 +405,7 @@
             }
           ],
           "meta": {
-            "line": 99,
+            "line": 107,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -427,7 +427,7 @@
             }
           ],
           "meta": {
-            "line": 116,
+            "line": 124,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -448,7 +448,7 @@
             }
           ],
           "meta": {
-            "line": 130,
+            "line": 138,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -470,7 +470,7 @@
             }
           ],
           "meta": {
-            "line": 144,
+            "line": 152,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -497,7 +497,7 @@
             }
           ],
           "meta": {
-            "line": 158,
+            "line": 166,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -524,7 +524,7 @@
             }
           ],
           "meta": {
-            "line": 172,
+            "line": 180,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -573,7 +573,7 @@
             }
           ],
           "meta": {
-            "line": 189,
+            "line": 197,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -603,7 +603,7 @@
             ]
           ],
           "meta": {
-            "line": 215,
+            "line": 223,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -1096,32 +1096,7 @@
           "type": [
             [
               [
-                "USER_MENTION",
-                "\""
-              ]
-            ],
-            [
-              [
-                "ROLE_MENTION",
-                "\""
-              ]
-            ],
-            [
-              [
-                "CHANNEL_MENTION",
-                "\""
-              ]
-            ],
-            [
-              [
-                "string",
-                "\""
-              ]
-            ],
-            [
-              [
-                "number",
-                "\""
+                "ArgumentTypeResolvable"
               ]
             ]
           ]
@@ -1143,30 +1118,7 @@
           "type": [
             [
               [
-                "MESSAGE_AUTHOR",
-                "\""
-              ]
-            ],
-            [
-              [
-                "MESSAGE_CHANNEL",
-                "\""
-              ]
-            ],
-            [
-              [
-                "MESSAGE_GUILD",
-                "\""
-              ]
-            ],
-            [
-              [
-                "string"
-              ]
-            ],
-            [
-              [
-                "number"
+                "ArgumentDefaultResolvable"
               ]
             ]
           ]
@@ -1177,6 +1129,26 @@
         "file": "command.js",
         "path": "../build/components"
       }
+    },
+    {
+      "name": "ArgumentTypeResolvable",
+      "type": [
+        [
+          [
+            "\"USER_MENTION\" | \"ROLE_MENTION\" | \"CHANNEL_MENTION\" | \"string\" | \"number\""
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "ArgumentDefaultResolvable",
+      "type": [
+        [
+          [
+            "\"MESSAGE_AUTHOR\" | \"MESSAGE_CHANNEL\" | \"MESSAGE_GUILD\" | string | number"
+          ]
+        ]
+      ]
     }
   ],
   "externals": []
