@@ -2,7 +2,7 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570366482165
+    "date": 1570374104178
   },
   "custom": {
     "general": {
@@ -324,6 +324,22 @@
           }
         },
         {
+          "name": "ignoreCooldown",
+          "description": "If this Property is set to True, the Command will ignore any type of cooldown.",
+          "type": [
+            [
+              [
+                "Boolean"
+              ]
+            ]
+          ],
+          "meta": {
+            "line": 55,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
           "name": "arguments",
           "description": "The Array of Arguments this command requires.",
           "type": [
@@ -339,7 +355,7 @@
             ]
           ],
           "meta": {
-            "line": 55,
+            "line": 60,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -355,7 +371,7 @@
             ]
           ],
           "meta": {
-            "line": 60,
+            "line": 65,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -376,7 +392,7 @@
             ]
           ],
           "meta": {
-            "line": 65,
+            "line": 70,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -405,7 +421,7 @@
             }
           ],
           "meta": {
-            "line": 92,
+            "line": 110,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -427,7 +443,7 @@
             }
           ],
           "meta": {
-            "line": 109,
+            "line": 127,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -448,7 +464,7 @@
             }
           ],
           "meta": {
-            "line": 123,
+            "line": 141,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -470,7 +486,29 @@
             }
           ],
           "meta": {
-            "line": 137,
+            "line": 155,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "setIgnoreCooldown",
+          "description": "Used to set the \"ignoreCooldown\" property.",
+          "params": [
+            {
+              "name": "bool",
+              "description": "The Duration in Seconds.",
+              "type": [
+                [
+                  [
+                    "boolean"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "meta": {
+            "line": 169,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -497,7 +535,7 @@
             }
           ],
           "meta": {
-            "line": 151,
+            "line": 177,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -524,7 +562,7 @@
             }
           ],
           "meta": {
-            "line": 165,
+            "line": 191,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -572,7 +610,7 @@
           ],
           "async": true,
           "meta": {
-            "line": 191,
+            "line": 217,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -621,7 +659,7 @@
             }
           ],
           "meta": {
-            "line": 198,
+            "line": 224,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -651,7 +689,7 @@
             ]
           ],
           "meta": {
-            "line": 224,
+            "line": 250,
             "file": "command.js",
             "path": "../build/components"
           }

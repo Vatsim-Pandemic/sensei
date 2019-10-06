@@ -76,6 +76,12 @@ class SenseiCommand {
      * @type {number}
      */
     public cooldown : number = 5;
+
+    /**
+     * If this Property is set to True, the Command will ignore any type of cooldown.
+     * @type {Boolean}
+     */
+    public ignoreCooldown : boolean = false;
     
     /**
      * The Array of Arguments this command requires.
@@ -96,6 +102,20 @@ class SenseiCommand {
     protected permissions : PermissionResolvable[] = [];
 
     // Methods
+    protected ordinal_suffix_of(i : number) {
+        var j = i % 10,
+            k = i % 100;
+        if (j == 1 && k != 11) {
+            return i + "st";
+        }
+        if (j == 2 && k != 12) {
+            return i + "nd";
+        }
+        if (j == 3 && k != 13) {
+            return i + "rd";
+        }
+        return i + "th";
+    }
 
     protected duplicateArguments() : boolean {
         if(this.arguments.length > 0) {
@@ -174,6 +194,14 @@ class SenseiCommand {
         }
         return this;
     }
+    /**
+     * Used to set the "ignoreCooldown" property.
+     * @param {boolean} bool The Duration in Seconds.
+     */
+    protected setIgnoreCooldown(bool : boolean) {
+        this.ignoreCooldown = bool;
+        return this;
+    }
 
     /**
      * Used to set the Arguments for the Command
@@ -234,7 +262,7 @@ class SenseiCommand {
         let errString : string = "";
         let index = 1;
         messages.forEach(message => {
-            errString += `\n${index}.) ${message}`;
+            errString += `\n-) ${message}`;
             index++;
         })
         
@@ -329,7 +357,7 @@ class SenseiCommand {
                                     if(this.isNum(args[index])) {
                                         argObject[argumentsList[index].name] = Number(args[index]);
                                     } else {
-                                        errors.push(`Argument must be a Number.`);
+                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Number.`);
                                     }
                                     break;
                                 case "USER_MENTION":
@@ -340,10 +368,10 @@ class SenseiCommand {
                                                 userIndex++;
                                             }
                                         } else {
-                                            errors.push(`Argument must be a Mentioned User.`);
+                                            errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned User.`);
                                         }
                                     } else {
-                                        errors.push(`Argument must be a Mentioned User.`);
+                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned User.`);
                                     }
                                     break;
                                 case "ROLE_MENTION":
@@ -354,10 +382,10 @@ class SenseiCommand {
                                                 roleIndex++;
                                             }
                                         } else {
-                                            errors.push(`Argument must be a Mentioned Role.`);
+                                            errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Role.`);
                                         }
                                     } else {
-                                        errors.push(`Argument must be a Mentioned Role.`);
+                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Role.`);
                                     }
                                     break;
                                 case "CHANNEL_MENTION":
@@ -368,10 +396,10 @@ class SenseiCommand {
                                                 channelIndex++;
                                         }
                                         } else {
-                                            errors.push(`Argument must be a Mentioned Channel.`);
+                                            errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Channel.`);
                                         }
                                     } else {
-                                        errors.push(`Argument must be a Mentioned Channel.`);
+                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Channel.`);
                                     }
                                     break;
                             }
@@ -394,14 +422,16 @@ class SenseiCommand {
                         index++;
                     }        
                     if(errors.length == 0) {
-                        bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
-                        bot.sysMemory.add(message.author.id);
-                        setTimeout(() => {
-                            bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
-                        }, this.cooldown * 1000);
-                        setTimeout(() => {
-                            bot.sysMemory.delete(message.author.id);
-                        }, bot.cooldowns.systemCooldown * 1000);
+                        if(!this.ignoreCooldown) {
+                            bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
+                            bot.sysMemory.add(message.author.id);
+                            setTimeout(() => {
+                                bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
+                            }, this.cooldown * 1000);
+                            setTimeout(() => {
+                                bot.sysMemory.delete(message.author.id);
+                            }, bot.cooldowns.systemCooldown * 1000);
+                        }
                         this.run(bot, message, argObject);
                     } else {
                         this.reportError(bot, message, errors);

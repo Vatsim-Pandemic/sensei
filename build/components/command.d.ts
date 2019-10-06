@@ -57,6 +57,11 @@ declare class SenseiCommand {
      */
     cooldown: number;
     /**
+     * If this Property is set to True, the Command will ignore any type of cooldown.
+     * @type {Boolean}
+     */
+    ignoreCooldown: boolean;
+    /**
      * The Array of Arguments this command requires.
      * @type {ArgumentObject[]}
      */
@@ -71,6 +76,7 @@ declare class SenseiCommand {
      * @type {PermissionResolvable[]}
      */
     protected permissions: PermissionResolvable[];
+    protected ordinal_suffix_of(i: number): string;
     protected duplicateArguments(): boolean;
     protected duplicateNames(): boolean;
     /**
@@ -93,6 +99,11 @@ declare class SenseiCommand {
      * @param {number} duration The Duration in Seconds.
      */
     protected setCooldown(duration: number): this;
+    /**
+     * Used to set the "ignoreCooldown" property.
+     * @param {boolean} bool The Duration in Seconds.
+     */
+    protected setIgnoreCooldown(bool: boolean): this;
     /**
      * Used to set the Arguments for the Command
      * @param {ArgumentObject[]} argumentsArray Array of Arguments

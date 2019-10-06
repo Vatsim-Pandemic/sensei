@@ -49,6 +49,11 @@ class SenseiCommand {
          */
         this.cooldown = 5;
         /**
+         * If this Property is set to True, the Command will ignore any type of cooldown.
+         * @type {Boolean}
+         */
+        this.ignoreCooldown = false;
+        /**
          * The Array of Arguments this command requires.
          * @type {ArgumentObject[]}
          */
@@ -65,6 +70,19 @@ class SenseiCommand {
         this.permissions = [];
     }
     // Methods
+    ordinal_suffix_of(i) {
+        var j = i % 10, k = i % 100;
+        if (j == 1 && k != 11) {
+            return i + "st";
+        }
+        if (j == 2 && k != 12) {
+            return i + "nd";
+        }
+        if (j == 3 && k != 13) {
+            return i + "rd";
+        }
+        return i + "th";
+    }
     duplicateArguments() {
         if (this.arguments.length > 0) {
             let arr = [];
@@ -145,6 +163,14 @@ class SenseiCommand {
         return this;
     }
     /**
+     * Used to set the "ignoreCooldown" property.
+     * @param {boolean} bool The Duration in Seconds.
+     */
+    setIgnoreCooldown(bool) {
+        this.ignoreCooldown = bool;
+        return this;
+    }
+    /**
      * Used to set the Arguments for the Command
      * @param {ArgumentObject[]} argumentsArray Array of Arguments
      */
@@ -201,7 +227,7 @@ class SenseiCommand {
         let errString = "";
         let index = 1;
         messages.forEach(message => {
-            errString += `\n${index}.) ${message}`;
+            errString += `\n-) ${message}`;
             index++;
         });
         errString += `\n\n\`${bot.prefixes[0]}${this.info.syntax}\``;
@@ -291,7 +317,7 @@ class SenseiCommand {
                                         argObject[argumentsList[index].name] = Number(args[index]);
                                     }
                                     else {
-                                        errors.push(`Argument must be a Number.`);
+                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Number.`);
                                     }
                                     break;
                                 case "USER_MENTION":
@@ -303,11 +329,11 @@ class SenseiCommand {
                                             }
                                         }
                                         else {
-                                            errors.push(`Argument must be a Mentioned User.`);
+                                            errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned User.`);
                                         }
                                     }
                                     else {
-                                        errors.push(`Argument must be a Mentioned User.`);
+                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned User.`);
                                     }
                                     break;
                                 case "ROLE_MENTION":
@@ -319,11 +345,11 @@ class SenseiCommand {
                                             }
                                         }
                                         else {
-                                            errors.push(`Argument must be a Mentioned Role.`);
+                                            errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Role.`);
                                         }
                                     }
                                     else {
-                                        errors.push(`Argument must be a Mentioned Role.`);
+                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Role.`);
                                     }
                                     break;
                                 case "CHANNEL_MENTION":
@@ -335,11 +361,11 @@ class SenseiCommand {
                                             }
                                         }
                                         else {
-                                            errors.push(`Argument must be a Mentioned Channel.`);
+                                            errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Channel.`);
                                         }
                                     }
                                     else {
-                                        errors.push(`Argument must be a Mentioned Channel.`);
+                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Channel.`);
                                     }
                                     break;
                             }
@@ -367,14 +393,16 @@ class SenseiCommand {
                         index++;
                     }
                     if (errors.length == 0) {
-                        bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
-                        bot.sysMemory.add(message.author.id);
-                        setTimeout(() => {
-                            bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
-                        }, this.cooldown * 1000);
-                        setTimeout(() => {
-                            bot.sysMemory.delete(message.author.id);
-                        }, bot.cooldowns.systemCooldown * 1000);
+                        if (!this.ignoreCooldown) {
+                            bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
+                            bot.sysMemory.add(message.author.id);
+                            setTimeout(() => {
+                                bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
+                            }, this.cooldown * 1000);
+                            setTimeout(() => {
+                                bot.sysMemory.delete(message.author.id);
+                            }, bot.cooldowns.systemCooldown * 1000);
+                        }
                         this.run(bot, message, argObject);
                     }
                     else {
