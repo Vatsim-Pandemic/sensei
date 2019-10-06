@@ -1,0 +1,20 @@
+{
+      "name": "ArgumentTypeResolvable",
+      "type": [
+        [
+          [
+            "\"USER_MENTION\" | \"ROLE_MENTION\" | \"CHANNEL_MENTION\" | \"string\" | \"number\""
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "ArgumentDefaultResolvable",
+      "type": [
+        [
+          [
+            "\"MESSAGE_AUTHOR\" | \"MESSAGE_CHANNEL\" | \"MESSAGE_GUILD\" | string | number"
+          ]
+        ]
+      ]
+    }
