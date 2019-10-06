@@ -2,7 +2,7 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570362665482
+    "date": 1570366336681
   },
   "custom": {
     "general": {
@@ -28,19 +28,19 @@
         "configuration": {
           "name": "Configuration",
           "type": "md",
-          "content": "<<<<<<< HEAD\n### Configuration Object\nThe object that is passed as an Argument to the \"configure()\" method has a few properties that need to be Specified for it to work properly.\n\nThese are the properties that are required to be in this Object.\n#### 1.) Token\nThese properties are:\n```javascript\ntoken: \"the.bot.token\" // The Bot Token that is required to Login as the Bot.\n```\nThis property is the Token of the Bot that is used to Login into Discord.\n\n#### 2.) Prefixes Array\n```javascript\nprefixes: [\n    \"prefix1\",\n    \"prefix2\",\n    \"p!\"\n]\n```\nAn array of the Prefixes that the bot understands. A Bot may have atleast 1 Prefix to Work but alternative prefixes can be specified.\n\n#### 3.) Error Reporting\n```javascript\nreportErrors: true // Dictates whether All Errors should be reported to the Discord User or not.\n```\nThis property determines If even the smallest of errors should be reported to the user or not.<br>Note that If the user attempts to use a command with incorrect syntax, Those types of errors will be reported but If the user tries to execute a command that doesn't exist then those types of errors will not be reported if this is set to false.<br>\n\nThis is an optional property. Its value is set to \"false\" by default.\n\n#### 4.) Cooldown Settings\n```javascript\ncooldowns: {\n    type: \"command\" // Cooldowns Type. \"command\" or \"system\".\n    systemCooldown: 10 // Duration of the Cooldown if the type is set to \"system\"\n}\n```\nThis property is an object which determines how Cooldowns should work in the bot.<br>\n\nIf `cooldowns.type` is set to \"command\", Then the cooldowns will be applied on a command basis (User can execute other commands but cannot execute the same command for a certain amount of seconds).<br>\nIf `cooldowns.type` is set to \"system\", Then the User will not be able to execute *any* command until the cooldown duration is over.\n<br>\n\n`cooldowns.systemCooldown` determines the duration of the Cooldown *IF* `cooldowns.type` is set to \"system\". If the `cooldowns.type` is set to \"command\" then the Duration specified in the Command will be used instead.\n\n#### 5.) Commands Directory\n```javascript\ncommandsDirectory: path.join(__dirname, \"/commands\") // The Full Path to the Directory where Command Files are saved.\n```\nThis property is the path of the Commands Source Directory. The Commands Directory is the folder where all the command files are saved. The bot assumes that the command files are saved in this Directory and only reads from here.<br>\n\nAdditional directories may be created under the Commands directory for keeping everything organized e.g. Moderation commands under their own specific directory. You can read more about this [here](https://github.com/Demonicious/sensei/wiki/commands).\n\n#### 6.) Information\n```javascript\ninfo: {\n    name: \"The Name of the Bot\",\n    version: \"The Current Version of the Bot\",\n    author: {\n        name: \"The Real/Online Name of the Author\",\n        username: \"The Discord Username of the Author\",\n        email: \"The Support E-Mail of the Author\".\n    }\n}\n```\nThis property holds some information about the bot that may be used for Logging or providing Information to the users.<br>\nThe Framework doesn't use this information for anything. So this is optional but it may be useful to someone who's using this Framework.\n\n#### 7.) Setting Custom Properties\n```javascript\ncustom: {\n   myCustomProperty: \"The Value of my Custom Property\",\n}\n```\nThis is another Optional Property that can be used to set Custom Properties in the bot that can later be used later as such: ```bot.custom.myCustomProperty``` inside your code anywhere. This is useful for Declaring some useful information such as.. You may want to declare some kind of custom \"primaryColor\" property that holds color codes which you may then use inside your RichEmbeds as such ```richEmbed.setColor(bot.custom.primaryColor)```.<br>\n\nSome custom properties are pre-declared. These are:\n```\ncustom.footerText = \"SenseiBot\";\ncustom.primaryColor = \"#5f5ac6\";\ncustom.secondaryColor = \"#8e7878\";\ncustom.errorColor = \"#ef2e2e\";\ncustom.successColor = \"#68c73f\";\n```\nThese are used by the Bot for Showing Errors to the User. To edit these properties you must specify their values in the \"custom\" propertie.<br>\n\nI'd let the user think of more use cases :)\n\n#### 8.) Full Example of a \"main.js\" file.\n\n```javascript\nconst { SenseiClient } = require(\"sensei.djs\");\nconst path = require(\"path\");\n\nconst bot = new SenseiClient;\nbot.configure({\n    // The Login Token of My Bot.\n    token: \"BOT.TOKEN.HERE\",\n    // The Prefixes I want this bot to understand.\n    prefixes: [\n        \"r>\",\n        \"rave>\"\n    ],\n    // Whether even the smallest of errors should be reported to the User or Not.\n    reportErrors: true,\n    // How should the Cooldowns work in the bot.\n    cooldowns: {\n        type: \"command\",\n        systemCooldown: 10\n    },\n    // Where all my commands are stored.\n    commandsDirectory: path.join(__dirname, \"/commands\"),\n    // Some Information about the Bot (Optional Property)\n    info: {\n        name: \"RAVE\",\n        version: \"1.0.0\",\n        author: {\n            name: \"Mudassar Islam\",\n            username: \"Demonicious#9560\",\n            email: \"demoncious@gmail.com\",\n        }\n    },\n    // Some Custom Properties that I want to be held in the \"bot\" object.\n    custom: {\n        // I declared this footerText property so that I can use it in my RichEmbeds without typing out everything manually.\n        footerText: \"Footer Text\",\n    }\n});\n\nbot.start();\n```\n=======\n### Configuration Object\r\nThe object that is passed as an Argument to the \"configure()\" method has a few properties that need to be Specified for it to work properly.\r\n\r\nThese are the properties that are required to be in this Object.\r\n#### 1.) Token\r\nThese properties are:\r\n```javascript\r\ntoken: \"the.bot.token\" // The Bot Token that is required to Login as the Bot.\r\n```\r\nThis property is the Token of the Bot that is used to Login into Discord.\r\n\r\n#### 2.) Prefixes Array\r\n```javascript\r\nprefixes: [\r\n    \"prefix1\",\r\n    \"prefix2\",\r\n    \"p!\"\r\n]\r\n```\r\nAn array of the Prefixes that the bot understands. A Bot may have atleast 1 Prefix to Work but alternative prefixes can be specified.\r\n\r\n#### 3.) Error Reporting\r\n```javascript\r\nreportErrors: true // Dictates whether All Errors should be reported to the Discord User or not.\r\n```\r\nThis property determines If even the smallest of errors should be reported to the user or not.<br>Note that If the user attempts to use a command with incorrect syntax, Those types of errors will be reported but If the user tries to execute a command that doesn't exist then those types of errors will not be reported if this is set to false.<br>\r\n\r\nThis is an optional property. Its value is set to \"false\" by default.\r\n\r\n#### 4.) Cooldown Settings\r\n```javascript\r\ncooldowns: {\r\n    type: \"command\" // Cooldowns Type. \"command\" or \"system\".\r\n    systemCooldown: 10 // Duration of the Cooldown if the type is set to \"system\"\r\n}\r\n```\r\nThis property is an object which determines how Cooldowns should work in the bot.<br>\r\n\r\nIf `cooldowns.type` is set to \"command\", Then the cooldowns will be applied on a command basis (User can execute other commands but cannot execute the same command for a certain amount of seconds).<br>\r\nIf `cooldowns.type` is set to \"system\", Then the User will not be able to execute *any* command until the cooldown duration is over.\r\n<br>\r\n\r\n`cooldowns.systemCooldown` determines the duration of the Cooldown *IF* `cooldowns.type` is set to \"system\". If the `cooldowns.type` is set to \"command\" then the Duration specified in the Command will be used instead.\r\n\r\n#### 5.) Commands Directory\r\n```javascript\r\ncommandsDirectory: path.join(__dirname, \"/commands\") // The Full Path to the Directory where Command Files are saved.\r\n```\r\nThis property is the path of the Commands Source Directory. The Commands Directory is the folder where all the command files are saved. The bot assumes that the command files are saved in this Directory and only reads from here.<br>\r\n\r\nAdditional directories may be created under the Commands directory for keeping everything organized e.g. Moderation commands under their own specific directory. You can read more about this [here](https://github.com/Demonicious/sensei/wiki/commands).\r\n\r\n#### 6.) Information\r\n```javascript\r\ninfo: {\r\n    name: \"The Name of the Bot\",\r\n    version: \"The Current Version of the Bot\",\r\n    author: {\r\n        name: \"The Real/Online Name of the Author\",\r\n        username: \"The Discord Username of the Author\",\r\n        email: \"The Support E-Mail of the Author\".\r\n    }\r\n}\r\n```\r\nThis property holds some information about the bot that may be used for Logging or providing Information to the users.<br>\r\nThe Framework doesn't use this information for anything. So this is optional but it may be useful to someone who's using this Framework.\r\n\r\n#### 7.) Setting Custom Properties\r\n```javascript\r\ncustom: {\r\n   myCustomProperty: \"The Value of my Custom Property\",\r\n}\r\n```\r\nThis is another Optional Property that can be used to set Custom Properties in the bot that can later be used later as such: ```bot.custom.myCustomProperty``` inside your code anywhere. This is useful for Declaring some useful information such as.. You may want to declare some kind of custom \"primaryColor\" property that holds color codes which you may then use inside your RichEmbeds as such ```richEmbed.setColor(bot.custom.primaryColor)```.<br>\r\n\r\nSome custom properties are pre-declared. These are:\r\n```\r\ncustom.footerText = \"SenseiBot\";\r\ncustom.primaryColor = \"#5f5ac6\";\r\ncustom.secondaryColor = \"#8e7878\";\r\ncustom.errorColor = \"#ef2e2e\";\r\ncustom.successColor = \"#68c73f\";\r\n```\r\nThese are used by the Bot for Showing Errors to the User. To edit these properties you must specify their values in the \"custom\" propertie.<br>\r\n\r\nI'd let the user think of more use cases :)\r\n\r\n#### 8.) Full Example of a \"main.js\" file.\r\n\r\n```javascript\r\nconst { SenseiClient } = require(\"sensei.djs\");\r\nconst path = require(\"path\");\r\n\r\nconst bot = new SenseiClient;\r\nbot.configure({\r\n    // The Login Token of My Bot.\r\n    token: \"BOT.TOKEN.HERE\",\r\n    // The Prefixes I want this bot to understand.\r\n    prefixes: [\r\n        \"r>\",\r\n        \"rave>\"\r\n    ],\r\n    // Whether even the smallest of errors should be reported to the User or Not.\r\n    reportErrors: true,\r\n    // How should the Cooldowns work in the bot.\r\n    cooldowns: {\r\n        type: \"command\",\r\n        systemCooldown: 10\r\n    },\r\n    // Where all my commands are stored.\r\n    commandsDirectory: path.join(__dirname, \"/commands\"),\r\n    // Some Information about the Bot (Optional Property)\r\n    info: {\r\n        name: \"RAVE\",\r\n        version: \"1.0.0\",\r\n        author: {\r\n            name: \"Mudassar Islam\",\r\n            username: \"Demonicious#9560\",\r\n            email: \"demoncious@gmail.com\",\r\n        }\r\n    },\r\n    // Some Custom Properties that I want to be held in the \"bot\" object.\r\n    custom: {\r\n        // I declared this footerText property so that I can use it in my RichEmbeds without typing out everything manually.\r\n        footerText: \"Footer Text\",\r\n    }\r\n});\r\n\r\nbot.start();\r\n```\r\n>>>>>>> a4c2ffe1800aea07f805211787c40770b7d4bd32\n",
+          "content": "![Discord-Sensei](https://discord-sensei.js.org/img/logo.27982581.png)\r\n\r\n",
           "path": "../docs/basic/configuration.md"
         },
         "firstcommand": {
           "name": "First Command",
           "type": "md",
-          "content": "",
+          "content": "![Discord-Sensei](https://discord-sensei.js.org/img/logo.27982581.png)\r\n\r\n## Creating the First Command.\r\n\r\nIf your Working Directory doesn't have a `/commands` directory, then this would be the time to do so.\r\n\r\n*Note: The name of this directory doesn't have to be 'commands', It can be anything as long as you set the `commandsDirectory` property to the path of this directory in `index.js`*\r\n\r\nThis bot framework uses a separate file for each command, and this `/commands` directory will be used to hold all of our Command Files.\r\n\r\n### Creating our Command File.\r\n\r\nWe could just create a new file directly under `/commands` but imagine you have a large bot with a lot of commands, It will easily get extremely tedious if all commands are just directly under the `/commands` directory.\r\n\r\nTo Fix this issue, we can simply create a sub-directory under `/commands`.\r\n\r\n*Sub-Directories can be created under the `/commands` directory. Creating sub-directories doesn't hold any significance other than organizing.*<br>\r\n*If you want to disable a command, you can create a sub-directory named `/_drafts` under `/commands` which will simply be ignored by the bot.*\r\n\r\nWe're gonna make a new directory named `./Interaction` under `/commands`. The name of this directory doesn't matter, I just went for \"Interaction\" because it makes sense to the type of commands that will be in this directory.\r\n\r\nIn our `./Interaction` Directory we're gonna create a new file named `HiCommand.js`. This will be an extremely basic command that just says Hi to a User.\r\n\r\n### Writing the Code for The Command\r\n\r\nOpen up our newly created file in your favorite Text Editor.\r\n\r\nThe first thing to do is to require the `SenseiCommand` class from `discord-sensei`\r\n\r\n#### Requiring Modules.\r\n\r\n```javascript\r\nconst { SenseiCommand } = require(\"discord-sensei\");\r\n```\r\n\r\nI want the Bot to say Hi in a nicer way then just a message, So i'm deciding to use RichEmbeds. For that I will have to require `RichEmbed` from `discord.js`\r\n\r\n```javascript\r\nconst { RichEmbed } = require(\"discord.js\");\r\n```\r\n\r\n#### Creating our Class.\r\n\r\nWe will declare a class named `HiCommand` that extends `SenseiCommand`. We're gonna define the Constructor method, and the first thing in the constructor method should be the super() method as such:\r\n\r\n##### Declaration\r\n\r\n```javascript\r\nclass HiCommand extends SenseiCommand {\r\n  constructor() {\r\n    super();\r\n  }\r\n}\r\n```\r\n\r\n##### Setting of Properties.\r\n\r\nWe're gonna use the Methods provided by `SenseiCommand` in the constructor method to set all of the different properties for this command.<br>\r\n*[SenseiCommand Methods](https://discord-sensei.js.org/#/docs/main/stable/class/SenseiCommand)*\r\n\r\n```javascript\r\nclass HiCommand extends SenseiCommand {\r\n  constructor() {\r\n    super();\r\n\r\n    // Set the Name and Aliases\r\n    this.setNames([\r\n      \"hi\",\r\n      \"hello\"\r\n    ]);\r\n    \r\n    // Set the Category\r\n    this.setCategory(\"Interaction\");\r\n    \r\n    // Set the Information\r\n    this.setInfo({\r\n      name: \"Hi Command\",\r\n      description: \"Says Hi to Someone\",\r\n      syntax: \"hi [Optional User Mention]\"\r\n    });\r\n    \r\n    // Set the Arguments. We will only have 1 Optional Argument for this Command.\r\n    this.setArguments([\r\n      {\r\n        name: \"user\",\r\n        type: \"USER_MENTION\",\r\n        optional: true,\r\n        default: \"MESSAGE_AUTHOR\" // If the User doesn't pass this argument, the Message Author will be the default value.\r\n      }\r\n    ]);\r\n  }\r\n}\r\n```\r\n\r\n##### Creating our Run Method.\r\n\r\nAfter this we need to define our run() method in the Class. This is the actual code that will be executed by the Bot.\r\nWe need to follow a Specific Syntax for the run() method's definition; [run() Method](https://discord-sensei.js.org/#/docs/main/stable/class/SenseiCommand?scrollTo=run)\r\n\r\nThe run method is declared as such in the class:\r\n\r\n```javascript\r\nasync run(bot, message, args) {}\r\n```\r\n\r\nHere, the `bot` is the [SenseiClient](https://discord-sensei.js.org/#/docs/main/stable/class/SenseiClient) Object. The `message` is the [Message](https://discord.js.org/#/docs/main/stable/class/Message) that triggered the command.<br>`args` is an Object containing the Arguments this command was executed with. We can access the values of the arguments we defined above using their `name` as such:\r\n```javascript\r\nconsole.log(args.user);\r\n// Will log the value of the argument with the name 'user' we defined above.\r\n```\r\n\r\nThe run() method definition for this command will be like this:\r\n\r\n```javascript\r\nasync run(bot, message, args) {\r\n  let rb = new RichEmbed;\r\n  rb.setDescription(`Hi ${args.user.username}`)\r\n  .setColor(\"#68c73f\")\r\n  .setFooter(\"My Awesome Bot\")\r\n  .setTimestamp();\r\n  \r\n  message.channel.send(rb);\r\n  return;\r\n}\r\n```\r\n\r\n#### Exporting our Command Class.\r\n\r\nTo actually make it so that the Bot can use this command, we need to export our newly created class at the end of the file as such:\r\n\r\n```javascript\r\nmodule.exports = HiCommand;\r\n```\r\n\r\n### Full Code.\r\n\r\nThis is how our entire command file should look like (without comments)\r\n\r\n```javascript\r\nconst { SenseiCommand } = require(\"discord-sensei\");\r\nconst { RichEmbed } = require(\"discord.js\");\r\n\r\nclass HiCommand extends SenseiCommand {\r\n  constructor() {\r\n    super();\r\n    this.setNames([\r\n      \"hi\",\r\n      \"hello\"\r\n    ]);\r\n    this.setCategory(\"Interaction\");\r\n    this.setInfo({\r\n      name: \"Hi Command\",\r\n      description: \"Says Hi to Someone\",\r\n      syntax: \"hi [Optional User Mention]\"\r\n    });\r\n    this.setArguments([\r\n      {\r\n        name: \"user\",\r\n        type: \"USER_MENTION\",\r\n        optional: true,\r\n        default: \"MESSAGE_AUTHOR\"\r\n      }\r\n    ]);\r\n  }\r\n  \r\n  async run(bot, message, args) {\r\n    let rb = new RichEmbed;\r\n    rb.setDescription(`Hi ${args.user.username}`)\r\n    .setColor(\"#68c73f\")\r\n    .setFooter(\"My Awesome Bot\")\r\n    .setTimestamp();\r\n\r\n    message.channel.send(rb);\r\n    return;\r\n  }\r\n}\r\n\r\nmodule.exports = HiCommand;\r\n```\r\n\r\nThis should be the response of the Bot when you try to execute this command:\r\n\r\n![Proof](https://discord-sensei.js.org/img/command1.jpeg)\r\n",
           "path": "../docs/basic/firstcommand.md"
         },
         "directorystructure": {
           "name": "Directory Structure",
           "type": "md",
-          "content": "",
+          "content": "![Discord-Sensei](https://discord-sensei.js.org/img/logo.27982581.png)\r\n\r\n## Directory Structure.\r\n\r\nThis is the Default Directory Structure:\r\n\r\n```\r\n├── commands                   \r\n│   ├── Group 1\r\n|   |   └── // Command Files Belonging to Group 1 \r\n│   ├── Group 2\r\n|   |   └── // Command Files Belonging to Group 2 \r\n│   └── _drafts\r\n|       └── // Draft Command Files that are ignored by the bot.\r\n├── index.js\r\n└── package.json\r\n```\r\n",
           "path": "../docs/basic/directorystructure.md"
         }
       }
@@ -405,7 +405,7 @@
             }
           ],
           "meta": {
-            "line": 107,
+            "line": 92,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -427,7 +427,7 @@
             }
           ],
           "meta": {
-            "line": 124,
+            "line": 109,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -448,7 +448,7 @@
             }
           ],
           "meta": {
-            "line": 138,
+            "line": 123,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -470,7 +470,7 @@
             }
           ],
           "meta": {
-            "line": 152,
+            "line": 137,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -497,7 +497,7 @@
             }
           ],
           "meta": {
-            "line": 166,
+            "line": 151,
             "file": "command.js",
             "path": "../build/components"
           }
@@ -524,7 +524,55 @@
             }
           ],
           "meta": {
-            "line": 180,
+            "line": 165,
+            "file": "command.js",
+            "path": "../build/components"
+          }
+        },
+        {
+          "name": "run",
+          "description": "The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.",
+          "examples": [
+            "// Here's how this method may be defined in a Command:\rasync run(bot, message, args) {\r     let sender = message.author.username;\r     let channel = message.channel;\r\r     channel.send(`Hello ${sender}!. How are you doing ?`);\r     return;\r}"
+          ],
+          "params": [
+            {
+              "name": "bot",
+              "description": "The SenseiClient Object.",
+              "type": [
+                [
+                  [
+                    "SenseiClient"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "message",
+              "description": "The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object",
+              "type": [
+                [
+                  [
+                    "Message"
+                  ]
+                ]
+              ]
+            },
+            {
+              "name": "args",
+              "description": "The Arguments this message was sent with.",
+              "type": [
+                [
+                  [
+                    "Object"
+                  ]
+                ]
+              ]
+            }
+          ],
+          "async": true,
+          "meta": {
+            "line": 190,
             "file": "command.js",
             "path": "../build/components"
           }
