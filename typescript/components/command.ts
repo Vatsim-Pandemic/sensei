@@ -117,22 +117,6 @@ class SenseiCommand {
     }
 
     /**
-     * The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.
-     * @param {SenseiClient} bot The SenseiClient Object.
-     * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object 
-     * @param {Object} args The Arguments this message was sent with.
-     * @example
-     * // Here's how this method may be defined in a Command:
-     * async run(bot, message, args) {
-     *      let sender = message.author.username;
-     *      let channel = message.channe;
-     * 
-     *      channel.send(`Hello ${sender}!. How are you doing ?`);
-     *      return;
-     * }
-     */
-
-    /**
      * Used to set the Name(s) of the Command.
      * @param {string[]} namesArray The Array of Names.
      */
@@ -219,6 +203,21 @@ class SenseiCommand {
         return this;
     }
      
+    /**
+     * The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.
+     * @param {SenseiClient} bot The SenseiClient Object.
+     * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object 
+     * @param {Object} args The Arguments this message was sent with.
+     * @example
+     * // Here's how this method may be defined in a Command:
+     * async run(bot, message, args) {
+     *      let sender = message.author.username;
+     *      let channel = message.channel;
+     * 
+     *      channel.send(`Hello ${sender}!. How are you doing ?`);
+     *      return;
+     * }
+     */
     protected async run(bot : SenseiClient, message : Discord.Message, args? : any) : Promise<void> {}
 
     /**

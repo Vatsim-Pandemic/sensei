@@ -74,21 +74,6 @@ declare class SenseiCommand {
     protected duplicateArguments(): boolean;
     protected duplicateNames(): boolean;
     /**
-     * The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.
-     * @param {SenseiClient} bot The SenseiClient Object.
-     * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object
-     * @param {Object} args The Arguments this message was sent with.
-     * @example
-     * // Here's how this method may be defined in a Command:
-     * async run(bot, message, args) {
-     *      let sender = message.author.username;
-     *      let channel = message.channe;
-     *
-     *      channel.send(`Hello ${sender}!. How are you doing ?`);
-     *      return;
-     * }
-     */
-    /**
      * Used to set the Name(s) of the Command.
      * @param {string[]} namesArray The Array of Names.
      */
@@ -118,6 +103,21 @@ declare class SenseiCommand {
      * @param {PermissionResolvable[]} permissionsArray Array of [PermissionResolvable](https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS)
      */
     protected setPermissions(permissionsArray: PermissionResolvable[]): this;
+    /**
+     * The Code to be Executed when this Command is called by a Discord User. This Method needs to be Defined by the User inside a Command Class that Extends this SenseiCommand class.
+     * @param {SenseiClient} bot The SenseiClient Object.
+     * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object
+     * @param {Object} args The Arguments this message was sent with.
+     * @example
+     * // Here's how this method may be defined in a Command:
+     * async run(bot, message, args) {
+     *      let sender = message.author.username;
+     *      let channel = message.channel;
+     *
+     *      channel.send(`Hello ${sender}!. How are you doing ?`);
+     *      return;
+     * }
+     */
     protected run(bot: SenseiClient, message: Discord.Message, args?: any): Promise<void>;
     /**
      * This Method is used for Error Reporting (To the Discord User)
