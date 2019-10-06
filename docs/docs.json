@@ -2,7 +2,7 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570351910286
+    "date": 1570362563404
   },
   "custom": {
     "general": {
@@ -960,6 +960,8 @@
         {
           "name": "logMessages",
           "description": "Whether the Bot should Log Information Messages to the Console or not.",
+          "optional": true,
+          "default": false,
           "type": [
             [
               [
@@ -971,6 +973,8 @@
         {
           "name": "reportErrors",
           "description": "Whether even the smallest of errors should be reported to the Discord User or not.",
+          "optional": true,
+          "default": false,
           "type": [
             [
               [
@@ -982,6 +986,8 @@
         {
           "name": "cooldowns",
           "description": "Determines how cooldowns should be applied in the bot.",
+          "optional": true,
+          "default": "{ type: \"command\", systemCooldown: 10 }",
           "type": [
             [
               [
@@ -993,6 +999,8 @@
         {
           "name": "info",
           "description": "Some Optional but Useful information about the bot.",
+          "optional": true,
+          "default": "{ name: \"Sensei Bot\", version: 1.0.0, author: { name: \"Demonicious\", username: \"Demonicious#9560\", email: \"demoncious@gmail.com\" } }",
           "type": [
             [
               [
@@ -1004,6 +1012,8 @@
         {
           "name": "custom",
           "description": "Used to Declare Custom Properties that are held in the bot object.",
+          "optional": true,
+          "default": "{ footerText: \"SenseiBot\", errorColor: \"#ef2e2e\", successColor: \"#68c73f\", secondaryColor: \"#8e7878\", primaryColor: \"#5f5ac6\" }",
           "type": [
             [
               [
@@ -1129,26 +1139,6 @@
         "file": "command.js",
         "path": "../build/components"
       }
-    },
-    {
-      "name": "ArgumentTypeResolvable",
-      "type": [
-        [
-          [
-            "\"USER_MENTION\" | \"ROLE_MENTION\" | \"CHANNEL_MENTION\" | \"string\" | \"number\""
-          ]
-        ]
-      ]
-    },
-    {
-      "name": "ArgumentDefaultResolvable",
-      "type": [
-        [
-          [
-            "\"MESSAGE_AUTHOR\" | \"MESSAGE_CHANNEL\" | \"MESSAGE_GUILD\" | string | number"
-          ]
-        ]
-      ]
     }
   ],
   "externals": []

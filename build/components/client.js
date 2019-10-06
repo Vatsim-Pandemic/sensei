@@ -248,7 +248,7 @@ class SenseiClient extends discord_js_1.Client {
      */
     /**
      * @typedef {Object} BotInfo
-     * @property {string} name The Name of the Bot.
+     * @property {string} nam The Name of the Bot.
      * @property {string} version The Current Version of the Bot.
      * @property {AuthorInfo} author Information about the Author.
      */
@@ -261,11 +261,11 @@ class SenseiClient extends discord_js_1.Client {
      * @typedef {Object} Config
      * @property {string[]} prefixes The Array of Prefixes the bot uses. The first item is considered the Main Prefix, others are considered alternative prefixes.
      * @property {string} commandsDirectory The Directory where the Bot should scan for Command Files.
-     * @property {boolean} logMessages Whether the Bot should Log Information Messages to the Console or not.
-     * @property {boolean} reportErrors Whether even the smallest of errors should be reported to the Discord User or not.
-     * @property {CooldownSettings} cooldowns Determines how cooldowns should be applied in the bot.
-     * @property {BotInfo} info Some Optional but Useful information about the bot.
-     * @property {Object} custom Used to Declare Custom Properties that are held in the bot object.
+     * @property {boolean} [logMessages=false] Whether the Bot should Log Information Messages to the Console or not.
+     * @property {boolean} [reportErrors=false] Whether even the smallest of errors should be reported to the Discord User or not.
+     * @property {CooldownSettings} [cooldowns={ type: "command", systemCooldown: 10 }] Determines how cooldowns should be applied in the bot.
+     * @property {BotInfo} [info={ name: "Sensei Bot", version: 1.0.0, author: { name: "Demonicious", username: "Demonicious#9560", email: "demoncious@gmail.com" } }] Some Optional but Useful information about the bot.
+     * @property {Object} [custom={ footerText: "SenseiBot", errorColor: "#ef2e2e", successColor: "#68c73f", secondaryColor: "#8e7878", primaryColor: "#5f5ac6" }] Used to Declare Custom Properties that are held in the bot object.
      */
     async registerCommands() {
         return await recursive_readdir_1.default(this.commandsDir, (err, files) => {
