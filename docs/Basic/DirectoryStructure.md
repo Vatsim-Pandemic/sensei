@@ -11,7 +11,7 @@ This is the Default Directory Structure:
 │   ├── Group 2
 |   |   └── // Command Files Belonging to Group 2 
 │   └── _drafts
-|        └── // Draft Command Files that are ignored by the bot.
+|       └── // Draft Command Files that are ignored by the bot.
 ├── index.js
 └── package.json
 ```
