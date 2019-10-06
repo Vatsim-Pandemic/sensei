@@ -64,10 +64,12 @@ Run the Bot using:
 
 If everything goes well, you should see these logs:
 
-```bash
+```
 [Progress]: Beginning Startup Process. [1/4]
 [Progress]: Saving Configuration. [2/4]
 [Progress]: Starting Registry of System Events. [3/4]
 [Progress]: Bot Logged In & Ready! [4/4]
 [OK]: Watching for command events..
 ```
+
+Now you can move on to [Configuration](https://discord-sensei.js.org/#/docs/main/stable/basic/configuration)
