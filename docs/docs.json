@@ -2,7 +2,7 @@
   "meta": {
     "generator": "0.9.0",
     "format": 20,
-    "date": 1570362599836
+    "date": 1570362665482
   },
   "custom": {
     "general": {
@@ -11,7 +11,7 @@
         "welcome": {
           "name": "Welcome",
           "type": "md",
-          "content": "",
+          "content": "![Discord-Sensei](https://discord-sensei.js.org/img/logo.27982581.png)\r\n\r\n### About.\r\ndiscord-sensei is a [node.js](https://nodejs.org/) module that makes the development of [Discord](https://discordapp.com/) Bots extremely easy. It serves as a wrapper around [discord.js](https://discord.js.org/#/) with a workflow thats easy to get used to and is well organized.\r\n\r\n[discord.js](https://discord.js.org/#/) is a great library for interacting with the [Discord API](https://discordapp.com/developers/docs) and it covers nearly 100% of the Entire API.\r\n\r\nSimplicity, and Being Straightforward to use while having a clean workflow was the inspiration behind this project.\r\n\r\n### Some of the Features.\r\n* Built on [discord.js](https://discord.js.org/#/), Same Coding Practices!\r\n* Keeps things Simple, Clean and Organized.\r\n* Automated Message and Argument Parsing.\r\n* Flexible Command Class.\r\n* Arguments with Data types including Strings, Numbers, Discord.js Classes.\r\n* Convient Permissions Setup\r\n* Written in TypeScript.\r\n* Many many more features to come.\r\n\r\n### Who is this for ?\r\nIf you want a Framework that lets users do all the fun stuff without letting them worry about the Management/Boilerplate work underneath all while keeping everything clean and organized, then you'd definitely be interested in checking this out!\r\n\r\n### Installation.\r\n```npm\r\nnpm install --save discord-sensei discord.js\r\n```\r\n\r\n### Basic Setup.\r\n\r\n```javascript\r\nconst { SenseiClient } = require(\"discord-sensei\");\r\nconst path = require(\"path\");\r\n\r\nconst client = new SenseiClient({\r\n  prefixes: [\"p!\", \"p>\"],\r\n  commandsDirectory: path.join(__dirname, \"/commands\")\r\n});\r\n\r\nclient.login(\"YOUR.BOT.TOKEN\");\r\n```\r\n\r\n#### Links.\r\n\r\n[Documentation](https://discord-sensei.js.org/#/docs)<br>\r\n[Discord Server](https://discord.gg/8hxuRZn)<br>\r\n[GitHub Repository](https://github.com/demonicious/sensei)\r\n",
           "path": "../docs/general/welcome.md"
         }
       }
@@ -22,7 +22,7 @@
         "startup": {
           "name": "Startup",
           "type": "md",
-          "content": "",
+          "content": "![Discord-Sensei](https://discord-sensei.js.org/img/logo.27982581.png)\r\n\r\nThis guide assumes that you know the basics of how to work with [Node](https://nodejs.org/). Creating package.json files and Installing and using modules using [npm](https://npmjs.org/).\r\n\r\n## Installation & Setup.\r\n\r\n#### Init.\r\n\r\nCreate a New Directory and Initialize it with a `package.json`\r\n\r\nEdit the `package.json` file and add a `\"start\": \"node .\"` script under the \"test\" script.\r\n\r\nAfter adding the script, your `package.json` file should look similar to this:\r\n\r\n```json\r\n{\r\n    \"name\": \"my_bot\",\r\n    \"description\": \"My new Awesome Bot.\",\r\n    \"version\": \"1.0.0\",\r\n    \"main\": \"index.js\",\r\n    \"scripts\": {\r\n      \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\r\n      \"start\": \"node .\"\r\n    },\r\n    \"keywords\": [\"discord\", \"bot\"],\r\n    \"author\": \"me <me@myemail.com>\",\r\n    \"license\": \"ISC\"\r\n}\r\n```\r\n\r\nAfter this we can create our `index.js` file next to our `package.json` file.\r\n\r\n#### Installation.\r\n\r\nOpen up a Terminal Window in the working directory we created above.\r\n\r\nNow we can install `discord.js` and `discord-sensei` as such:\r\n\r\n```bash\r\nnpm install --save discord.js discord-sensei\r\n```\r\n\r\n#### Running The Bot.\r\n\r\nIf you haven't already, this would be the perfect time to Open up your Working Directory in a Text Editor of your Choice.\r\n\r\nEdit your `index.js` file and fill it with:\r\n\r\n```javascript\r\nconst { SenseiClient } = require(\"discord-sensei\");\r\nconst path = require(\"path\");\r\n\r\nconst client = new SenseiClient({\r\n  prefixes: [\"p!\"],\r\n  commandsDirectory: path.join(__dirname, \"/commands\")\r\n});\r\n\r\nclient.login(\"YOUR.BOT.TOKEN\");\r\n```\r\n\r\nRun the Bot using:\r\n\r\n```npm start```\r\n\r\nIf everything goes well, you should see these logs:\r\n\r\n```\r\n[Progress]: Beginning Startup Process. [1/4]\r\n[Progress]: Saving Configuration. [2/4]\r\n[Progress]: Starting Registry of System Events. [3/4]\r\n[Progress]: Bot Logged In & Ready! [4/4]\r\n[OK]: Watching for command events..\r\n```\r\n\r\nNow you can move on to [Configuration](https://discord-sensei.js.org/#/docs/main/stable/basic/configuration)\r\n",
           "path": "../docs/basic/startup.md"
         },
         "configuration": {
