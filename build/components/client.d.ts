@@ -112,4 +112,3 @@ declare class SenseiClient extends Client {
     private registerCommands;
 }
 export = SenseiClient;
-//# sourceMappingURL=client.d.ts.map

@@ -393,4 +393,3 @@ class SenseiCommand {
     }
 }
 module.exports = SenseiCommand;
-//# sourceMappingURL=command.js.map

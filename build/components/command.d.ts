@@ -137,4 +137,3 @@ declare class SenseiCommand {
     execute(bot: SenseiClient, message: Discord.Message, args: string[]): Promise<void>;
 }
 export = SenseiCommand;
-//# sourceMappingURL=command.d.ts.map

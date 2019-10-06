@@ -34,4 +34,3 @@ declare class Logger {
     progress(message: string): void;
 }
 export = Logger;
-//# sourceMappingURL=log.d.ts.map

@@ -9,4 +9,3 @@ const command_1 = __importDefault(require("./components/command"));
 exports.SenseiCommand = command_1.default;
 const log_1 = __importDefault(require("./components/log"));
 exports.Logger = log_1.default;
-//# sourceMappingURL=sensei.js.map

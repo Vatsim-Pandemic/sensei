@@ -300,4 +300,3 @@ class SenseiClient extends discord_js_1.Client {
     }
 }
 module.exports = SenseiClient;
-//# sourceMappingURL=client.js.map

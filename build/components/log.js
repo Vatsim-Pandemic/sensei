@@ -55,4 +55,3 @@ class Logger {
     }
 }
 module.exports = Logger;
-//# sourceMappingURL=log.js.map
