@@ -90,7 +90,7 @@ declare class SenseiClient extends Client {
      */
     /**
      * @typedef {Object} BotInfo
-     * @property {string} nam The Name of the Bot.
+     * @property {string} name The Name of the Bot.
      * @property {string} version The Current Version of the Bot.
      * @property {AuthorInfo} author Information about the Author.
      */
