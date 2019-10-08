@@ -92,7 +92,7 @@ class HiCommand extends SenseiCommand {
 }
 ```
 
-#### Creating our Run Method.
+### Creating our Run Method.
 
 After this we need to define our run() method in the Class. This is the actual code that will be executed by the Bot.
 We need to follow a Specific Syntax for the run() method's definition; [run() Method](https://discord-sensei.js.org/#/docs/main/stable/class/SenseiCommand?scrollTo=run)
