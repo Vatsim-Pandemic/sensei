@@ -58,4 +58,4 @@ const client = new SenseiClient({
 client.login("YOUR.BOT.TOKEN");
 ```
 
-[Creating Your First Command](https://discord-sensei.js.org/#/docs/main/stable/basic/firstcommand).
+After this, you might wanna take a look at: [Creating Your First Command](https://discord-sensei.js.org/#/docs/main/stable/basic/firstcommand).
