@@ -181,3 +181,7 @@ module.exports = HiCommand;
 This should be the response of the Bot when you try to execute this command:
 
 ![Proof](https://discord-sensei.js.org/img/command1.jpeg)
+
+You might wanna take a look at [this](https://discord-sensei.js.org/#/docs/main/stable/basic/directorystructure) to get an idea of how your directory structure might look when you're working with this.
+
+After that, you can get right into creating Awesome Commands. You can find some snippets on the left sidebar of this page!
