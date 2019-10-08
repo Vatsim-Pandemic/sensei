@@ -3,7 +3,7 @@
 ### Simple Ping Command.
 
 ```javascript
-const { SenseiClient, SenseiCommand } = require("../../../build/sensei");
+const { SenseiClient, SenseiCommand } = require("discord-sensei");
 const { Message } = require("discord.js");
 
 class PingCommand extends SenseiCommand {
