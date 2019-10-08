@@ -114,6 +114,8 @@ class SenseiClient extends Client {
 
     constructor(configObject : Config) {
         super();
+        this.log.progress("Beginning Startup Process. [1/4]");
+
         this.custom.footerText = "SenseiBot";
         this.custom.primaryColor = "#5f5ac6";
         this.custom.secondaryColor = "#8e7878";
@@ -174,14 +176,15 @@ class SenseiClient extends Client {
                     break;
             }
         }
+
+        this.log.progress("Saving Configuration. [2/4]");
+
         // if(!this.verifyToken()) { this.log.error(`Login Token hasn't been set properly. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`); process.exit(); }
         if(!(this.prefixes.length > 0)) { this.log.error(`Atleast one prefix is required for the bot to work. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`); process.exit(); }
         if(this.commandsDir == "none") { this.log.error(`Commands Source Directory hasn't been set. Please see https://github.com/Demonicious/sensei/wiki/2.-Configuration`); process.exit(); }
 
         this.registerCommands().then(() => {
             this.on("ready", () => {
-                this.log.progress("Beginning Startup Process. [1/4]");
-                this.log.progress("Saving Configuration. [2/4]");
                 this.log.progress("Starting Registry of System Events. [3/4]");
                 this.on("message", (message) => {
                     let content = message.content;

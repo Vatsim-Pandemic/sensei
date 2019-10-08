@@ -336,108 +336,122 @@ class SenseiCommand {
                     if(this.reportError) {
                         this.reportError(bot, message, ["System Error."]);
                     }
-                } else if(argumentsList.length > 0 && required.length <= args.length) {
-                    let index : number = 0;
-        
-                    // Used for Sending the Mentioned Objects as Arguments.
-                    let userIndex : number = 0;
-                    let userMentions : Discord.User[] = message.mentions.users.array();
-                    let roleIndex : number = 0;
-                    let roleMentions : Discord.Role[] = message.mentions.roles.array();
-                    let channelIndex : number = 0;
-                    let channelMentions : Discord.GuildChannel[] = message.mentions.channels.array();
-        
-                    for(let arg in argumentsList) {
-                        if(args[index] != undefined) {
-                            switch(argumentsList[index].type) {
-                                case "string":
-                                    argObject.push(this);
-                                    break;
-                                case "number":
-                                    if(this.isNum(args[index])) {
-                                        argObject[argumentsList[index].name] = Number(args[index]);
-                                    } else {
-                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Number.`);
-                                    }
-                                    break;
-                                case "USER_MENTION":
-                                    if(args[index].length == 21) {
-                                        if(args[index].includes("<@") && args[index].includes(">")) {
-                                            if(this.isNum(args[index].replace("<@", "").replace(">", ""))) {
-                                                argObject[argumentsList[index].name] = userMentions[userIndex];
-                                                userIndex++;
+                } else if(this.arguments.length > 0) { 
+                    if(argumentsList.length > 0 && required.length <= args.length) {
+                        let index : number = 0;
+            
+                        // Used for Sending the Mentioned Objects as Arguments.
+                        let userIndex : number = 0;
+                        let userMentions : Discord.User[] = message.mentions.users.array();
+                        let roleIndex : number = 0;
+                        let roleMentions : Discord.Role[] = message.mentions.roles.array();
+                        let channelIndex : number = 0;
+                        let channelMentions : Discord.GuildChannel[] = message.mentions.channels.array();
+            
+                        for(let arg in argumentsList) {
+                            if(args[index] != undefined) {
+                                switch(argumentsList[index].type) {
+                                    case "string":
+                                        argObject.push(this);
+                                        break;
+                                    case "number":
+                                        if(this.isNum(args[index])) {
+                                            argObject[argumentsList[index].name] = Number(args[index]);
+                                        } else {
+                                            errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Number.`);
+                                        }
+                                        break;
+                                    case "USER_MENTION":
+                                        if(args[index].length == 21) {
+                                            if(args[index].includes("<@") && args[index].includes(">")) {
+                                                if(this.isNum(args[index].replace("<@", "").replace(">", ""))) {
+                                                    argObject[argumentsList[index].name] = userMentions[userIndex];
+                                                    userIndex++;
+                                                }
+                                            } else {
+                                                errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned User.`);
                                             }
                                         } else {
                                             errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned User.`);
                                         }
-                                    } else {
-                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned User.`);
-                                    }
-                                    break;
-                                case "ROLE_MENTION":
-                                    if(args[index].length == 22) {
-                                        if(args[index].includes("<@&") && args[index].includes(">")) {
-                                            if(this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
-                                                argObject[argumentsList[index].name] = roleMentions[roleIndex];
-                                                roleIndex++;
+                                        break;
+                                    case "ROLE_MENTION":
+                                        if(args[index].length == 22) {
+                                            if(args[index].includes("<@&") && args[index].includes(">")) {
+                                                if(this.isNum(args[index].replace("<@&", "").replace(">", ""))) {
+                                                    argObject[argumentsList[index].name] = roleMentions[roleIndex];
+                                                    roleIndex++;
+                                                }
+                                            } else {
+                                                errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Role.`);
                                             }
                                         } else {
                                             errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Role.`);
                                         }
-                                    } else {
-                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Role.`);
-                                    }
-                                    break;
-                                case "CHANNEL_MENTION":
-                                    if(args[index].length == 21) {
-                                        if(args[index].includes("<#") && args[index].includes(">")) {
-                                            if(this.isNum(args[index].replace("<#", "").replace(">", ""))) {
-                                                argObject[argumentsList[index].name] = channelMentions[channelIndex];
-                                                channelIndex++;
-                                        }
+                                        break;
+                                    case "CHANNEL_MENTION":
+                                        if(args[index].length == 21) {
+                                            if(args[index].includes("<#") && args[index].includes(">")) {
+                                                if(this.isNum(args[index].replace("<#", "").replace(">", ""))) {
+                                                    argObject[argumentsList[index].name] = channelMentions[channelIndex];
+                                                    channelIndex++;
+                                            }
+                                            } else {
+                                                errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Channel.`);
+                                            }
                                         } else {
                                             errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Channel.`);
                                         }
-                                    } else {
-                                        errors.push(`${this.ordinal_suffix_of(index + 1)} Argument must be a Mentioned Channel.`);
-                                    }
-                                    break;
-                            }
-                        } else if(argumentsList[index].optional) {
-                            if(argumentsList[index].default != undefined) {
-                                let def = argumentsList[index].default;
-                                if(def == "MESSAGE_AUTHOR") {
-                                    argObject[argumentsList[index].name] = message.author;
-                                } else if(def == "MESSAGE_CHANNEL") {
-                                    argObject[argumentsList[index].name] = message.channel;
-                                } else if(def == "MESSAGE_GUILD") {
-                                    argObject[argumentsList[index].name] = message.guild;
-                                } else {
-                                    argObject[argumentsList[index].name] = def;
+                                        break;
                                 }
-                            } else {
-                                argObject[argumentsList[index].name] = null;
+                            } else if(argumentsList[index].optional) {
+                                if(argumentsList[index].default != undefined) {
+                                    let def = argumentsList[index].default;
+                                    if(def == "MESSAGE_AUTHOR") {
+                                        argObject[argumentsList[index].name] = message.author;
+                                    } else if(def == "MESSAGE_CHANNEL") {
+                                        argObject[argumentsList[index].name] = message.channel;
+                                    } else if(def == "MESSAGE_GUILD") {
+                                        argObject[argumentsList[index].name] = message.guild;
+                                    } else {
+                                        argObject[argumentsList[index].name] = def;
+                                    }
+                                } else {
+                                    argObject[argumentsList[index].name] = null;
+                                }
                             }
+                            index++;
+                        }        
+                        if(errors.length == 0) {
+                            if(!this.ignoreCooldown) {
+                                bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
+                                bot.sysMemory.add(message.author.id);
+                                setTimeout(() => {
+                                    bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
+                                }, this.cooldown * 1000);
+                                setTimeout(() => {
+                                    bot.sysMemory.delete(message.author.id);
+                                }, bot.cooldowns.systemCooldown * 1000);
+                            }
+                            this.run(bot, message, argObject);
+                        } else {
+                            this.reportError(bot, message, errors);
                         }
-                        index++;
-                    }        
-                    if(errors.length == 0) {
-                        if(!this.ignoreCooldown) {
-                            bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
-                            bot.sysMemory.add(message.author.id);
-                            setTimeout(() => {
-                                bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
-                            }, this.cooldown * 1000);
-                            setTimeout(() => {
-                                bot.sysMemory.delete(message.author.id);
-                            }, bot.cooldowns.systemCooldown * 1000);
-                        }
-                        this.run(bot, message, argObject);
                     } else {
-                        this.reportError(bot, message, errors);
+                        this.reportError(bot, message, ["Insufficient arguments provided."]);
                     }
                 } else {
-                    this.reportError(bot, message, ["Insufficient arguments provided."]);
+                    if(!this.ignoreCooldown) {
+                        bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);
+                        bot.sysMemory.add(message.author.id);
+                        setTimeout(() => {
+                            bot.cmdMemory.delete(message.author.id + "<->" + this.names[0]);
+                        }, this.cooldown * 1000);
+                        setTimeout(() => {
+                            bot.sysMemory.delete(message.author.id);
+                        }, bot.cooldowns.systemCooldown * 1000);
+                    }
+                    this.run(bot, message, argObject);
                 }
             } else {
                 this.reportError(bot, message, [
