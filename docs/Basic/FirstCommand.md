@@ -8,7 +8,7 @@ If your Working Directory doesn't have a `/commands` directory, then this would 
 
 This bot framework uses a separate file for each command, and this `/commands` directory will be used to hold all of our Command Files.
 
-### Creating our Command File.
+## Creating our Command File.
 
 We could just create a new file directly under `/commands` but imagine you have a large bot with a lot of commands, It will easily get extremely tedious if all commands are just directly under the `/commands` directory.
 
@@ -21,13 +21,13 @@ We're gonna make a new directory named `./Interaction` under `/commands`. The na
 
 In our `./Interaction` Directory we're gonna create a new file named `HiCommand.js`. This will be an extremely basic command that just says Hi to a User.
 
-### Writing the Code for The Command
+## Writing the Code for The Command
 
 Open up our newly created file in your favorite Text Editor.
 
 The first thing to do is to require the `SenseiCommand` class from `discord-sensei`
 
-#### Requiring Modules.
+### Requiring Modules.
 
 ```javascript
 const { SenseiCommand } = require("discord-sensei");
@@ -39,11 +39,11 @@ I want the Bot to say Hi in a nicer way then just a message, So i'm deciding to 
 const { RichEmbed } = require("discord.js");
 ```
 
-#### Creating our Class.
+### Creating our Class.
 
 We will declare a class named `HiCommand` that extends `SenseiCommand`. We're gonna define the Constructor method, and the first thing in the constructor method should be the super() method as such:
 
-##### Declaration
+#### Declaration
 
 ```javascript
 class HiCommand extends SenseiCommand {
@@ -53,7 +53,7 @@ class HiCommand extends SenseiCommand {
 }
 ```
 
-##### Setting of Properties.
+#### Setting of Properties.
 
 We're gonna use the Methods provided by `SenseiCommand` in the constructor method to set all of the different properties for this command.<br>
 *[SenseiCommand Methods](https://discord-sensei.js.org/#/docs/main/stable/class/SenseiCommand)*
@@ -92,7 +92,7 @@ class HiCommand extends SenseiCommand {
 }
 ```
 
-##### Creating our Run Method.
+#### Creating our Run Method.
 
 After this we need to define our run() method in the Class. This is the actual code that will be executed by the Bot.
 We need to follow a Specific Syntax for the run() method's definition; [run() Method](https://discord-sensei.js.org/#/docs/main/stable/class/SenseiCommand?scrollTo=run)
@@ -124,7 +124,7 @@ async run(bot, message, args) {
 }
 ```
 
-#### Exporting our Command Class.
+### Exporting our Command Class.
 
 To actually make it so that the Bot can use this command, we need to export our newly created class at the end of the file as such:
 
@@ -132,7 +132,7 @@ To actually make it so that the Bot can use this command, we need to export our 
 module.exports = HiCommand;
 ```
 
-### Full Code.
+## Full Code.
 
 This is how our entire command file should look like (without comments)
 
