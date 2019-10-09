@@ -1,6 +1,6 @@
 {
   "name": "discord-sensei",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Bot framework for making Bot writing easier and cleaner. Basically a wrapper for Discord.js",
   "dependencies": {
     "@types/node": "^12.7.8",
