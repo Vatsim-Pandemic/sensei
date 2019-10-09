@@ -17,7 +17,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "tsc -b",
-    "docs": "jsdoc -c ./jsdoc.json"
+    "test": "node ./test/bot.js"
   },
   "keywords": [
     "discord",
@@ -30,7 +30,7 @@
     "url": "git+https://github.com/Demonicious/bot_framework.git"
   },
   "author": "demonicious <demoncious@gmail.com>",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/Demonicious/bot_framework/issues"
   },
