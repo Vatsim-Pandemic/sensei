@@ -29,3 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.0.5
 
 - Performance Improvements.
+
+## 1.0.6
+
+- Updated Documentation
