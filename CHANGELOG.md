@@ -17,3 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Added Linters
 - Small Bug Fixes and Performance Improvements.
+
+## 1.0.3
+
+- Small Fix.
