@@ -225,10 +225,8 @@ class SenseiCommand {
         let rb = new discord_js_1.default.RichEmbed;
         rb.setColor(bot.custom.errorColor);
         let errString = "";
-        let index = 1;
         messages.forEach(message => {
-            errString += `\n-) ${message}`;
-            index++;
+            errString += `\n(-) ${message}`;
         });
         errString += `\n\n\`${bot.prefixes[0]}${this.info.syntax}\``;
         rb.setTitle("The following errors occured:")

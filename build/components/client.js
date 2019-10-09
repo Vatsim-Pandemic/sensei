@@ -272,7 +272,7 @@ class SenseiClient extends discord_js_1.Client {
             if (err)
                 throw (err);
             this.commandPaths = files;
-            this.commandPaths.forEach((commandPath, index) => {
+            this.commandPaths.forEach((commandPath) => {
                 if (!commandPath.includes("_drafts")) {
                     Promise.resolve().then(() => __importStar(require(commandPath))).then((command) => {
                         try {
