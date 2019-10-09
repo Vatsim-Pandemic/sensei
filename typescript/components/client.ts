@@ -1,6 +1,6 @@
 import { Client, RichEmbed } from "discord.js";
 import recursive from "recursive-readdir";
-import { SenseiCommand, Logger } from "../sensei";
+import { Logger } from "../sensei";
 
 interface AuthorInfo {
     name? : string,
@@ -207,7 +207,7 @@ class SenseiClient extends Client {
                                 let callArgs = split.slice(1);
 
                                 let shouldRun = false;
-                                let attempt : SenseiCommand = new this.commands[cmd];
+                                let attempt = new this.commands[cmd];
                                 let seconds : number = 0;
                                 if(this.cooldowns.type == "command") {
                                     if(!this.cmdMemory.has(message.author.id + "<->" + attempt.names[0])) {
@@ -297,7 +297,7 @@ class SenseiClient extends Client {
         return await recursive(this.commandsDir, (err : Error, files : string[]) => {
             if(err) throw(err);
             this.commandPaths = files;
-            this.commandPaths.forEach((commandPath, index) => {
+            this.commandPaths.forEach((commandPath) => {
                 if(!commandPath.includes("_drafts")) {
                     import(commandPath).then((command : any) => {
                         try {

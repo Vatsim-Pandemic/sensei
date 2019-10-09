@@ -10,7 +10,12 @@
     "recursive-readdir": "^2.2.2"
   },
   "devDependencies": {
-    "discord.js-docgen": "docgen"
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "acorn": "^7.1.0",
+    "discord.js-docgen": "docgen",
+    "eslint": "^6.5.1",
+    "typescript": "^3.6.3"
   },
   "main": "./build/sensei.js",
   "typings": "./build/sensei.d.ts",

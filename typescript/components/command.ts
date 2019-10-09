@@ -1,6 +1,5 @@
 import Discord, { PermissionResolvable } from "discord.js";
 import { SenseiClient, Logger } from "../sensei";
-import path from "path";
 
 interface CommandInfo {
     name : string,
@@ -260,10 +259,8 @@ class SenseiCommand {
         rb.setColor(bot.custom.errorColor);
         
         let errString : string = "";
-        let index = 1;
         messages.forEach(message => {
-            errString += `\n-) ${message}`;
-            index++;
+            errString += `\n(-) ${message}`;
         })
         
         errString += `\n\n\`${bot.prefixes[0]}${this.info.syntax}\``; 
