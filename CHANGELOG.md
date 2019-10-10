@@ -32,4 +32,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 1.0.6
 
-- Updated Documentation
+- Updated Documentation.
+
+## 1.0.7
+
+- Improved Code Quality.
+
+## 1.0.8
+
+- Improved Code Quality.
