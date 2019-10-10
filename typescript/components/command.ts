@@ -8,7 +8,7 @@ interface CommandInfo {
 }
 
 /**
- * @typedef {String} ArgumentTypeResolvable Determines the type of the argument. Argument Types: "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number" 
+ * @typedef {String} ArgumentTypeResolvable Determines the type of the argument. Argument Types: "USER_MENTION" | "ROLE_MENTION" | "CHANNEL_MENTION" | "string" | "number"
  */
 
 /**
@@ -168,7 +168,7 @@ class SenseiCommand {
 
     /**
      * Used to set some Information about the Command
-     * @param {CommandInfo} info 
+     * @param {CommandInfo} info
      */
     protected setInfo(info : CommandInfo) {
         if(info != undefined) {
@@ -241,7 +241,7 @@ class SenseiCommand {
      * async run(bot, message, args) {
      *      let sender = message.author.username;
      *      let channel = message.channel;
-     * 
+     *
      *      channel.send(`Hello ${sender}!. How are you doing ?`);
      *      return;
      * }
@@ -251,11 +251,11 @@ class SenseiCommand {
     /**
      * This Method is used for Error Reporting (To the Discord User)
      * @param {SenseiClient} bot The SenseiClient Object.
-     * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object 
+     * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object.
      * @param {String[]} messages An array of messages to be included in the error.
      */
     protected reportError(bot : SenseiClient, message : Discord.Message, messages : string[]) : void {
-        let rb : Discord.RichEmbed = new Discord.RichEmbed;
+        let rb : Discord.RichEmbed = new Discord.RichEmbed();
         rb.setColor(bot.custom.errorColor);
         
         let errString : string = "";
@@ -263,7 +263,7 @@ class SenseiCommand {
             errString += `\n(-) ${message}`;
         })
         
-        errString += `\n\n\`${bot.prefixes[0]}${this.info.syntax}\``; 
+        errString += `\n\n\`${bot.prefixes[0]}${this.info.syntax}\``;
 
         rb.setTitle("The following errors occured:")
         .setDescription(errString)
@@ -280,7 +280,7 @@ class SenseiCommand {
 
     /**
      * This Method is used to check if the User has the necessary permissions required to Execute this command.
-     * @param {Discord.GuildMember} member The [GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to Check. 
+     * @param {Discord.GuildMember} member The [GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to Check.
      * @returns {Boolean}
      * @private
      */
@@ -333,7 +333,7 @@ class SenseiCommand {
                     if(this.reportError) {
                         this.reportError(bot, message, ["System Error."]);
                     }
-                } else if(this.arguments.length > 0) { 
+                } else if(this.arguments.length > 0) {
                     if(argumentsList.length > 0 && required.length <= args.length) {
                         let index : number = 0;
             
@@ -418,7 +418,7 @@ class SenseiCommand {
                                 }
                             }
                             index++;
-                        }        
+                        }
                         if(errors.length == 0) {
                             if(!this.ignoreCooldown) {
                                 bot.cmdMemory.add(message.author.id + "<->" + this.names[0]);

@@ -207,7 +207,7 @@ class SenseiClient extends Client {
                                 let callArgs = split.slice(1);
 
                                 let shouldRun = false;
-                                let attempt = new this.commands[cmd];
+                                let attempt = new this.commands[cmd]();
                                 let seconds : number = 0;
                                 if(this.cooldowns.type == "command") {
                                     if(!this.cmdMemory.has(message.author.id + "<->" + attempt.names[0])) {
@@ -285,7 +285,7 @@ class SenseiClient extends Client {
     /**
      * @typedef {Object} Config
      * @property {string[]} prefixes The Array of Prefixes the bot uses. The first item is considered the Main Prefix, others are considered alternative prefixes.
-     * @property {string} commandsDirectory The Directory where the Bot should scan for Command Files.     
+     * @property {string} commandsDirectory The Directory where the Bot should scan for Command Files.
      * @property {boolean} [logMessages=false] Whether the Bot should Log Information Messages to the Console or not.
      * @property {boolean} [reportErrors=false] Whether even the smallest of errors should be reported to the Discord User or not.
      * @property {CooldownSettings} [cooldowns={ type: "command", systemCooldown: 10 }] Determines how cooldowns should be applied in the bot.
@@ -294,14 +294,14 @@ class SenseiClient extends Client {
      */
 
     private async registerCommands() : Promise<void> {
-        return await recursive(this.commandsDir, (err : Error, files : string[]) => {
+        return recursive(this.commandsDir, (err : Error, files : string[]) => {
             if(err) throw(err);
             this.commandPaths = files;
             this.commandPaths.forEach((commandPath) => {
                 if(!commandPath.includes("_drafts")) {
                     import(commandPath).then((command : any) => {
                         try {
-                            let cmd = new command.default;
+                            let cmd = new command.default();
                             cmd.names.forEach((name : string) => {
                                 if(this.possibleNames.includes(name)) {
                                     this.log.error(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);

@@ -185,7 +185,7 @@ class SenseiClient extends discord_js_1.Client {
                                 let cmd = split[0];
                                 let callArgs = split.slice(1);
                                 let shouldRun = false;
-                                let attempt = new this.commands[cmd];
+                                let attempt = new this.commands[cmd]();
                                 let seconds = 0;
                                 if (this.cooldowns.type == "command") {
                                     if (!this.cmdMemory.has(message.author.id + "<->" + attempt.names[0])) {
@@ -268,7 +268,7 @@ class SenseiClient extends discord_js_1.Client {
      * @property {Object} [custom={ footerText: "SenseiBot", errorColor: "#ef2e2e", successColor: "#68c73f", secondaryColor: "#8e7878", primaryColor: "#5f5ac6" }] Used to Declare Custom Properties that are held in the bot object.
      */
     async registerCommands() {
-        return await recursive_readdir_1.default(this.commandsDir, (err, files) => {
+        return recursive_readdir_1.default(this.commandsDir, (err, files) => {
             if (err)
                 throw (err);
             this.commandPaths = files;
@@ -276,7 +276,7 @@ class SenseiClient extends discord_js_1.Client {
                 if (!commandPath.includes("_drafts")) {
                     Promise.resolve().then(() => __importStar(require(commandPath))).then((command) => {
                         try {
-                            let cmd = new command.default;
+                            let cmd = new command.default();
                             cmd.names.forEach((name) => {
                                 if (this.possibleNames.includes(name)) {
                                     this.log.error(`Name: '${name}' of Command: '${commandPath}' already in use by another Command. Names/Aliases can't be same and can't be repeated,`);

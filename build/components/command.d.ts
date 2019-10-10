@@ -134,7 +134,7 @@ declare class SenseiCommand {
     /**
      * This Method is used for Error Reporting (To the Discord User)
      * @param {SenseiClient} bot The SenseiClient Object.
-     * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object
+     * @param {Message} message The [Message](https://discord.js.org/#/docs/main/stable/class/Message) Object.
      * @param {String[]} messages An array of messages to be included in the error.
      */
     protected reportError(bot: SenseiClient, message: Discord.Message, messages: string[]): void;
