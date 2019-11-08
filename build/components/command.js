@@ -309,7 +309,7 @@ class SenseiCommand {
                             if (args[index] != undefined) {
                                 switch (argumentsList[index].type) {
                                     case "string":
-                                        argObject.push(this);
+                                        argObject[argumentsList[index].name] = args[index];
                                         break;
                                     case "number":
                                         if (this.isNum(args[index])) {
