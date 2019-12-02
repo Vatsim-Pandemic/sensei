@@ -1,43 +1,42 @@
 {
-  "name": "discord-sensei",
-  "version": "1.0.7",
-  "description": "A Bot framework for making Bot writing easier and cleaner. Basically a wrapper for Discord.js",
-  "dependencies": {
-    "@types/node": "^12.7.8",
-    "@types/recursive-readdir": "^2.2.0",
-    "colors": "^1.4.0",
-    "discord.js": "^11.5.1",
-    "recursive-readdir": "^2.2.2"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.3.3",
-    "@typescript-eslint/parser": "^2.3.3",
-    "acorn": "^7.1.0",
-    "discord.js-docgen": "docgen",
-    "eslint": "^6.5.1",
-    "typescript": "^3.6.3"
-  },
-  "main": "./build/sensei.js",
-  "typings": "./build/sensei.d.ts",
-  "scripts": {
-    "prepare": "npm run build",
-    "build": "tsc -b",
-    "test": "node ./test/bot.js"
-  },
-  "keywords": [
-    "discord",
-    "bot",
-    "framework",
-    "chat"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Demonicious/bot_framework.git"
-  },
-  "author": "demonicious <demoncious@gmail.com>",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/Demonicious/bot_framework/issues"
-  },
-  "homepage": "https://discord-sensei.js.org/#/"
+	"name": "discord-sensei",
+	"version": "1.0.8",
+	"description": "A Bot framework for making Bot writing easier and cleaner. Basically a wrapper for Discord.js",
+	"dependencies": {
+		"@types/node": "^12.7.8",
+		"@types/recursive-readdir": "^2.2.0",
+		"colors": "^1.4.0",
+		"discord.js": "^11.5.1",
+		"recursive-readdir": "^2.2.2"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^2.3.3",
+		"@typescript-eslint/parser": "^2.3.3",
+		"acorn": "^7.1.0",
+		"eslint": "^6.5.1",
+		"typescript": "^3.6.3"
+	},
+	"main": "./build/sensei.js",
+	"typings": "./build/sensei.d.ts",
+	"scripts": {
+		"prepare": "npm run build",
+		"build": "tsc -b",
+		"test": "node ./test/bot.js"
+	},
+	"keywords": [
+		"discord",
+		"bot",
+		"framework",
+		"chat"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Demonicious/bot_framework.git"
+	},
+	"author": "demonicious <demoncious@gmail.com>",
+	"license": "Apache-2.0",
+	"bugs": {
+		"url": "https://github.com/Demonicious/bot_framework/issues"
+	},
+	"homepage": "https://discord-sensei.js.org/#/"
 }
